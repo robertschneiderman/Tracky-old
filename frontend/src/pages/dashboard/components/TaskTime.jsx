@@ -11,6 +11,7 @@ class TaskTime extends Component {
             timer: 0,
             totalTime: 0
         };
+        this.interval;
     }
 
     componentDidMount() {
@@ -38,18 +39,23 @@ class TaskTime extends Component {
         let lastTimestamp = this.getLastTimestamp();
 
         if (!this.state.running) {
-            dispatches.createTimestamp({taskId: task.id});
-            let interval = setInterval(() => {
+            this.setState({running: true});
+            this.interval = setInterval(() => {
                 this.setState({timer: this.state.timer + 10});
-                dispatches.updateTimer(this.state.timer + 10);
+                dispatches.updateTimer({id: task.id, time: this.state.timer + 10});
             }, 10);
-            this.setState({running: true, interval});
+            dispatches.createTimestamp({taskId: task.id});
         } else {
             dispatches.updateTimestamp({id: lastTimestamp.id});
-            clearInterval(this.state.interval);
+            clearInterval(this.interval);
             let totalTime = this.state.totalTime + this.state.timer;
             this.setState({running: false, interval: null, timer: 0, totalTime});
         }
+    }
+
+    handleMouseEnter() {
+        let { task, dispatches } = this.props;
+        dispatches.selectTask(task.id);
     }
 
     renderTimestampDisplay() {
@@ -69,7 +75,7 @@ class TaskTime extends Component {
         let { totalTime, timer } = this.state;
         // debugger;
         return(
-            <div className="c-task" onClick={this.handleClick.bind(this)}>
+            <div className="c-task" onClick={this.handleClick.bind(this)} onMouseEnter={this.handleMouseEnter.bind(this)}>
                 <img src={`./static/images/task_icons/${icon}.svg`} className="img-task-icon" />
                 <div className="c-task-text">
                     <div className="c-task-row-1">

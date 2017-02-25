@@ -16,13 +16,13 @@ export class Dashboard extends Component {
   }
 
   render() {
-    let { tasks, history, time } = this.props;
+    let { tasks, history, timers, activeTask } = this.props;
     return (
       <div className="c-dashboard">
         <div className="text-message">{this.message || ''}</div>
           <div className="c-dashboard-main">
             {(tasks.length > 0) ? <Tasks {...this.props} /> : ''}
-            <TaskDisplay time={time} />
+            <TaskDisplay time={timers[activeTask]} />
           </div>
       </div>
     );
@@ -44,8 +44,9 @@ function mapStateToProps(state) {
     history: currentHistory,
     tasks,
     timestamp,
-    time: dashboard.time,
-    message: dashboard.message
+    timers: dashboard.timers,
+    message: dashboard.message,
+    activeTask: dashboard.activeTask
   };
 }
 
