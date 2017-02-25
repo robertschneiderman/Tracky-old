@@ -14,12 +14,12 @@ class TaskDisplay extends Component {
         return goals.sort((a, b) => a > b).map(goalId => {
             let goal = goalDictionary[goalId];
             return (
-                <div className="c-task-display-goal">
+                <div className="c-task-display-goal" key={`sdk-${goal.id}`}>
                     <h3 className="title-task-display-goal">{startCase(goal.interval)}</h3>
                     <p className="text-task-display-goal">
                         {goal.count} / {goal.target}
                     </p>
-                    <Progressbar />
+                    <ProgressBar goal={goal} />
                 </div>
             );
         });
