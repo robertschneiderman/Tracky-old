@@ -5,6 +5,7 @@ import * as actions from '../redux/actions';
 import { requestUser } from '../../../data/user/actions';
 import { createTimestamp } from '../../../data/timestamp/actions';
 import Tasks from './Tasks';
+import TaskDisplay from './TaskDisplay';
 
 export class Dashboard extends Component {
 
@@ -15,13 +16,14 @@ export class Dashboard extends Component {
   }
 
   render() {
-    let { tasks, history } = this.props;
+    let { tasks, history, time } = this.props;
     return (
       <div className="c-dashboard">
         <div className="text-message">{this.message || ''}</div>
-
-        {(tasks.length > 0) ? <Tasks {...this.props} /> : ''}
-        
+          <div className="c-dashboard-main">
+            {(tasks.length > 0) ? <Tasks {...this.props} /> : ''}
+            <TaskDisplay time={time} />
+          </div>
       </div>
     );
   }
@@ -42,6 +44,7 @@ function mapStateToProps(state) {
     history: currentHistory,
     tasks,
     timestamp,
+    time: dashboard.time,
     message: dashboard.message
   };
 }

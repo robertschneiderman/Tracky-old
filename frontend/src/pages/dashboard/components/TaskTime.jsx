@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import { dateToTime, padNumber, msToTime, msToLongerTime } from '../../../common/helpers/timeHelpers';
 
 class TaskTime extends Component {
     constructor(props) {
@@ -15,14 +16,6 @@ class TaskTime extends Component {
     componentDidMount() {
         let totalTime = this.getTotalTime(this.props.timestamps);
         this.setState({totalTime});
-    }
-
-    componentWillReceiveProps(nextProps) {
-        // if (this.props.timestamps.length !== nextProps.timestamps.length) {
-        //     let totalTime = this.getTotalTime(nextProps.timestamps);
-        //     debugger;
-        //     this.setState({totalTime});
-        // }
     }
 
     getTotalTime(timestamps) {
@@ -48,38 +41,15 @@ class TaskTime extends Component {
             dispatches.createTimestamp({taskId: task.id});
             let interval = setInterval(() => {
                 this.setState({timer: this.state.timer + 10});
+                dispatches.updateTimer(this.state.timer + 10);
             }, 10);
             this.setState({running: true, interval});
         } else {
             dispatches.updateTimestamp({id: lastTimestamp.id});
             clearInterval(this.state.interval);
-            debugger;
             let totalTime = this.state.totalTime + this.state.timer;
             this.setState({running: false, interval: null, timer: 0, totalTime});
         }
-    }
-
-    dateToTime(date) {
-        return moment(date).format('h:mm A');
-    }
-
-    padNumber(number) {
-        return (number < 10) ? `0${number}` : number;
-    }
-
-    msToTime(totalMilliSeconds) {
-        let duration = moment.duration(totalMilliSeconds);
-        let hours = duration.hours();
-        let minutes = duration.minutes();
-        let seconds = duration.seconds();
-        // debugger;
-        return `${this.padNumber(hours)}:${this.padNumber(minutes)}:${this.padNumber(seconds)}`;
-    }
-
-    msToLongerTime(totalMilliSeconds) {
-        let duration = moment.duration(totalMilliSeconds);
-        let decaSeconds = Math.floor(duration.milliseconds() / 10);        
-        return this.msToTime(totalMilliSeconds) + `:${this.padNumber(decaSeconds)}:${this.padNumber(decaSeconds)}`;
     }
 
     renderTimestampDisplay() {
@@ -87,8 +57,8 @@ class TaskTime extends Component {
         let lastTimestamp = this.getLastTimestamp();
         return (
             <p className="text-timestamp-display">
-                {(lastTimestamp && lastTimestamp.start) ? `${this.dateToTime(lastTimestamp.start)} - ` : '' }
-                {(lastTimestamp && lastTimestamp.end) ? this.dateToTime(lastTimestamp.end) : '' }
+                {(lastTimestamp && lastTimestamp.start) ? `${dateToTime(lastTimestamp.start)} - ` : '' }
+                {(lastTimestamp && lastTimestamp.end) ? dateToTime(lastTimestamp.end) : '' }
             </p>
         );
     }
@@ -104,11 +74,11 @@ class TaskTime extends Component {
                 <div className="c-task-text">
                     <div className="c-task-row-1">
                         <h3 className="title-task-name">{name}</h3>
-                        <p className="text-task-timer">{this.msToTime(timer)}</p>
+                        <p className="text-task-timer">{msToTime(timer)}</p>
                     </div>
                     <div className="c-task-row-2">
                         {this.renderTimestampDisplay()}
-                        <p className="text-total-time">{this.msToTime(totalTime)}</p>
+                        <p className="text-total-time">{msToTime(totalTime)}</p>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,6 @@ const numberToTime = (minutes) => {
 const timeToNumber = (time) => {
     let hours = parseInt(time.slice(0, 2));
     let minutes = parseInt(time.slice(3));
-
     return (hours * 60 + minutes);
 };
 
