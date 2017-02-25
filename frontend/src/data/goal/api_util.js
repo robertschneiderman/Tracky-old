@@ -22,8 +22,8 @@ export const createGoals = (goals, success, error) => {
   .catch(error);
 };
 
-export const updateGoal = (goal, success) => {
-  axioss.patch(`goals/${goal.id}`)
+export const updateGoal = (id, goal, success) => {
+  axioss.patch(`goals/${id}`, goal)
   .then(success)
   .catch(function (error) {
     console.log(error);

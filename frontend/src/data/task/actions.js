@@ -7,6 +7,7 @@ export const RECEIVE_TASKS = 'RECEIVE_TASKS';
 export const RECEIVE_TASK = 'RECEIVE_TASK';
 export const REMOVE_TASK = 'REMOVE_TASKS';
 export const UPDATE_TIMESTAMP_ARR = 'UPDATE_TIMESTAMP_ARR';
+export const UPDATE_GOAL_ARR = 'UPDATE_GOAL_ARR';
 export const TASK_ERROR = 'TASK_ERROR';
 
 export const requestTasks = () => ({
@@ -46,6 +47,12 @@ export const updateTask = task => ({
 export const destroyTask = task => ({
     type: DESTROY_TASK,
     task
+});
+
+export const updateGoalArr = (taskId, goalId) => ({
+    type: UPDATE_GOAL_ARR,
+    taskId,
+    goalId
 });
 
 export const updateTimestampArr = (taskId, timestampId) => ({

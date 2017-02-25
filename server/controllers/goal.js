@@ -57,29 +57,13 @@ exports.create = function(req, res, next) {
 
 
 exports.update = function(req, res, next) {
-  var token = req.header('x-auth');
-  User.findByToken(token).then((user) => {
-    if (!user) {
-      return Promise.reject();
-    }
+  let timestamp = req.body;
+  let key = Object.keys(req.body)[0];
+  let value = req.body[key];
 
-    let task = user.histories[0].tasks.find(task2 => {
-      return task2._id == req.params.id;
-    });
-
-    let goals = task.goals;
-    let newGoals = (req.body.increment) ? increment(task.goals, req.body) : req.body;
-    task.goals = newGoals;
-
-    user.save(function(err) {
-      if (err) { return next(err); }
-      let history = user.histories[0].toObject();
-      history.date = dh.formattedDate(user.histories[0].date);    
-      res.json(task.goals);
-    });
-
-
+  Goal.update({[key]: value}, {where: {id: req.params.id}, plain: true, returning: true }).then(goal => {
+    res.status(201).json(goal[1]);
   }).catch((e) => {
-    res.status(401).send();
+    res.status(401).send(e);
   });
 };

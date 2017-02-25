@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { dateToTime } from '../../../common/helpers/timeHelpers';
 
 
 class TaskFrequency extends Component {
@@ -10,39 +11,56 @@ class TaskFrequency extends Component {
         };
     }
 
-    handleClick() {
-        let { dispatches, task } = this.props;
-        if (!this.state.running) {
-            dispatches.createTimestamp({id: task.id});
-            this.setState({running: !this.state.running});
-            // this.startTimer();
-        }
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        if (this.state.running) {
-            this.setState({timer: this.state.times + 1});
-        }
-    }
-
-    // startTimer() {
-    //     this.intervsetInterval(() => {
-    //     }, 1000)
+    // componentWillMount() {
+    //     let { task, goalDictionary } = this.props;
+    //     let shortestDurationGoal = task.goals.sort((a, b) => a > b).map(goalId => goalDictionary[goalId])[0];
+    //     this.displayGoal = shortestDurationGoal;
     // }
 
+    // componentWillReceiveProps(nextProps) {
+    //     if (this.props.goal.count !==)
+    // }
+
+    handleClick() {
+        let { dispatches, task, goal } = this.props;
+        dispatches.createTimestamp({taskId: task.id});        
+        dispatches.updateGoal(goal.id, {count: goal.count + 1});
+    }
+
+    handleMouseEnter() {
+        let { task, dispatches } = this.props;
+        dispatches.selectTask(task.id);
+    }
+
+    getLastTimestamp() {
+        let { timestamps } = this.props;
+        return timestamps[timestamps.length-1];        
+    }
+
+    renderTimestampDisplay() {
+        let { task } = this.props;   
+        let lastTimestamp = this.getLastTimestamp();
+        return (lastTimestamp && lastTimestamp.start) ? dateToTime(lastTimestamp.start) : '';
+    }        
+
     render() {
-        let { name, icon } = this.props.task;
+        let { task, goal } = this.props;
+        let { name, icon } = task;
         // debugger;        
         return(
-            <div className="c-task" onClick={this.handleClick}>
+            <div className="c-task" onClick={this.handleClick.bind(this)}>
                 <img src={`./static/images/task_icons/${icon}.svg`} className="img-task-icon" />
-                <div className="c-task-text">
-                    <div className="c-task-row-1">
+                <div className="c-task-frequency">
+                    <div className="c-task-column-1">
                         <h3 className="title-task-name">{name}</h3>
-                        <p className="text-task-timer"></p>
+                        <p className="text-timestamp-f-display">
+                            {this.renderTimestampDisplay()}
+                        </p>
                     </div>
-                    <div className="c-task-row-2">
-                        <p className="text-timestamp-display"></p>
+                    <div className="c-task-column-2">
+                        <p className="text-task-count">
+                            {goal.count}
+                        </p>
                     </div>
                 </div>
             </div>

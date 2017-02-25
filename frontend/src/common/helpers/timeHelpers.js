@@ -14,10 +14,10 @@ export const msToTime = (totalMilliSeconds) => {
 };
 
 export const msToLongerTime = (totalMilliSeconds) => {
+    if (!totalMilliSeconds) return '';
     let duration = moment.duration(totalMilliSeconds);
-    let seconds = duration.seconds();
     let decaSeconds = Math.floor(duration.milliseconds() / 10);        
-    return msToTime(totalMilliSeconds) + `:${padNumber(seconds)}:${padNumber(decaSeconds)}`;
+    return msToTime(totalMilliSeconds) + `:${padNumber(duration.seconds())}:${padNumber(decaSeconds)}`;
 };
 
 export const hoursAndMinsToNumber = time => {

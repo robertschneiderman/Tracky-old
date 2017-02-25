@@ -4,6 +4,7 @@ export const CREATE_GOALS = 'CREATE_GOALS';
 export const UPDATE_GOAL = 'UPDATE_GOAL';
 export const DESTROY_GOAL = 'DESTROY_GOAL';
 export const RECEIVE_GOALS = 'RECEIVE_GOALS';
+export const RECEIVE_GOAL = 'RECEIVE_GOAL';
 export const MERGE_GOALS = 'MERGE_GOALS';
 export const REMOVE_GOAL = 'REMOVE_GOALS';
 export const GOAL_ERROR = 'GOAL_ERROR';
@@ -22,6 +23,11 @@ export const receiveGoals = goals => ({
     goals
 });
 
+export const receiveGoal = goal => ({
+    type: RECEIVE_GOAL,
+    goal
+});
+
 export const mergeGoals = goal => ({
     type: MERGE_GOALS,
     goal
@@ -37,8 +43,9 @@ export const createGoals = goals => ({
     goals
 });
 
-export const updateGoal = goal => ({
+export const updateGoal = (id, goal) => ({
     type: UPDATE_GOAL,
+    id,
     goal
 });
 

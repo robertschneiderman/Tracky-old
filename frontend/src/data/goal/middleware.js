@@ -1,3 +1,5 @@
+import { updateGoalArr } from '../task/actions';
+
 // Goal API Util
 import { fetchGoals,
          fetchGoal,
@@ -36,7 +38,7 @@ export default ({getState, dispatch}) => next => action => {
       createGoals(action.goals, goalSuccess, goalErrored);
       return next(action);
     case UPDATE_GOAL:
-      updateGoal(action.goal, goalSuccess);
+      updateGoal(action.id, action.goal, goalSuccess);
       return next(action);
     case DESTROY_GOAL:
       destroyGoal(action.goal, goalRemoved);

@@ -8,13 +8,14 @@ class Tasks extends Component {
     }
 
     renderTasks() {
-        let { tasks, dispatches, timestamp } = this.props;
+        let { tasks, dispatches, timestamp, goalDictionary } = this.props;
         return tasks.map((task, i) => {
             let timestamps = task.timestamps.map(id => timestamp[id]);
+            let shortestDurationGoal = task.goals.sort((a, b) => a > b).map(goalId => goalDictionary[goalId])[0];        
             if (task.type === 'time') {
-                return <TaskTime task={task} dispatches={dispatches} timestamps={timestamps} {...this.props} key={`sd2-${i}`} />; 
+                return <TaskTime task={task} goal={shortestDurationGoal} dispatches={dispatches} timestamps={timestamps} {...this.props} key={`sd2-${i}`} />; 
             } else {
-                return <TaskFrequency task={task} dispatches={dispatches} timestamps={timestamps} {...this.props} key={`sd2-${i}`} />;
+                return <TaskFrequency task={task} goal={shortestDurationGoal} dispatches={dispatches} timestamps={timestamps} {...this.props} key={`sd2-${i}`} />;
             }
         });
     }
