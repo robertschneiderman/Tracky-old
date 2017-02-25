@@ -20,24 +20,31 @@ class TaskTime extends Component {
 
     getTotalTime(timestamps) {
         let ts = timestamps[0];
-        let totalSeconds = timestamps.reduce((accum, tss) => {
-            let seconds = moment.duration(moment(tss.end).unix() - moment(tss.start).unix(), 'seconds').seconds();
-            return accum + seconds;
+        let totalMilliSeconds = timestamps.reduce((accum, tss) => {
+        let milliSeconds = moment.duration(moment(tss.end).unix() - moment(tss.start).unix(), 'seconds').seconds() * 1000;
+            return accum + milliSeconds;
         }, 0);
-        debugger;
-        return this.secondsToHoursMinutes(totalSeconds);
+        // debugger;
+        return this.msToTime(totalMilliSeconds);
+    }
+
+    getLastTimestamp() {
+        let { timestamps } = this.props;
+        return timestamps[timestamps.length-1];        
     }
 
     handleClick() {
-        let { dispatches, task, timestamp } = this.props;
+        let { dispatches, task } = this.props;
+        let lastTimestamp = this.getLastTimestamp();
+
         if (!this.state.running) {
             dispatches.createTimestamp({taskId: task.id});
             let interval = setInterval(() => {
-                this.setState({timer: this.state.timer + 1});
-            }, 1000);
+                this.setState({timer: this.state.timer + 10});
+            }, 10);
             this.setState({running: true, interval});
         } else {
-            dispatches.updateTimestamp({id: timestamp.id});
+            dispatches.updateTimestamp({id: lastTimestamp.id});
             clearInterval(this.state.interval);
             this.setState({running: false, interval: null});
         }
@@ -51,20 +58,28 @@ class TaskTime extends Component {
         return (number < 10) ? `0${number}` : number;
     }
 
-    secondsToHoursMinutes(seconds) {
-        let totalMinutes = Math.floor(seconds / 60);
-        let hours = Math.floor(totalMinutes / 60);
-        let minutes = (totalMinutes - hours * 60);
+    msToTime(totalMilliSeconds) {
+        let duration = moment.duration(totalMilliSeconds);
+        let hours = duration.hours();
+        let minutes = duration.minutes();
+        let seconds = duration.seconds();
         // debugger;
-        return `${this.padNumber(hours)}:${this.padNumber(minutes)}`;
+        return `${this.padNumber(hours)}:${this.padNumber(minutes)}:${this.padNumber(seconds)}`;
+    }
+
+    msToLongerTime(totalMilliSeconds) {
+        let duration = moment.duration(totalMilliSeconds);
+        let decaSeconds = Math.floor(duration.milliseconds() / 10);        
+        return this.msToTime(totalMilliSeconds) + `:${this.padNumber(decaSeconds)}:${this.padNumber(decaSeconds)}`;
     }
 
     renderTimestampDisplay() {
-        let { timestamp, task } = this.props;        
+        let { task } = this.props;   
+        let lastTimestamp = this.getLastTimestamp();
         return (
             <p className="text-timestamp-display">
-                {(timestamp && timestamp.start) ? `${this.dateToTime(timestamp.start)} - ` : '' }
-                {(timestamp && timestamp.end) ? this.dateToTime(timestamp.end) : '' }
+                {(lastTimestamp && lastTimestamp.start) ? `${this.dateToTime(lastTimestamp.start)} - ` : '' }
+                {(lastTimestamp && lastTimestamp.end) ? this.dateToTime(lastTimestamp.end) : '' }
             </p>
         );
     }
@@ -79,7 +94,7 @@ class TaskTime extends Component {
                 <div className="c-task-text">
                     <div className="c-task-row-1">
                         <h3 className="title-task-name">{name}</h3>
-                        <p className="text-task-timer">{this.secondsToHoursMinutes(this.state.timer)}</p>
+                        <p className="text-task-timer">{this.msToTime(this.state.timer)}</p>
                     </div>
                     <div className="c-task-row-2">
                         {this.renderTimestampDisplay()}
