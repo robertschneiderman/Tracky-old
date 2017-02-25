@@ -31,7 +31,6 @@ export default ({getState, dispatch}) => next => action => {
   const userSuccess = res => {
     const normalized = normalize(res.data, userSchema);
     let {users, historys, tasks, goals, timestamps} = normalized.entities;
-    // debugger;
     dispatch(receiveTimestamps(timestamps));
     dispatch(receiveGoals(goals));
     dispatch(receiveTasks(tasks));

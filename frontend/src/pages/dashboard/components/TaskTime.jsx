@@ -6,32 +6,57 @@ class TaskTime extends Component {
         super(props);
         this.state = {
             running: false,
-            timer: 0
+            interval: null,
+            timer: 0,
+            totalTime: 0
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.timestamps.length !== nextProps.timestamps.length) {
+            this.setState({totalTime: this.getTotalTime(nextProps.timestamps)});
+        }
+    }
+
+    getTotalTime(timestamps) {
+        let ts = timestamps[0];
+        let totalSeconds = timestamps.reduce((accum, tss) => {
+            let seconds = moment.duration(moment(tss.end).unix() - moment(tss.start).unix(), 'seconds').seconds();
+            return accum + seconds;
+        }, 0);
+        debugger;
+        return this.secondsToHoursMinutes(totalSeconds);
     }
 
     handleClick() {
         let { dispatches, task, timestamp } = this.props;
         if (!this.state.running) {
             dispatches.createTimestamp({taskId: task.id});
-            this.setState({running: !this.state.running});
-            // this.startTimer();
-        } else {
-            dispatches.updateTimestamp({id: timestamp.id});
-            this.setState({running: !this.state.running});
-        }
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        if (this.state.running) {
-            setTimeout(() => {
+            let interval = setInterval(() => {
                 this.setState({timer: this.state.timer + 1});
             }, 1000);
+            this.setState({running: true, interval});
+        } else {
+            dispatches.updateTimestamp({id: timestamp.id});
+            clearInterval(this.state.interval);
+            this.setState({running: false, interval: null});
         }
     }
 
     dateToTime(date) {
         return moment(date).format('h:mm A');
+    }
+
+    padNumber(number) {
+        return (number < 10) ? `0${number}` : number;
+    }
+
+    secondsToHoursMinutes(seconds) {
+        let totalMinutes = Math.floor(seconds / 60);
+        let hours = Math.floor(totalMinutes / 60);
+        let minutes = (totalMinutes - hours * 60);
+        // debugger;
+        return `${this.padNumber(hours)}:${this.padNumber(minutes)}`;
     }
 
     renderTimestampDisplay() {
@@ -44,11 +69,6 @@ class TaskTime extends Component {
         );
     }
 
-    // startTimer() {
-    //     this.intervsetInterval(() => {
-    //     }, 1000)
-    // }
-
     render() {
         let { timestamp, task } = this.props;
         let { name, icon } = task;
@@ -59,7 +79,7 @@ class TaskTime extends Component {
                 <div className="c-task-text">
                     <div className="c-task-row-1">
                         <h3 className="title-task-name">{name}</h3>
-                        <p className="text-task-timer">{this.state.timer}</p>
+                        <p className="text-task-timer">{this.secondsToHoursMinutes(this.state.timer)}</p>
                     </div>
                     <div className="c-task-row-2">
                         {this.renderTimestampDisplay()}

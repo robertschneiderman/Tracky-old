@@ -25,8 +25,8 @@ import { requestTasks,
 export default ({getState, dispatch}) => next => action => {
   const tasksSuccess = res => dispatch(receiveTasks(res.data));
   const taskSuccess = res => {
-    dispatch(updateTaskArr(res.data.historyId, res.data.id));
     dispatch(receiveTask(res.data));
+    dispatch(updateTaskArr(res.data.historyId, res.data.id));
   };
   const taskRemoved = res => dispatch(removeTask(res.data));
   const taskErrored = res => dispatch(taskError(res.data));

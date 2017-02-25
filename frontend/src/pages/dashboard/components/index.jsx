@@ -41,7 +41,7 @@ function mapStateToProps(state) {
     users: user,
     history: currentHistory,
     tasks,
-    timestamps: timestamp,
+    timestamp,
     message: dashboard.message
   };
 }
