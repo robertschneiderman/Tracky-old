@@ -10,10 +10,7 @@ export const padNumber = (number) => {
 
 export const msToTime = (totalMilliSeconds) => {
     let duration = moment.duration(totalMilliSeconds);
-    let hours = duration.hours();
-    let minutes = duration.minutes();
-    // debugger;
-    return `${padNumber(hours)}:${padNumber(minutes)}`;
+    return `${padNumber(duration.hours)}:${padNumber(duration.minutes)}`;
 };
 
 export const msToLongerTime = (totalMilliSeconds) => {
@@ -21,4 +18,10 @@ export const msToLongerTime = (totalMilliSeconds) => {
     let seconds = duration.seconds();
     let decaSeconds = Math.floor(duration.milliseconds() / 10);        
     return msToTime(totalMilliSeconds) + `:${padNumber(seconds)}:${padNumber(decaSeconds)}`;
+};
+
+const hoursAndMinsToNumber = time => {
+    let hours = parseInt(time.slice(0, 2));
+    let minutes = parseInt(time.slice(3));
+    return (hours * 60 + minutes);    
 };
