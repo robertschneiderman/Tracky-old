@@ -28,6 +28,7 @@ export default ({getState, dispatch}) => next => action => {
     dispatch(receiveTimestamp(res.data));
     dispatch(updateTimestampArr(res.data.taskId, res.data.id));
   };
+  const timestampUpdateSuccess = res => dispatch(receiveTimestamp(res.data));  
   const timestampRemoved = res => dispatch(removeTimestamp(res.data));
   const timestampErrored = res => dispatch(timestampError(res.data));
   switch(action.type){
@@ -41,7 +42,7 @@ export default ({getState, dispatch}) => next => action => {
       createTimestamp(action.timestamp, timestampSuccess, timestampErrored);
       return next(action);
     case UPDATE_TIMESTAMP:
-      updateTimestamp(action.timestamp, timestampSuccess);
+      updateTimestamp(action.timestamp, timestampUpdateSuccess);
       return next(action);
     case DESTROY_TIMESTAMP:
       destroyTimestamp(action.timestamp, timestampRemoved);

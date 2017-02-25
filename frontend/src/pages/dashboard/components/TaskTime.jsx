@@ -12,10 +12,17 @@ class TaskTime extends Component {
         };
     }
 
+    componentDidMount() {
+        let totalTime = this.getTotalTime(this.props.timestamps);
+        this.setState({totalTime});
+    }
+
     componentWillReceiveProps(nextProps) {
-        if (this.props.timestamps.length !== nextProps.timestamps.length) {
-            this.setState({totalTime: this.getTotalTime(nextProps.timestamps)});
-        }
+        // if (this.props.timestamps.length !== nextProps.timestamps.length) {
+        //     let totalTime = this.getTotalTime(nextProps.timestamps);
+        //     debugger;
+        //     this.setState({totalTime});
+        // }
     }
 
     getTotalTime(timestamps) {
@@ -25,7 +32,7 @@ class TaskTime extends Component {
             return accum + milliSeconds;
         }, 0);
         // debugger;
-        return this.msToTime(totalMilliSeconds);
+        return totalMilliSeconds;
     }
 
     getLastTimestamp() {
@@ -46,7 +53,9 @@ class TaskTime extends Component {
         } else {
             dispatches.updateTimestamp({id: lastTimestamp.id});
             clearInterval(this.state.interval);
-            this.setState({running: false, interval: null});
+            debugger;
+            let totalTime = this.state.totalTime + this.state.timer;
+            this.setState({running: false, interval: null, timer: 0, totalTime});
         }
     }
 
@@ -87,6 +96,7 @@ class TaskTime extends Component {
     render() {
         let { timestamp, task } = this.props;
         let { name, icon } = task;
+        let { totalTime, timer } = this.state;
         // debugger;
         return(
             <div className="c-task" onClick={this.handleClick.bind(this)}>
@@ -94,11 +104,11 @@ class TaskTime extends Component {
                 <div className="c-task-text">
                     <div className="c-task-row-1">
                         <h3 className="title-task-name">{name}</h3>
-                        <p className="text-task-timer">{this.msToTime(this.state.timer)}</p>
+                        <p className="text-task-timer">{this.msToTime(timer)}</p>
                     </div>
                     <div className="c-task-row-2">
                         {this.renderTimestampDisplay()}
-                        <p className="text-total-time"></p>
+                        <p className="text-total-time">{this.msToTime(totalTime)}</p>
                     </div>
                 </div>
             </div>
