@@ -1,0 +1,21 @@
+user: {
+  email,
+  name,
+  tasks: [
+    {
+      name,
+      description,
+      type
+      interval
+      streak        
+      goals: {
+        daily : { count, goal, assessed: {last, next} }
+        weekly : { count, goal, assessed: {last, next} }
+        monthly : { count, goal, assessed: {last, next} }
+      }
+      stubs: [
+        { start: end: }
+      ]
+    }
+  ],
+}

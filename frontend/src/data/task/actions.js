@@ -1,0 +1,60 @@
+export const REQUEST_TASKS = 'REQUEST_TASKS';
+export const REQUEST_TASK = 'REQUEST_TASK';
+export const CREATE_TASK = 'CREATE_TASK';
+export const UPDATE_TASK = 'UPDATE_TASK';
+export const DESTROY_TASK = 'DESTROY_TASK';
+export const RECEIVE_TASKS = 'RECEIVE_TASKS';
+export const RECEIVE_TASK = 'RECEIVE_TASK';
+export const REMOVE_TASK = 'REMOVE_TASKS';
+export const UPDATE_TIMESTAMP_ARR = 'UPDATE_TIMESTAMP_ARR';
+export const TASK_ERROR = 'TASK_ERROR';
+
+export const requestTasks = () => ({
+    type: REQUEST_TASKS,
+});
+
+export const requestTask = id => ({
+    type: REQUEST_TASK,
+    id
+});
+
+export const receiveTasks = tasks => ({
+    type: RECEIVE_TASKS,
+    tasks
+});
+
+export const receiveTask = task => ({
+    type: RECEIVE_TASK,
+    task
+});
+
+export const removeTask = task => ({
+    type: REMOVE_TASK,
+    task
+});
+
+export const createTask = task => ({
+    type: CREATE_TASK,
+    task
+});
+
+export const updateTask = task => ({
+    type: UPDATE_TASK,
+    task
+});
+
+export const destroyTask = task => ({
+    type: DESTROY_TASK,
+    task
+});
+
+export const updateTimestampArr = (taskId, timestampId) => ({
+    type: UPDATE_TIMESTAMP_ARR,
+    taskId,
+    timestampId
+});
+
+export const taskError = error => ({
+    type: TASK_ERROR,
+    error
+});

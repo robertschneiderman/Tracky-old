@@ -1,0 +1,48 @@
+{
+  "name": "tracking_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./index.js",
+  "scripts": {
+    "test:watch": "npm run test -- --watch",
+    "start": "nodemon ./index.js",
+    "start:dev": "nodemon ./bin/www",
+    "cron": "node ./cron.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertschneiderman/tracking_app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robertschneiderman/tracking_app/issues"
+  },
+  "homepage": "https://github.com/robertschneiderman/tracking_app#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "cron": "^1.1.1",
+    "express": "^4.14.0",
+    "jwt-simple": "^0.5.0",
+    "moment": "^2.17.1",
+    "moment-timezone": "^0.5.11",
+    "morgan": "^1.7.0",
+    "node-cron": "^1.1.2",
+    "nodemailer": "^2.6.4",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^6.1.2",
+    "pg-hstore": "^2.3.2",
+    "sendgrid": "^4.7.1",
+    "sequelize": "^3.30.2"
+  },
+  "engines": {
+    "node": "6.3.1",
+    "npm": "3.10.3"
+  }
+}

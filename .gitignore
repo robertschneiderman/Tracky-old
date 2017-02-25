@@ -1,0 +1,17 @@
+frontend/build
+frontend/node_modules
+frontend/npm-debug.log
+frontend/target
+frontend/node
+frontend/src/_tmp
+frontend/static
+frontend/tools
+frontend/dist
+
+server/node_modules
+
+
+coverage
+.nyc_output
+.tmp
+.DS_Store

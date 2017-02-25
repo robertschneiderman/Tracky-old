@@ -1,0 +1,1 @@
+export { createTimestamp, updateTimestamp } from '../../../data/timestamp/actions';
