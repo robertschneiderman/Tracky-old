@@ -24,7 +24,6 @@ export class NewTask extends Component {
     if (interval === 'weekly' || interval === 'monthly') delete goals.daily;
     if (interval === 'monthly') delete goals.weekly;
 
-    debugger;
     this.props.createTaskAndGoals({name, color, icon, type, historyId: lastHistory.id}, goals)
     hashHistory.push('dashboard');
   }

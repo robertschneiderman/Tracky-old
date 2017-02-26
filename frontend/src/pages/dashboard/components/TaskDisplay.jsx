@@ -9,15 +9,16 @@ class TaskDisplay extends Component {
     }
 
     getCompletionString(goal) {
-        let { task } = this.props;
-        debugger;
+        let { task, timer } = this.props;
+        let timeToAdd = timer.running ? (timer.time / 1000) : 0;
+        // debugger;
         return (task.type === 'frequency') ? 
                `${goal.count} / ${goal.target}` :
-               `${secondsToTimeString(goal.count)} / ${secondsToTimeString(goal.target)}`;
+               `${secondsToTimeString(goal.count + timeToAdd)} / ${secondsToTimeString(goal.target)}`;
     }
 
     renderGoals() {
-        let { task, goalDictionary } = this.props;
+        let { task, goalDictionary, timer } = this.props;
         let goals = (task && task.goals) || [];
         return goals.sort((a, b) => a > b).map(goalId => {
             let goal = goalDictionary[goalId];
@@ -27,19 +28,19 @@ class TaskDisplay extends Component {
                     <p className="text-task-display-goal">
                         {this.getCompletionString(goal)}
                     </p>
-                    <ProgressBar goal={goal} />
+                    <ProgressBar goal={goal} timer={timer} />
                 </div>
             );
         });
     }
     
     render() {
-        let { time, task } = this.props;
+        let { timer, task } = this.props;
         task = task || {name: '', icon: ''};
         let timeVisibility = task.type === 'frequency' ? {visibility: 'hidden'} : {};
         return(
             <div className="c-task-display">
-                <div className="c-task-display-time" style={timeVisibility}>{msToLongerTime(time)}</div>
+                <div className="c-task-display-time" style={timeVisibility}>{msToLongerTime(timer && timer.time)}</div>
                 <div className="c-task-display-time-main">
                     {(task.icon) ? <img src={`./static/images/task_icons/${task.icon}.svg`} alt="" className="img-task-display-icon"/> : ''}
                     <div className="c-task-display-text">

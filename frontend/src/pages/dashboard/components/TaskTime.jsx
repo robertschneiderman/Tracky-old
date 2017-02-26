@@ -39,6 +39,7 @@ class TaskTime extends Component {
         this.setState({running: true});
         this.interval = setInterval(() => {
             this.setState({timer: this.state.timer + 10});
+            dispatches.startTimer({id: task.id});
             dispatches.updateTimer({id: task.id, time: this.state.timer + 10});
         }, 10);
         dispatches.createTimestamp({taskId: task.id});        
@@ -48,6 +49,7 @@ class TaskTime extends Component {
         let { dispatches, task, goal } = this.props;
         let lastTimestamp = this.getLastTimestamp();
 
+        dispatches.stopTimer({id: task.id});
         dispatches.updateTimestamp({id: lastTimestamp.id});
         dispatches.incrementGoals(task.id, Math.floor(this.state.timer/ 1000));
         clearInterval(this.interval);
