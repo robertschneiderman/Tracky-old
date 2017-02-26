@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
 import Day from './Day';
+import TimeGraph from './TimeGraph';
 
 export class Calendar extends Component {
 
@@ -36,20 +37,13 @@ export class Calendar extends Component {
     let historys = week.map(histId => historyDict[histId]);
 
     return (week.length < 7) ? this.renderIncompleteWeek(historys) : this.renderCompleteWeek(historys);
-
-
-    // for (let i = 1; i <= 7; i++) {
-    //   let history = historys[historys.length-i] || {tasks: [], timestamps: []};
-    //   days.push(<Day history={history} taskDict={taskDict} tsDict={tsDict} key={`tsd-${i}`}/>)
-    // }
-    // return days;
   }
   
   render() {
     let { week } = this.props;
-    debugger;
     return (
       <div className="c-calendar">
+        <TimeGraph />
         <div className="c-week">
           {week ? this.renderWeek() : ''}
         </div>
