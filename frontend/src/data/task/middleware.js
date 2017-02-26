@@ -34,10 +34,11 @@ export default ({getState, dispatch}) => next => action => {
     let { tasks, goals } = normalized.entities;
     let task = Object.values(tasks)[0];
     goals = objToArr(goals);
+    // debugger;
+    dispatch(mergeGoals(goals));
     dispatch(receiveTask(task));
     dispatch(updateTaskArr(task.historyId, task.id));
-    dispatch(mergeGoals(goals));
-    hashHistory.push('dashboard');
+    // hashHistory.push('dashboard');
   };
   const taskRemoved = res => dispatch(removeTask(res.data));
   const taskErrored = res => dispatch(taskError(res.data));

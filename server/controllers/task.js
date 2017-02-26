@@ -1,5 +1,6 @@
 const Task = require('../models').Task;
 const Goal = require('../models').Goal;
+const Timestamp = require('../models').Timestamp;
 var _ = require('lodash');
 const dh = require('../date_helpers');
 var moment = require('moment');
@@ -39,10 +40,14 @@ const calculateMultipliers = goals => {
 exports.create = function(req, res, next) {
   let {task, goals} = req.body;
   task.goals = goals;
+  task.timestamps = [];
 
-  Task.create(task, {include: [ {model: Goal, as: 'goals'} ]})
+  Task.create(task, {include: [ {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'} ]})
   .then(task => {
-    res.status(201).json(task);
+    // task.timestamps = [];
+    // task.setTimestamps([]).then(task => {
+      res.status(201).json(task);
+    // });
   }).catch((e) => {
     res.status(401).send(e);
   });

@@ -28,6 +28,7 @@ const taskReducer = (state = initialState, action) => {
       newState[action.taskId].timestamps.push(action.timestampId);
       return newState;    
     case TASK_ERROR:
+      debugger;
       alert(action.error);
     default:
       return state;

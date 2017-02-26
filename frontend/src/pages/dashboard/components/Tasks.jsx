@@ -9,6 +9,7 @@ class Tasks extends Component {
 
     renderTasks() {
         let { tasks, dispatches, timestamp, goalDictionary } = this.props;
+        debugger;
         return tasks.map((task, i) => {
             let timestamps = task.timestamps.map(id => timestamp[id]);
             let goals = task.goals.sort((a, b) => a > b).map(goalId => goalDictionary[goalId]);  

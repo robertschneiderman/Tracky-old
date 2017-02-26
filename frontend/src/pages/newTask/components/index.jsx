@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import {hashHistory} from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
@@ -22,7 +23,7 @@ export class NewTask extends Component {
     this.props.createTaskAndGoals({name, color, icon, type, historyId: lastHistory.id}, goals)
     // this.props.createTask({name, color, icon, type});
     // this.props.createGoals({goals});
-
+    hashHistory.push('dashboard');
   }
 
   render() {
