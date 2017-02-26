@@ -53,7 +53,6 @@ class TaskFrequency extends Component {
                         </p>
                     </div>
                 </div>
-                <div className="shape-loader loader"></div>                
             </div>
         );
     }

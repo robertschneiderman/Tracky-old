@@ -21,6 +21,7 @@ class GoalArea extends React.Component {
     syncIntervals(intervalChanged, value) {
         let daily, weekly, monthly;
         let type = this.props.state.type;
+        let interval = this.props.state.interval;
 
         if (intervalChanged === 'daily') {
             daily = value;
@@ -35,6 +36,7 @@ class GoalArea extends React.Component {
             weekly = Math.floor(monthly * .226);
             daily = Math.floor(weekly * 7 * .8);
         }
+            
         this.props.dispatches.changeNewTaskField(type, {daily, weekly, monthly});
     }
 

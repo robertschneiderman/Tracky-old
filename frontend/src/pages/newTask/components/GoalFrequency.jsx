@@ -18,12 +18,17 @@ class GoalFrequency extends React.Component {
 
   handleBlur(e, field) {
     let { name } = this.props;
+// debugger;
 
     if (e.target.value.length > 0) {
-      e.target.value = '';
       this.props.changeGoal(name, e.target.value);
+      e.target.value = '';
     }    
   }
+
+  handleFocus(e) {
+    if (!this.props.enabled) e.target.blur();
+  }  
 
   render() {
     let { name, value, } = this.props;

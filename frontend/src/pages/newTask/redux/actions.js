@@ -14,11 +14,13 @@ export const changeNewTaskField = (key, payload) => ({
 export const createTaskAndGoals = (task, goals) => {
   return (dispatch) => {
     let resultGoals = [];
+
     for (let key in goals) {
       let target = goals[key];
       if (task.type === 'time') target *= 60;
       resultGoals.push({interval: key, target});
     }
+
     dispatch({type: "CREATE_TASK", task, goals: resultGoals});
     // let {name, color, icon, type, historyId} = payload;
     // let task = {name, color, icon, type, historyId};

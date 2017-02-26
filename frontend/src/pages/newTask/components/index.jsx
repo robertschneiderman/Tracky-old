@@ -16,13 +16,16 @@ export class NewTask extends Component {
   }
 
   handleCreate() {
-    let { name, color, type, icon, time, frequency, history } = this.props;
+    let { name, color, type, icon, time, frequency, interval, history } = this.props;
     let goals = type === 'time' ? time : frequency;
     let lastKey = Object.keys(history)[0];
     let lastHistory = history[lastKey]
+
+    if (interval === 'weekly' || interval === 'monthly') delete goals.daily;
+    if (interval === 'monthly') delete goals.weekly;
+
+    debugger;
     this.props.createTaskAndGoals({name, color, icon, type, historyId: lastHistory.id}, goals)
-    // this.props.createTask({name, color, icon, type});
-    // this.props.createGoals({goals});
     hashHistory.push('dashboard');
   }
 
