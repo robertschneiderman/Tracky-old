@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
 import { startCase } from 'lodash';
-import { dateToTime, padNumber, msToTime, msToLongerTime } from '../../../common/helpers/timeHelpers';
+import { dateToTime, padNumber, msToTime, msToLongerTime, secondsToTimeString } from '../../../common/helpers/timeHelpers';
 import ProgressBar from './ProgressBar';
 
 class TaskDisplay extends Component {
     constructor(props) {
         super(props);
+    }
+
+    getCompletionString(goal) {
+        let { task } = this.props;
+        debugger;
+        return (task.interval === 'time') ? 
+               `${goal.count} / ${goal.target}` :
+               `${secondsToTimeString(goal.count)} / ${secondsToTimeString(goal.target)}`;
     }
 
     renderGoals() {
@@ -17,7 +25,7 @@ class TaskDisplay extends Component {
                 <div className="c-task-display-goal" key={`sdk-${goal.id}`}>
                     <h3 className="title-task-display-goal">{startCase(goal.interval)}</h3>
                     <p className="text-task-display-goal">
-                        {goal.count} / {goal.target}
+                        {this.getCompletionString(goal)}
                     </p>
                     <ProgressBar goal={goal} />
                 </div>

@@ -49,7 +49,8 @@ class TaskTime extends Component {
         let lastTimestamp = this.getLastTimestamp();
 
         dispatches.updateTimestamp({id: lastTimestamp.id});
-        dispatches.incrementGoals(task.id, this.state.timer);
+        debugger;
+        dispatches.incrementGoals(task.id, Math.floor(this.state.timer/ 1000));
         clearInterval(this.interval);
         let totalTime = this.state.totalTime + this.state.timer;
         this.setState({running: false, interval: null, timer: 0, totalTime});

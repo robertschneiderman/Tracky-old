@@ -59,3 +59,10 @@ export const firstDayOfMonth = () => {
 export const daysInMonth = () => {
   return moment().endOf('month').date();
 };
+
+export const secondsToTimeString = seconds => {
+    seconds = parseInt(seconds);
+    let hours = Math.floor(moment.duration(seconds, 'seconds').get('hours'));
+    let minutes = Math.floor(moment.duration(seconds, 'seconds').get('minutes'));
+    return (hours > 0) ? `${hours}h ${minutes}m` : `${minutes}m`;
+};

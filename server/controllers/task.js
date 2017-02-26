@@ -44,10 +44,7 @@ exports.create = function(req, res, next) {
 
   Task.create(task, {include: [ {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'} ]})
   .then(task => {
-    // task.timestamps = [];
-    // task.setTimestamps([]).then(task => {
       res.status(201).json(task);
-    // });
   }).catch((e) => {
     res.status(401).send(e);
   });

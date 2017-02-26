@@ -15,7 +15,6 @@ class GoalTime extends React.Component {
   }
 
   validNumberOfTime(time) {
-    debugger;
     return Math.min(hoursAndMinsToNumber(time), 1440);
   }
 
