@@ -48,7 +48,7 @@ exports.create = function(req, res, next) {
   let goals = calculateMultipliers(req.body);
 
   Goal.bulkCreate(goals).then(() => {
-    Goal.findAll().then(goals => {
+    Goal.findAll({where: {taskId: req.body[0].taskId}}).then(goals => {
       res.status(201).json(goals);
     });
   }).catch((e) => {

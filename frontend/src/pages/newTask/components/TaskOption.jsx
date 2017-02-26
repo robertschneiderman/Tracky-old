@@ -10,7 +10,7 @@ class TaskOptions extends Component {
     handleChange(e) {
         let { dispatches, name } = this.props;
         name = name.toLowerCase();
-        dispatches.changeNewTaskField({[name]: e.target.value});
+        dispatches.changeNewTaskField(name, e.target.value);
     }
     
     renderOptions() {

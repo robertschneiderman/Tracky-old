@@ -21,7 +21,6 @@ const historyReducer = (state = initialState, action) => {
       delete newState[action.history.id];
       return newState;
     case UPDATE_TASK_ARR:
-      debugger;
       newState[action.historyId].tasks.push(action.taskId);
       return newState;
     case HISTORY_ERROR:

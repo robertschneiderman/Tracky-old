@@ -6,7 +6,7 @@ class ColorOption extends Component {
     }
 
     selectColor(color) {
-        this.props.dispatches.changeNewTaskField({color});
+        this.props.dispatches.changeNewTaskField('color', color);
     }    
 
     renderColorOptions() {

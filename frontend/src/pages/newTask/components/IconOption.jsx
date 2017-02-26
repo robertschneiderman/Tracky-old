@@ -11,7 +11,7 @@ class IconOption extends Component {
 
     handleSelection(icon) {
         let { dispatches } = this.props;
-        dispatches.changeNewTaskField({icon});
+        dispatches.changeNewTaskField('icon', icon);
         this.setState({popup: false});
     }
 

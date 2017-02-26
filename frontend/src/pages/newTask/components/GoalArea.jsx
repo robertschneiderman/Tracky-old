@@ -35,7 +35,7 @@ class GoalArea extends React.Component {
             weekly = Math.floor(monthly * .226);
             daily = Math.floor(weekly * 7 * .8);
         }
-        this.props.dispatches.incrementGoal(type, {daily, weekly, monthly});
+        this.props.dispatches.changeNewTaskField(type, {daily, weekly, monthly});
     }
 
     changeGoal(name, increment) {

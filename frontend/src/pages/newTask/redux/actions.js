@@ -4,8 +4,9 @@ import {hashHistory} from 'react-router';
 export const CHANGE_NEW_TASK_FIELD = 'CHANGE_NEW_TASK_FIELD';
 export const CREATE_TASK_AND_GOALS = 'CREATE_TASK_AND_GOALS';
 
-export const changeNewTaskField = payload => ({
+export const changeNewTaskField = (key, payload) => ({
   type: CHANGE_NEW_TASK_FIELD,
+  key,
   payload
 });
 
@@ -14,8 +15,9 @@ export const createTaskAndGoals = (task, goals) => {
     // let {name, color, icon, type, historyId} = payload;
     // let task = {name, color, icon, type, historyId};
     axioss.post('tasks', task).then((res) => {
-      dispatch({type: "UPDATE_TASK_ARR", historyId: res.data.historyId, taskId: res.data.id});
+      // debugger;
       dispatch({type: "RECEIVE_TASK", task: res.data});
+      dispatch({type: "UPDATE_TASK_ARR", historyId: res.data.historyId, taskId: res.data.id});
       let resultGoals = [];
       for(let key in goals) {
         resultGoals.push({interval: key, target: goals[key], taskId: res.data.id});
@@ -25,8 +27,7 @@ export const createTaskAndGoals = (task, goals) => {
         dispatch({type: "RECEIVE_GOALS", goals: res.data});
         hashHistory.push('dashboard');
       }).catch(e => {
-        // debugger;
-        console.log(e.response.data.message);
+        console.log(e);
       });
     }).catch(e => console.log(e));
   };

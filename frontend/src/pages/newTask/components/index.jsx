@@ -10,7 +10,8 @@ export class NewTask extends Component {
 
   taskAreaComplete() {
     let { name, color, type, interval } = this.props;
-    return name && color && type && interval;
+    // return name && color && type && interval;
+    return true;
   }
 
   handleCreate() {

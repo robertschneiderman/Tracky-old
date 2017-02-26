@@ -15,9 +15,9 @@ const newtaskReducer = (state = initialState, action) => {
 
   switch(action.type){
     case CHANGE_NEW_TASK_FIELD:
-      let key = Object.keys(action.payload)[0];
-      let value = Object.values(action.payload)[0];
-      newState[key] = value;
+      // let key = Object.keys(action.payload)[0];
+      // let value = Object.values(action.payload)[0];
+      newState[action.key] = action.payload;
       return newState;
     case INCREMENT_GOAL:
       newState[action.key] = action.payload;

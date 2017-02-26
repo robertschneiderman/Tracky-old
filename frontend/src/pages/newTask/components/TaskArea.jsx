@@ -13,7 +13,7 @@ class TaskArea extends React.Component {
 
     updateName(evt) {
         let { dispatches } = this.props;
-        dispatches.changeNewTaskField({name: evt.target.value});
+        dispatches.changeNewTaskField('name', evt.target.value);
     }
 
     render() {

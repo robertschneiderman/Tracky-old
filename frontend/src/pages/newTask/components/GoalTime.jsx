@@ -1,5 +1,5 @@
 import React from 'react';
-import { hoursAndMinsToNumber, dateToTime, padNumber, msToTime, msToLongerTime } from '../../../common/helpers/timeHelpers';
+import { hoursAndMinsToNumber, dateToTime, padNumber, minutesToTime, msToLongerTime } from '../../../common/helpers/timeHelpers';
 
 class GoalTime extends React.Component {
 
@@ -15,6 +15,7 @@ class GoalTime extends React.Component {
   }
 
   validNumberOfTime(time) {
+    debugger;
     return Math.min(hoursAndMinsToNumber(time), 1440);
   }
 
@@ -44,7 +45,7 @@ class GoalTime extends React.Component {
   }
 
   render () {
-    let formattedValue =  msToTime(this.props.value);
+    let formattedValue =  minutesToTime(this.props.value);
     let [hours, minutes] = formattedValue.split(":");
     
     return (

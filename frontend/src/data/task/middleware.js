@@ -1,3 +1,5 @@
+import { normalize, Schema } from 'normalizr';
+import {userSchema, historySchema, taskSchema, goalSchema, timestampSchema} from '../user/schemas';
 import { updateTaskArr } from '../history/actions';
 
 // Task API Util
@@ -25,8 +27,11 @@ import { requestTasks,
 export default ({getState, dispatch}) => next => action => {
   const tasksSuccess = res => dispatch(receiveTasks(res.data));
   const taskSuccess = res => {
-    dispatch(receiveTask(res.data));
-    dispatch(updateTaskArr(res.data.historyId, res.data.id));
+    const normalized = normalize(res.data, taskSchema);
+    let { task } = normalized.entities;
+    debugger;
+    dispatch(receiveTask(task));
+    dispatch(updateTaskArr(task.historyId, task.id));
   };
   const taskRemoved = res => dispatch(removeTask(res.data));
   const taskErrored = res => dispatch(taskError(res.data));

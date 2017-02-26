@@ -13,6 +13,10 @@ export const msToTime = (totalMilliSeconds) => {
     return `${padNumber(duration.hours())}:${padNumber(duration.minutes())}`;
 };
 
+export const minutesToTime = (totalMinutes) => {
+    return msToTime(totalMinutes * 60 * 1000);
+};
+
 export const msToLongerTime = (totalMilliSeconds) => {
     if (!totalMilliSeconds) return '';
     let duration = moment.duration(totalMilliSeconds);
@@ -23,7 +27,7 @@ export const msToLongerTime = (totalMilliSeconds) => {
 export const hoursAndMinsToNumber = time => {
     let hours = parseInt(time.slice(0, 2));
     let minutes = parseInt(time.slice(3));
-    return (hours * 3660 + minutes);    
+    return (hours * 60 + minutes);    
 };
 
 export const fullTimeToNumber = time => {
