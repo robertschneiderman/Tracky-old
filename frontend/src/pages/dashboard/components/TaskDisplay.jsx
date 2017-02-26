@@ -36,9 +36,10 @@ class TaskDisplay extends Component {
     render() {
         let { time, task } = this.props;
         task = task || {name: '', icon: ''};
+        let timeVisibility = task.type === 'frequency' ? {visibility: 'hidden'} : {};
         return(
             <div className="c-task-display">
-                <div className="c-task-display-time">{msToLongerTime(time)}</div>
+                <div className="c-task-display-time" style={timeVisibility}>{msToLongerTime(time)}</div>
                 <div className="c-task-display-time-main">
                     {(task.icon) ? <img src={`./static/images/task_icons/${task.icon}.svg`} alt="" className="img-task-display-icon"/> : ''}
                     <div className="c-task-display-text">

@@ -18,7 +18,7 @@ export const minutesToTime = (totalMinutes) => {
 };
 
 export const msToLongerTime = (totalMilliSeconds) => {
-    if (!totalMilliSeconds) return '';
+    // if (!totalMilliSeconds) return '';
     let duration = moment.duration(totalMilliSeconds);
     let decaSeconds = Math.floor(duration.milliseconds() / 10);        
     return msToTime(totalMilliSeconds) + `:${padNumber(duration.seconds())}:${padNumber(decaSeconds)}`;
