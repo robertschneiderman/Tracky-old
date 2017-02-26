@@ -1,3 +1,4 @@
+const Task = require('../models').Task;
 const Goal = require('../models').Goal;
 const dh = require('../date_helpers');
 var _ = require('lodash');
@@ -60,6 +61,26 @@ exports.update = function(req, res, next) {
   let timestamp = req.body;
   let key = Object.keys(req.body)[0];
   let value = req.body[key];
+
+  Goal.update({[key]: value}, {where: {id: req.params.id}, plain: true, returning: true }).then(goal => {
+    res.status(201).json(goal[1]);
+  }).catch((e) => {
+    res.status(401).send(e);
+  });
+};
+
+exports.increment = function(req, res, next) {
+  let timestamp = req.body;
+  let key = Object.keys(req.body)[0];
+  let value = req.body[key];
+
+  Task.findById(req.params.id).then(task => {
+    task.getGoals().then(goals => {
+      goals.forEach(goal => {
+        goal.increment('count', {by: req.body.amount});  
+      });
+    });
+  });
 
   Goal.update({[key]: value}, {where: {id: req.params.id}, plain: true, returning: true }).then(goal => {
     res.status(201).json(goal[1]);

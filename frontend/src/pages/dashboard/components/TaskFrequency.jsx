@@ -11,20 +11,10 @@ class TaskFrequency extends Component {
         };
     }
 
-    // componentWillMount() {
-    //     let { task, goalDictionary } = this.props;
-    //     let shortestDurationGoal = task.goals.sort((a, b) => a > b).map(goalId => goalDictionary[goalId])[0];
-    //     this.displayGoal = shortestDurationGoal;
-    // }
-
-    // componentWillReceiveProps(nextProps) {
-    //     if (this.props.goal.count !==)
-    // }
-
     handleClick() {
         let { dispatches, task, goal } = this.props;
         dispatches.createTimestamp({taskId: task.id});        
-        dispatches.updateGoal(goal.id, {count: goal.count + 1});
+        dispatches.incrementGoals(task.id, 1);
     }
 
     handleMouseEnter() {

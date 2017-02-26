@@ -6,6 +6,7 @@ export const DESTROY_GOAL = 'DESTROY_GOAL';
 export const RECEIVE_GOALS = 'RECEIVE_GOALS';
 export const RECEIVE_GOAL = 'RECEIVE_GOAL';
 export const MERGE_GOALS = 'MERGE_GOALS';
+export const INCREMENT_GOALS = 'INCREMENT_GOALS';
 export const REMOVE_GOAL = 'REMOVE_GOALS';
 export const GOAL_ERROR = 'GOAL_ERROR';
 
@@ -47,6 +48,12 @@ export const updateGoal = (id, goal) => ({
     type: UPDATE_GOAL,
     id,
     goal
+});
+
+export const incrementGoals = (taskId, amount) => ({
+    type: INCREMENT_GOALS,
+    taskId,
+    amount
 });
 
 export const destroyGoal = goal => ({

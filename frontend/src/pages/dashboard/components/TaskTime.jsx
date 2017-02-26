@@ -35,7 +35,7 @@ class TaskTime extends Component {
     }
 
     handleClick() {
-        let { dispatches, task } = this.props;
+        let { dispatches, task, goal } = this.props;
         let lastTimestamp = this.getLastTimestamp();
 
         if (!this.state.running) {
@@ -47,6 +47,7 @@ class TaskTime extends Component {
             dispatches.createTimestamp({taskId: task.id});
         } else {
             dispatches.updateTimestamp({id: lastTimestamp.id});
+            dispatches.updateGoal(goal.id, {count: this.state.timer});            
             clearInterval(this.interval);
             let totalTime = this.state.totalTime + this.state.timer;
             this.setState({running: false, interval: null, timer: 0, totalTime});

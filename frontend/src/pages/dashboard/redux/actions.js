@@ -1,5 +1,5 @@
 export { createTimestamp, updateTimestamp } from '../../../data/timestamp/actions';
-export { updateGoal } from '../../../data/goal/actions';
+export { incrementGoals } from '../../../data/goal/actions';
 
 export const UPDATE_TIMER = 'UPDATE_TIMER';
 export const SELECT_TASK = 'SELECT_TASK';

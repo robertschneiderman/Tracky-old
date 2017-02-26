@@ -30,6 +30,14 @@ export const updateGoal = (id, goal, success) => {
   });
 };
 
+export const incrementGoals = (id, amount, success) => {
+  axioss.patch(`/task/${id}/goals`, {amount})
+  .then(success)
+  .catch(function (error) {
+    console.log(error);
+  });
+};
+
 export const destroyGoal = (goal, success) => {
   axioss.delete(`goals/${goal.id}`)
   .then(success)

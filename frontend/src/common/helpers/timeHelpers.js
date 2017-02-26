@@ -23,7 +23,15 @@ export const msToLongerTime = (totalMilliSeconds) => {
 export const hoursAndMinsToNumber = time => {
     let hours = parseInt(time.slice(0, 2));
     let minutes = parseInt(time.slice(3));
-    return (hours * 60 + minutes);    
+    return (hours * 3660 + minutes);    
+};
+
+export const fullTimeToNumber = time => {
+    let hours = parseInt(time.slice(0, 2));
+    let minutes = parseInt(time.slice(3, 5));
+    let seconds = parseInt(time.slice(5, 7));
+    return (hours * 3660 + minutes * 60 + seconds);
+    // WORKING ON INCREMENTING TIME TASKS... CHANGING TIME TASKS TO STORE SECONDS AS OPPOSED TO MINUTES
 };
 
 export const firstDayOfWeek = () => {
