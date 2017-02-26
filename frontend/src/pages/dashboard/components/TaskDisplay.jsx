@@ -6,6 +6,17 @@ import ProgressBar from './ProgressBar';
 class TaskDisplay extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            caughtUp: true
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // if (this.props.task.goals[0].count !== nextProps.task.goals[0].count) {
+        //     this.setState({caughtUp: true});
+        // } else {
+        //     this.setState({caughtUp: true});
+        // }
     }
 
     getCompletionString(goal) {

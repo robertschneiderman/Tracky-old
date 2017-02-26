@@ -6,6 +6,7 @@ import Signin from '../pages/auth/components/Signin';
 import Signout from '../pages/auth/components/Signout';
 import newTask from '../pages/newTask/components';
 import dashboard from '../pages/dashboard/components';
+import calendar from '../pages/calendar/components';
 
 const routes = {
   path: '/',
@@ -18,6 +19,7 @@ const routes = {
     { path: 'signout', name: 'Signout', component: Signout},
     { path: 'new-task', name: 'NewTask', component: newTask},
     { path: 'dashboard', name: 'Dashboard', component: dashboard},
+    { path: 'calendar', name: 'Calendar', component: calendar},
     { path: '*', name: 'Page not found', component: PageNotFound },
   ],
 };

@@ -1,5 +1,6 @@
 import { normalize, Schema } from 'normalizr';
 import {userSchema, historySchema, taskSchema, goalSchema, timestampSchema} from './schemas';
+import {objToArr} from '../../common/helpers/selectors';
 import { receiveHistorys } from '../history/actions';
 import { receiveTasks } from '../task/actions';
 import { receiveGoals } from '../goal/actions';
@@ -31,11 +32,12 @@ export default ({getState, dispatch}) => next => action => {
   const userSuccess = res => {
     const normalized = normalize(res.data, userSchema);
     let {users, historys, tasks, goals, timestamps} = normalized.entities;
+    let user = objToArr(users)[0];
     dispatch(receiveTimestamps(timestamps));
     dispatch(receiveGoals(goals));
     dispatch(receiveTasks(tasks));
     dispatch(receiveHistorys(historys));
-    dispatch(receiveUser(users));
+    dispatch(receiveUser(user));
   };
   const userRemoved = res => dispatch(removeUser(res.data));
   const userErrored = res => dispatch(userError(res.data.responseJSON));

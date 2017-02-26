@@ -9,6 +9,7 @@ import dashboardReducer from '../pages/dashboard/redux/reducer';
 import userReducer from '../data/user/reducer';
 import goalReducer from '../data/goal/reducer';
 import timestampReducer from '../data/timestamp/reducer';
+import calendarReducer from '../pages/calendar/redux/reducer';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   goal: goalReducer,
   timestamp: timestampReducer,
+  calendar: calendarReducer,
 });
 
 export default rootReducer;
