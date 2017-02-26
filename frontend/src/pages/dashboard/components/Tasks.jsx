@@ -11,7 +11,9 @@ class Tasks extends Component {
         let { tasks, dispatches, timestamp, goalDictionary } = this.props;
         return tasks.map((task, i) => {
             let timestamps = task.timestamps.map(id => timestamp[id]);
-            let shortestDurationGoal = task.goals.sort((a, b) => a > b).map(goalId => goalDictionary[goalId])[0];        
+            let goals = task.goals.sort((a, b) => a > b).map(goalId => goalDictionary[goalId]);  
+            let shortestDurationGoal = goals[0];
+                  
             if (task.type === 'time') {
                 return <TaskTime task={task} goal={shortestDurationGoal} dispatches={dispatches} timestamps={timestamps} {...this.props} key={`sd2-${i}`} />; 
             } else {

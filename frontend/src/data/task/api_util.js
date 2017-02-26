@@ -16,9 +16,8 @@ export const fetchTask = (id, success) => {
   });
 };
 
-export const createTask = (task, success, error) => {
-  // debugger;
-  axioss.post(`tasks`, task)
+export const createTask = (task, goals, success, error) => {
+  axioss.post(`tasks`, {task, goals})
   .then(success)
   .catch(error);
 };

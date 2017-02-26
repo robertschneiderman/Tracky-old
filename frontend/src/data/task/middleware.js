@@ -1,6 +1,9 @@
 import { normalize, Schema } from 'normalizr';
 import {userSchema, historySchema, taskSchema, goalSchema, timestampSchema} from '../user/schemas';
 import { updateTaskArr } from '../history/actions';
+import { mergeGoals } from '../goal/actions';
+import { objToArr } from '../../common/helpers/selectors';
+import {hashHistory} from 'react-router';
 
 // Task API Util
 import { fetchTasks,
@@ -28,10 +31,13 @@ export default ({getState, dispatch}) => next => action => {
   const tasksSuccess = res => dispatch(receiveTasks(res.data));
   const taskSuccess = res => {
     const normalized = normalize(res.data, taskSchema);
-    let { task } = normalized.entities;
-    debugger;
+    let { tasks, goals } = normalized.entities;
+    let task = Object.values(tasks)[0];
+    goals = objToArr(goals);
     dispatch(receiveTask(task));
     dispatch(updateTaskArr(task.historyId, task.id));
+    dispatch(mergeGoals(goals));
+    hashHistory.push('dashboard');
   };
   const taskRemoved = res => dispatch(removeTask(res.data));
   const taskErrored = res => dispatch(taskError(res.data));
@@ -43,7 +49,7 @@ export default ({getState, dispatch}) => next => action => {
       fetchTask(action.id, taskSuccess);
       return next(action);
     case CREATE_TASK:
-      createTask(action.task, taskSuccess, taskErrored);
+      createTask(action.task, action.goals, taskSuccess, taskErrored);
       return next(action);
     case UPDATE_TASK:
       updateTask(action.task, taskSuccess);

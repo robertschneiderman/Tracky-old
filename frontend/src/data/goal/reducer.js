@@ -18,7 +18,6 @@ const goalReducer = (state = initialState, action) => {
         newState[action.goal.id] = action.goal;
         return newState;
     case MERGE_GOALS:
-      debugger;
       action.goals.forEach(goal => {
         newState[goal.id] = goal;
       });

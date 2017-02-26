@@ -34,9 +34,10 @@ export const removeTask = task => ({
     task
 });
 
-export const createTask = task => ({
+export const createTask = (task, goals) => ({
     type: CREATE_TASK,
-    task
+    task,
+    goals
 });
 
 export const updateTask = task => ({

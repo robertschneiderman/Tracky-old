@@ -1,69 +1,48 @@
 const Task = require('../models').Task;
+const Goal = require('../models').Goal;
 var _ = require('lodash');
 const dh = require('../date_helpers');
+var moment = require('moment');
 
-let today = new Date();
-let msInDay = (24 * 60 * 60 * 1000);
-let tomorrow = new Date(today.getTime() + msInDay);
-tomorrow.setHours(0,0,0,0);
-let nextWeek = new Date(today.getTime() + 7 * msInDay);
-nextWeek.setHours(0,0,0,0);
-let nextMonth;
-if (today.getMonth() === 11) {
-  nextMonth = new Date(today.getFullYear() + 1, 0, 1);
-} else {
-  nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-}
 
-const days = {
-  '0': 1,
-  '1': 7,
-  '2': 6,
-  '3': 5,
-  '4': 4,
-  '5': 3,
-  '6': 2,
+const firstDayOfWeek = () => {
+  let result = moment().day(1).startOf('day');
+  if (moment().day() === 0) result.subtract('days', 7);
+  return result;
 };
 
-const fillAssessments = goals => {
-  goals.forEach(goal => {
-    goal.lastAssessed = null;
-    if (goal.interval === 'daily') goal.nextAssessed = tomorrow;
-    if (goal.interval === 'weekly') goal.nextAssessed = nextWeek;
-    if (goal.interval === 'monthly') goal.nextAssessed = nextMonth;
-  });
+const hoursPassedSince = date => {
+  return Math.floor(moment.duration(moment().unix() - date.unix(), 'seconds').asHours());
+};
+
+const lastDayOfMonth = () => {
+  return moment().endOf('month').date();
 };
 
 const calculateMultipliers = goals => {
   goals.forEach(goal => {
-      let dailyTimeExhaustedPecent = (today.getHours() + (today.getMinutes() / 60)) / 24;
-      let dailyTimeLeftPercent = 1 - dailyTimeExhaustedPecent;
-      if (goal.interval === 'daily') {
-        goal.originalMultiplier = dailyTimeLeftPercent;
-      } else if (goal.interval === 'weekly') {
-        let daysLeft = days[today.getDay()];
-        goal.originalMultiplier = (daysLeft - 1 + dailyTimeLeftPercent) / 7;
-      } else {
-        let daysInMonth = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
-        goal.originalMultiplier = (daysInMonth - today.getDate() - dailyTimeExhaustedPecent) / daysInMonth;
-      }
-  });
-};
-
-const applyMultipliers = task => {
-  for (let key in task.goals) {
-    let goal = task.goals[key];
-    if (!goal.assessed.last) {
-      goal.goal = Math.ceiling(goal.goal * goal.originalMultiplier);
+    let fDoW = firstDayOfWeek();
+    let fDoM = moment().date(1).startOf('day');
+    // return Math.floor(moment.duration(moment().unix() - timestamp, 'seconds').asHours());
+    if (goal.interval === 'weekly') {
+      let hoursPassedInWeek = hoursPassedSince(fDoW);
+      goal.multiplier = hoursPassedInWeek / 168;
+    } else if (goal.interval === 'monthly') {
+      let hoursPassedInMonth = hoursPassedSince(fDoM);
+      goal.multiplier = hoursPassedInMonth / (lastDayOfMonth() * 24);
     }
-  }
-  return task;
+
+  });
+  return goals;
 };
 
 exports.create = function(req, res, next) {
+  let {task, goals} = req.body;
+  task.goals = goals;
 
-  Task.create(req.body).then(task => {
-    res.status(201).json(task.dataValues);
+  Task.create(task, {include: [ {model: Goal, as: 'goals'} ]})
+  .then(task => {
+    res.status(201).json(task);
   }).catch((e) => {
     res.status(401).send(e);
   });

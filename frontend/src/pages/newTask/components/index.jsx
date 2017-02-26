@@ -19,7 +19,6 @@ export class NewTask extends Component {
     let goals = type === 'time' ? time : frequency;
     let lastKey = Object.keys(history)[0];
     let lastHistory = history[lastKey]
-
     this.props.createTaskAndGoals({name, color, icon, type, historyId: lastHistory.id}, goals)
     // this.props.createTask({name, color, icon, type});
     // this.props.createGoals({goals});
