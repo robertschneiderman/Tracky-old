@@ -25,7 +25,7 @@ class TaskTime extends Component {
         let milliSeconds = moment.duration(moment(tss.end).unix() - moment(tss.start).unix(), 'seconds').seconds() * 1000;
             return accum + milliSeconds;
         }, 0);
-        // debugger;
+        
         return totalMilliSeconds;
     }
 
@@ -49,7 +49,6 @@ class TaskTime extends Component {
         let lastTimestamp = this.getLastTimestamp();
 
         dispatches.updateTimestamp({id: lastTimestamp.id});
-        debugger;
         dispatches.incrementGoals(task.id, Math.floor(this.state.timer/ 1000));
         clearInterval(this.interval);
         let totalTime = this.state.totalTime + this.state.timer;
@@ -80,8 +79,8 @@ class TaskTime extends Component {
     render() {
         let { timestamp, task } = this.props;
         let { name, icon } = task;
-        let { totalTime, timer } = this.state;
-        // debugger;
+        let { totalTime, timer, running } = this.state;
+        
         return(
             <div className="c-task" onClick={this.handleClick.bind(this)} onMouseEnter={this.handleMouseEnter.bind(this)}>
                 <img src={`./static/images/task_icons/${icon}.svg`} className="img-task-icon" />
@@ -95,6 +94,7 @@ class TaskTime extends Component {
                         <p className="text-total-time">{msToTime(totalTime)}</p>
                     </div>
                 </div>
+                {(running) ? <div className="shape-loader loader"></div> : ''}
             </div>
         );
     }

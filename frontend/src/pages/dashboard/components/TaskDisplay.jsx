@@ -10,7 +10,6 @@ class TaskDisplay extends Component {
 
     getCompletionString(goal) {
         let { task } = this.props;
-        debugger;
         return (task.interval === 'time') ? 
                `${goal.count} / ${goal.target}` :
                `${secondsToTimeString(goal.count)} / ${secondsToTimeString(goal.target)}`;
