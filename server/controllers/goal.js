@@ -81,8 +81,9 @@ exports.increment = function(req, res, next) {
           goal.increment('count', {by: req.body.amount}).then(() => {
             res.status(201).json(goals);
           });
+        } else {
+          goal.increment('count', {by: req.body.amount});
         }
-        goal.increment('count', {by: req.body.amount});  
       });
     });
   });
