@@ -20,21 +20,34 @@ class ProgressBar extends Component {
 
     getCompletedProgress() {
         let { goal } = this.props;
-        return goal.count / goal.target;
+        return Math.min((goal.count / goal.target), 1);
     }
 
-    render() {
+    getBarStyles() {
         let { goal } = this.props;
         let elapsedProgress = this.getElapsedProgress();
         let completedProgress = this.getCompletedProgress();
 
-        let elaspedStyle = {width: `${elapsedProgress * 100}%`};
+        let elapsedStyle = {width: `${elapsedProgress * 100}%`};
         let completedStyle = {width: `${completedProgress * 100}%`};
-        (elapsedProgress > completedProgress) ? completedStyle.zIndex = 10 : elapsedProgress.zIndex = 10;
-            // debugger;
+        
+        if (elapsedProgress < completedProgress) {
+            elapsedStyle = {
+                backgroundColor: 'transparent',
+                borderRight: '3px dotted #c6ffc6',
+                width: '1px',
+                left: `${elapsedProgress * 100}%`,
+                zIndex: 10
+            };
+        }
+        return [completedStyle, elapsedStyle];
+    }
+
+    render() {
+        let [completedStyle, elapsedStyle] = this.getBarStyles();
         return(
             <div className="c-progress-bar">
-                <div className="shape-progress-bar-elapsed" style={elaspedStyle}></div>
+                <div className="shape-progress-bar-elapsed" style={elapsedStyle}></div>
                 <div className="shape-progress-bar-completed" style={completedStyle}></div>
             </div>
         );

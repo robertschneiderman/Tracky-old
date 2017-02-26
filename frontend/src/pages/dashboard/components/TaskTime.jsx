@@ -34,24 +34,30 @@ class TaskTime extends Component {
         return timestamps[timestamps.length-1];        
     }
 
-    handleClick() {
+    timerStart() {
+        let { dispatches, task, goal } = this.props;
+        this.setState({running: true});
+        this.interval = setInterval(() => {
+            this.setState({timer: this.state.timer + 10});
+            dispatches.updateTimer({id: task.id, time: this.state.timer + 10});
+        }, 10);
+        dispatches.createTimestamp({taskId: task.id});        
+    }
+
+    timerEnd() {
         let { dispatches, task, goal } = this.props;
         let lastTimestamp = this.getLastTimestamp();
 
-        if (!this.state.running) {
-            this.setState({running: true});
-            this.interval = setInterval(() => {
-                this.setState({timer: this.state.timer + 10});
-                dispatches.updateTimer({id: task.id, time: this.state.timer + 10});
-            }, 10);
-            dispatches.createTimestamp({taskId: task.id});
-        } else {
-            dispatches.updateTimestamp({id: lastTimestamp.id});
-            dispatches.updateGoal(goal.id, {count: this.state.timer});            
-            clearInterval(this.interval);
-            let totalTime = this.state.totalTime + this.state.timer;
-            this.setState({running: false, interval: null, timer: 0, totalTime});
-        }
+        dispatches.updateTimestamp({id: lastTimestamp.id});
+        dispatches.incrementGoals(task.id, this.state.timer);
+        clearInterval(this.interval);
+        let totalTime = this.state.totalTime + this.state.timer;
+        this.setState({running: false, interval: null, timer: 0, totalTime});
+
+    }
+
+    handleClick() {
+        (!this.state.running) ? this.timerStart() : this.timerEnd();
     }
 
     handleMouseEnter() {

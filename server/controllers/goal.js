@@ -76,15 +76,14 @@ exports.increment = function(req, res, next) {
 
   Task.findById(req.params.id).then(task => {
     task.getGoals().then(goals => {
-      goals.forEach(goal => {
+      goals.forEach((goal, i) => {
+        if (i === goals.length-1) {
+          goal.increment('count', {by: req.body.amount}).then(() => {
+            res.status(201).json(goals);
+          });
+        }
         goal.increment('count', {by: req.body.amount});  
       });
     });
-  });
-
-  Goal.update({[key]: value}, {where: {id: req.params.id}, plain: true, returning: true }).then(goal => {
-    res.status(201).json(goal[1]);
-  }).catch((e) => {
-    res.status(401).send(e);
   });
 };

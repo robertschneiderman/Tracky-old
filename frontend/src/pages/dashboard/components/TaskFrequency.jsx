@@ -38,7 +38,7 @@ class TaskFrequency extends Component {
         let { name, icon } = task;
         // debugger;        
         return(
-            <div className="c-task" onClick={this.handleClick.bind(this)}>
+            <div className="c-task" onClick={this.handleClick.bind(this)} onMouseEnter={this.handleMouseEnter.bind(this)}>
                 <img src={`./static/images/task_icons/${icon}.svg`} className="img-task-icon" />
                 <div className="c-task-frequency">
                     <div className="c-task-column-1">

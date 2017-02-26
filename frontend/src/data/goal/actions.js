@@ -29,9 +29,9 @@ export const receiveGoal = goal => ({
     goal
 });
 
-export const mergeGoals = goal => ({
+export const mergeGoals = goals => ({
     type: MERGE_GOALS,
-    goal
+    goals
 });
 
 export const removeGoal = goal => ({
