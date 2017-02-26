@@ -26,3 +26,8 @@ exports.formattedDate= date => {
     let dayStrFull = `${day.toString()}${ending}`;
     return `${month} ${dayStrFull} ${date.getFullYear()}`;
 };
+
+exports.adjustedDay= day => {
+    if (day === 0) return 6;
+    return day - 1;
+};

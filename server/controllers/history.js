@@ -1,6 +1,7 @@
 const History = require('../models').History;
 const dh = require('../date_helpers');
 var _ = require('lodash');
+var moment = require('moment');
 
 exports.get = function(req, res, next) {
   var token = req.header('x-auth');
@@ -45,7 +46,12 @@ exports.get = function(req, res, next) {
 
 exports.create = function(req, res, next) {
   let userId = req.body.id;
-  History.create({userId, date: new Date()}).then(history => {
+  let date = moment().startOf('day');
+  let day = dh.adjustedDay(date.get('day'));
+  let week = date.get('week');
+  let year = date.get('year');
+
+  History.create({userId, date, day, week, year}).then(history => {
     res.status(201).json(history);
   }).catch((e) => {
     res.status(401).send(e);

@@ -10,8 +10,8 @@ import TaskDisplay from './TaskDisplay';
 export class Dashboard extends Component {
 
   componentWillUpdate(nextProps, nextState) {
-    let { users, tasks } = nextProps;
-    let user = Object.values(users)[0] || {name: ''};
+    let { user, tasks } = nextProps;
+    user = user || {name: ''};
     this.message =(Object.keys(tasks).length === 0) ? `Welcome ${user.name}! This is your dashboard... Create tasks by clicking on the "+" in the navbar` : '';
   }
 
@@ -42,7 +42,7 @@ function mapStateToProps(state) {
   }
 
   return {
-    users: user,
+    user,
     history: currentHistory,
     tasks,
     taskDictionary: task,

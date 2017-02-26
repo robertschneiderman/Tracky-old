@@ -14,22 +14,44 @@ export class Calendar extends Component {
     // this.props.getWeek()
   }
 
-  renderDays() {
-    let { historys, taskDict, tsDict } = this.props;
+  renderIncompleteWeek(historys) {
+    let { taskDict, tsDict } = this.props;
     let days = [];
-    for (let i = 1; i <= 7; i++) {
-      let history = historys[historys.length-i] || {tasks: [], timestamps: []};
+    let j = 0;
+    for (let i = 0; i <= 6; i++) {
+      let history = historys[j];
+      (history.day === i) ? j++ : history = {tasks: [], timestamps: []}
       days.push(<Day history={history} taskDict={taskDict} tsDict={tsDict} key={`tsd-${i}`}/>)
-    }
+    }      
     return days;
+  }
+
+  renderCompleteWeek(historys) {
+    let { taskDict, tsDict } = this.props;
+    return historys.map(history => <Day history={history} taskDict={taskDict} tsDict={tsDict} key={`tsd-${i}`}/>);
+  }
+
+  renderWeek() {
+    let { week, historyDict } = this.props;
+    let historys = week.map(histId => historyDict[histId]);
+
+    return (week.length < 7) ? this.renderIncompleteWeek(historys) : this.renderCompleteWeek(historys);
+
+
+    // for (let i = 1; i <= 7; i++) {
+    //   let history = historys[historys.length-i] || {tasks: [], timestamps: []};
+    //   days.push(<Day history={history} taskDict={taskDict} tsDict={tsDict} key={`tsd-${i}`}/>)
+    // }
+    // return days;
   }
   
   render() {
-    let { historys } = this.props;
+    let { week } = this.props;
+    debugger;
     return (
       <div className="c-calendar">
         <div className="c-week">
-          {historys.length > 0 ? this.renderDays() : ''}
+          {week ? this.renderWeek() : ''}
         </div>
       </div>
     );
@@ -47,7 +69,10 @@ function mapStateToProps(state) {
   // state.calendar.activeWeek;
     // history:
   return {
+    week: state.calendar.weeks[state.calendar.activeWeek],
+    activeWeek: state.calendar.activeWeek,
     historys,
+    historyDict: state.history,
     taskDict: state.task,
     tsDict: state.timestamp
   };
