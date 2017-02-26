@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import * as actions from '../redux/actions';
 import Day from './Day';
 import TimeGraph from './TimeGraph';
@@ -15,21 +16,33 @@ export class Calendar extends Component {
     // this.props.getWeek()
   }
 
+  returnDay(history, i) {
+    let { activeWeek, taskDict, tsDict } = this.props;
+    let startOfWeek = moment().subtract((activeWeek+1) * 7, 'days').startOf('week').add(1, 'days');
+    let date = startOfWeek.add(i, 'days');
+    debugger;
+    return <Day 
+            history={history}
+            date={date}
+            activeWeek={activeWeek}
+            taskDict={taskDict}
+            tsDict={tsDict}
+            key={`tsd-${i}`} />
+  }  
+
   renderIncompleteWeek(historys) {
-    let { taskDict, tsDict } = this.props;
     let days = [];
     let j = 0;
     for (let i = 0; i <= 6; i++) {
       let history = historys[j];
       (history.day === i) ? j++ : history = {tasks: [], timestamps: []}
-      days.push(<Day history={history} taskDict={taskDict} tsDict={tsDict} key={`tsd-${i}`}/>)
+      days.push(this.returnDay(history, i))
     }      
     return days;
   }
 
   renderCompleteWeek(historys) {
-    let { taskDict, tsDict } = this.props;
-    return historys.map(history => <Day history={history} taskDict={taskDict} tsDict={tsDict} key={`tsd-${i}`}/>);
+    return historys.map(history => this.returnDay(history));
   }
 
   renderWeek() {
