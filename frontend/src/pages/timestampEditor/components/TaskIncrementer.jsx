@@ -1,18 +1,39 @@
 import React, {Component} from 'react';
+import IncrementBtns from './IncrementBtns';
+
 class TaskIncrementer extends Component {
     constructor(props) {
         super(props);
     }
+
+    rotateTask(num) {
+        let { activeTaskIdx, tasks, dispatches } = this.props;
+
+        activeTaskIdx = activeTaskIdx + num;
+        if (activeTaskIdx < 0) activeTaskIdx = (tasks.length - 1);
+        if (activeTaskIdx === tasks.length) activeTaskIdx = 0;
+
+        let task = tasks[activeTaskIdx];
+        dispatches.editStoredTaskId(task.id);
+    }
+
     render() {
-        let { callback } = this.props;
+        let { tasks, activeTaskIdx } = this.props;
+        let selectedTask = tasks[activeTaskIdx];
+        let { name, icon, color } = selectedTask;
+
         return(
-            <div className="w-task-incrementer">
-                <div className="w-incrementer-btns">
-                    <img onClick={callback.bind(this, 1)} src="./static/images/task_icons/up_arrow.svg" className="btn-incrementer-btn" />
-                    <img onClick={callback.bind(this, -1)} src="./static/images/task_icons/down_arrow.svg" className="btn-incrementer-btn" />
-                </div>            
+          <div className="r-timestamp-editor">
+            <p className="label-timestamp-editor">Task</p>
+            <div className="w-timestamp-task-value">
+              <img className="img-timestamp-editor-task-icon" src={`./static/images/task_icons/${icon}.svg`} />
+              <p className="text-timestamp-editor">{name}</p>
             </div>
+            <IncrementBtns callback={this.rotateTask.bind(this)} />            
+          </div>     
         );
+            // <div className="w-task-incrementer">
+            // </div>
     }
 }
 

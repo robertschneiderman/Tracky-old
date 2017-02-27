@@ -12,8 +12,8 @@ import TimeInput from './TimeInput';
 export class TimestampEditor extends Component {
 
   componentWillMount() {
-    let { selectedTask } = this.props;
-    if (!selectedTask.name) hashHistory.push('calendar');
+    let { activeTaskIdx } = this.props;
+    if (activeTaskIdx === undefined) hashHistory.push('calendar');
   }
 
   renderDateIncrementer(time) {
@@ -30,16 +30,15 @@ export class TimestampEditor extends Component {
   }
 
   render() {
-    let { selectedTask, timestamp, tasks, dispatches } = this.props;
-    let { name, icon, color } = selectedTask;
+    let { activeTaskIdx, timestamp, tasks, dispatches } = this.props;
     let { start, end } = timestamp;
             // <p className="text-timestamp-editor">{start}</p>
     return (
       <div className="p-timestamp-editor">
         <div className="c-timestamp-editor">
 
-          {selectedTask.name ? [
-          <TaskIncrementer task={selectedTask} tasks={tasks} dispatches={dispatches} />,
+          {activeTaskIdx !== undefined ? [
+          <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} />,
           <TimeInput field={'start'} time={start} dispatches={dispatches} />,
           <TimeInput field={'end'} time={end}  dispatches={dispatches} />] : ''}
 
@@ -62,11 +61,17 @@ export class TimestampEditor extends Component {
 const mapStateToProps = (state) => {
   let {task, timestampEditor} = state;
   let {taskId, timestamp} = timestampEditor;
-  let selectedTask = task[taskId];
+  let tasks = objToArr(task);
+  let activeTaskIdx;
+  tasks.forEach((task, i) => {
+      if (task.id === taskId) activeTaskIdx = i;
+  })
+  // let selectedTask = task[taskId];
+  // let selectedTaskIndex = fil
 
   return {
-    tasks: objToArr(task),
-    selectedTask,
+    activeTaskIdx,
+    tasks,
     timestamp
   };
 }

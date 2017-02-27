@@ -23,7 +23,7 @@ class DateIncrementer extends Component {
         return(
             <div className="w-date-incrementer">
                 <p className="text-date-incrementer">{this.formattedTime()}</p>
-                <IncrementBtns callback={this.incrementTime} />
+                <IncrementBtns callback={this.incrementTime.bind(this)} />
             </div>
         );     
     }
