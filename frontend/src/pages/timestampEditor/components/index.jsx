@@ -16,17 +16,10 @@ export class TimestampEditor extends Component {
     if (activeTaskIdx === undefined) hashHistory.push('calendar');
   }
 
-  renderDateIncrementer(time) {
-    let timeStr = moment(time).format("MMM DD YYYY");
-    return (
-      <div className="w-date-incrementer">
-        <span className="text-date-incrementer">{timeStr}</span>
-        <div className="w-incrementer-btns">
-          <button className="btn-incrementer-btns">^</button>
-          <button className="btn-incrementer-btns">@</button>
-        </div>
-      </div>
-    )
+  handleEdit() {
+    let { dispatches, tasks, activeTaskIdx, timestamp } = this.props;
+    let task = tasks[activeTaskIdx];
+    dispatches.updateTimestamp(task.id, timestamp)
   }
 
   render() {
@@ -41,7 +34,7 @@ export class TimestampEditor extends Component {
           <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} />,
           <TimeInput field={'start'} time={start} dispatches={dispatches} />,
           <TimeInput field={'end'} time={end}  dispatches={dispatches} />] : ''}
-
+          <button onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">Update Timestamp</button>
         </div>
       </div>
     );

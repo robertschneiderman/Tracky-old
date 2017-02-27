@@ -5,7 +5,15 @@ import DateIncrementer from './DateIncrementer';
 class TimeInput extends Component {
     constructor(props) {
         super(props);
+        // this.lastMeridiemValue;
     }
+
+    // componentWillReceiveProps(nextProps) {
+    //   if (nextProps.field === 'meridiem') {
+    //     if (this.props.value === )
+    //   }
+    //   if (value === 'AM' || value === 'PM'   
+    // }
 
     getFieldKey(idx) {
       const KEYS = ['hours', 'minutes', 'meridiem'];
@@ -18,7 +26,7 @@ class TimeInput extends Component {
 
       if (key === 'hours') {
         value = (time.hours() > 12) ? value + 12 : value;
-        return time[key](value).format("YYYY-MM-DDTHH:mm:ss.SSSS");
+        return time[key](value).format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
       }
       if (key === 'meridiem') {
         if (value === 'AM') { /// make sure is a change
@@ -27,7 +35,7 @@ class TimeInput extends Component {
           return time.add(12, 'hours');
         }
       } else {
-        return time[key](value).format("YYYY-MM-DDTHH:mm:ss.SSSS");
+        return time[key](value).format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
       }
     }
 
@@ -39,6 +47,7 @@ class TimeInput extends Component {
       if (this.isValidChange(key, value)) {
 
         let timestamp = this.tsFromCaseBasis(key, value);
+        // timestamp = moment.utc(timestamp).format("YYYY-MM-DDTHH:mm:ss.SSSS");
         debugger;
 
         dispatches.editStoredTimestamp(field, timestamp);
@@ -49,10 +58,11 @@ class TimeInput extends Component {
     isValidChange(key, value) {
       return (key === 'hours') ? value >= 1 && value <= 12 :
              (key === 'minutes') ? value >= 0 && value <= 60 :
-             value === 'AM' || value === 'PM';
+             this.meridiemValidChange;
     }
 
     shiftFocus(input, idx) {
+        if (idx === 2) return;
         let inputContainer = input.parentElement;
         let nextIdx = idx + 2; // adjusts for colon
         let nextChild = inputContainer.children[nextIdx];

@@ -10,6 +10,18 @@ exports.create = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
+  let taskId = parseInt(req.params.taskId);
+  let { start, end } = req.body;
+
+
+  Timestamp.update({start: new Date(start), end: new Date(end), taskId}, {where: {taskId}, plain: true, returning: true }).then(timestamp => {
+    res.status(201).json(timestamp[1]);
+  }).catch((e) => {
+    res.status(401).send(e);
+  });
+};
+
+exports.finish = function(req, res, next) {
   let timestamp = req.body;
   let key = Object.keys(req.body)[0];
   let value = req.body[key];

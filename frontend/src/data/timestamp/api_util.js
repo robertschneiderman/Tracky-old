@@ -22,8 +22,16 @@ export const createTimestamp = (timestamp, success, error) => {
   .catch(error);
 };
 
-export const updateTimestamp = (timestamp, success) => {
+export const finishTimestamp = (timestamp, success) => {
   axioss.patch(`timestamps/${timestamp.id}`)
+  .then(success)
+  .catch(function (error) {
+    console.log(error);
+  });
+};
+
+export const updateTimestamp = (taskId, timestamp, success) => {
+  axioss.patch(`tasks/${taskId}/timestamps`, timestamp)
   .then(success)
   .catch(function (error) {
     console.log(error);

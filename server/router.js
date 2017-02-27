@@ -32,7 +32,8 @@ module.exports = function(app) {
   app.patch('/task/:id/goals', Goal.increment);
 
   app.post('/timestamps', requireAuth, Timestamp.create);
-  app.patch('/timestamps/:id', requireAuth, Timestamp.update);
+  app.patch('/timestamps/:id', requireAuth, Timestamp.finish);
+  app.patch('/tasks/:taskId/timestamps', requireAuth, Timestamp.update);
   // app.patch('/timestamp', requireAuth, Timestamp.edit);
   app.delete('/tasks/:taskId/timestamps/:id', requireAuth, Timestamp.delete);
 };

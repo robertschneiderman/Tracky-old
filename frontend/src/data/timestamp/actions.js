@@ -2,6 +2,7 @@ export const REQUEST_TIMESTAMPS = 'REQUEST_TIMESTAMPS';
 export const REQUEST_TIMESTAMP = 'REQUEST_TIMESTAMP';
 export const CREATE_TIMESTAMP = 'CREATE_TIMESTAMP';
 export const UPDATE_TIMESTAMP = 'UPDATE_TIMESTAMP';
+export const FINISH_TIMESTAMP = 'FINISH_TIMESTAMP';
 export const DESTROY_TIMESTAMP = 'DESTROY_TIMESTAMP';
 export const RECEIVE_TIMESTAMPS = 'RECEIVE_TIMESTAMPS';
 export const RECEIVE_TIMESTAMP = 'RECEIVE_TIMESTAMP';
@@ -37,8 +38,14 @@ export const createTimestamp = timestamp => ({
     timestamp
 });
 
-export const updateTimestamp = timestamp => ({
+export const finishTimestamp = timestamp => ({
+    type: FINISH_TIMESTAMP,
+    timestamp
+});
+
+export const updateTimestamp = (id, timestamp) => ({
     type: UPDATE_TIMESTAMP,
+    id,
     timestamp
 });
 

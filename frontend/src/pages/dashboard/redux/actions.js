@@ -1,4 +1,4 @@
-export { createTimestamp, updateTimestamp } from '../../../data/timestamp/actions';
+export { createTimestamp, finishTimestamp } from '../../../data/timestamp/actions';
 export { incrementGoals } from '../../../data/goal/actions';
 export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';

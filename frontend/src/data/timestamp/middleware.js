@@ -4,6 +4,7 @@ import { updateTimestampArr } from '../task/actions';
 import { fetchTimestamps,
          fetchTimestamp,
          createTimestamp,
+         finishTimestamp,
          updateTimestamp,
          destroyTimestamp
        } from './api_util';
@@ -18,6 +19,7 @@ import { requestTimestamps,
          REQUEST_TIMESTAMPS,
          REQUEST_TIMESTAMP,
          CREATE_TIMESTAMP,
+         FINISH_TIMESTAMP,
          UPDATE_TIMESTAMP,
          DESTROY_TIMESTAMP,
        } from './actions';
@@ -41,8 +43,10 @@ export default ({getState, dispatch}) => next => action => {
     case CREATE_TIMESTAMP:
       createTimestamp(action.timestamp, timestampSuccess, timestampErrored);
       return next(action);
+    case FINISH_TIMESTAMP:
+      finishTimestamp(action.timestamp, timestampUpdateSuccess);
     case UPDATE_TIMESTAMP:
-      updateTimestamp(action.timestamp, timestampUpdateSuccess);
+      updateTimestamp(action.id, action.timestamp, timestampUpdateSuccess);
       return next(action);
     case DESTROY_TIMESTAMP:
       destroyTimestamp(action.timestamp, timestampRemoved);

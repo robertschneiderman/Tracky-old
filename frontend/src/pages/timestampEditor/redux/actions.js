@@ -1,3 +1,4 @@
+export { updateTimestamp } from '../../../data/timestamp/actions';
 export const EDIT_STORED_TIMESTAMP = 'EDIT_STORED_TIMESTAMP';
 export const EDIT_STORED_TASK_ID = 'EDIT_STORED_TASK_ID';
 export const STORE_TIMESTAMP = 'STORE_TIMESTAMP';

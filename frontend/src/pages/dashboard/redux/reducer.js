@@ -22,7 +22,6 @@ const dashboardReducer = (state = initialState, action) => {
       return newState;
     case UPDATE_TIMER:
       newState.timers[action.payload.id].time = action.payload.time;
-      debugger;
       return newState;
     case STOP_TIMER:
       newState.timers[action.payload.id].running = false;
