@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import {hashHistory} from 'react-router';
 import moment from 'moment';
 import * as actions from '../redux/actions';
+import { objToArr } from '../../../common/helpers/selectors'
 
+import TaskIncrementer from './TaskIncrementer';
 import TimeInput from './TimeInput';
 
 export class TimestampEditor extends Component {
@@ -19,16 +21,16 @@ export class TimestampEditor extends Component {
     return (
       <div className="w-date-incrementer">
         <span className="text-date-incrementer">{timeStr}</span>
-        <div className="w-data-incrementer-btns">
-          <button className="btn-data-incrementer-btns">^</button>
-          <button className="btn-data-incrementer-btns">@</button>
+        <div className="w-incrementer-btns">
+          <button className="btn-incrementer-btns">^</button>
+          <button className="btn-incrementer-btns">@</button>
         </div>
       </div>
     )
   }
 
   render() {
-    let { selectedTask, timestamp, dispatches } = this.props;
+    let { selectedTask, timestamp, tasks, dispatches } = this.props;
     let { name, icon, color } = selectedTask;
     let { start, end } = timestamp;
             // <p className="text-timestamp-editor">{start}</p>
@@ -36,15 +38,8 @@ export class TimestampEditor extends Component {
       <div className="p-timestamp-editor">
         <div className="c-timestamp-editor">
 
-          <div className="r-timestamp-editor">
-            <p className="label-timestamp-editor">Task</p>
-            <div className="w-timestamp-task-value">
-              <img className="img-timestamp-editor-task-icon" src={`./static/images/task_icons/${icon}.svg`} />
-              <p className="text-timestamp-editor">{name}</p>
-            </div>
-          </div> 
-
           {selectedTask.name ? [
+          <TaskIncrementer task={selectedTask} tasks={tasks} dispatches={dispatches} />,
           <TimeInput field={'start'} time={start} dispatches={dispatches} />,
           <TimeInput field={'end'} time={end}  dispatches={dispatches} />] : ''}
 
@@ -70,6 +65,7 @@ const mapStateToProps = (state) => {
   let selectedTask = task[taskId];
 
   return {
+    tasks: objToArr(task),
     selectedTask,
     timestamp
   };

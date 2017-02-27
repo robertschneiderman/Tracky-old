@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import DateIncrementer from './DateIncrementer';
 
 class TimeInput extends Component {
     constructor(props) {
@@ -7,37 +8,42 @@ class TimeInput extends Component {
     }
 
     getFieldKey(idx) {
-      const KEYS = ['hours', 'colon', 'minutes', 'meridiem'];
+      const KEYS = ['hours', 'minutes', 'meridiem'];
       return KEYS[idx];
     }
 
-    tsFromCaseBasis(value) {
+    tsFromCaseBasis(key, value) {
       let { field, time } = this.props;
-      if (field === 'hours') {
-        if (time.hours() > 12) {
-          return moment(time)[key](value + 12);
-        }
+      time = moment(time);
+
+      if (key === 'hours') {
+        value = (time.hours() > 12) ? value + 12 : value;
+        return time[key](value).format("YYYY-MM-DDTHH:mm:ss.SSSS");
       }
-      if (field === 'meridiem') {
+      if (key === 'meridiem') {
         if (value === 'AM') { /// make sure is a change
           return time.subtract(12, 'hours');
         } else {
           return time.add(12, 'hours');
         }
       } else {
-        moment(time)[key](value + 12);
+        return time[key](value).format("YYYY-MM-DDTHH:mm:ss.SSSS");
       }
     }
 
-    sendOffTimestamp(idx, input) {
+    sendOffTimestamp(input, idx) {
       let { field, dispatches } = this.props;
       let { time } = this.props;
       let key = this.getFieldKey(idx);
-      if (this.isValidChange(key, input.value)) {
-        let timestamp = this.tsFromCaseBasis(key, input.value);
+      let value = parseInt(input.value);
+      if (this.isValidChange(key, value)) {
+
+        let timestamp = this.tsFromCaseBasis(key, value);
+        debugger;
+
         dispatches.editStoredTimestamp(field, timestamp);
-        input.value = '';
       }
+      input.value = '';
     }
 
     isValidChange(key, value) {
@@ -47,7 +53,6 @@ class TimeInput extends Component {
     }
 
     shiftFocus(input, idx) {
-        // debugger;
         let inputContainer = input.parentElement;
         let nextIdx = idx + 2; // adjusts for colon
         let nextChild = inputContainer.children[nextIdx];
@@ -82,14 +87,15 @@ class TimeInput extends Component {
       }
       return inputs;
     }
+              // {this.renderDateIncrementer(time)}
 
     render() {
-      let { time, field } = this.props;
-              // {this.renderDateIncrementer(time)}  underUI
+      let { time, dispatches, field } = this.props;
         return(
           <div className="r-timestamp-editor">
             <p className="label-timestamp-editor">{field}</p>
             <div className="w-timestamp-editor-ui">
+              <DateIncrementer field={field} time={time} dispatches={dispatches} />
               <div className="w-timestamp-editor-inputs">
                 {this.renderTimeInput(time)}
               </div>
