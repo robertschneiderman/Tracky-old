@@ -16,15 +16,29 @@ export class Calendar extends Component {
     // this.props.getWeek()
   }
 
+  renderDayTitles() {
+    let { activeWeek } = this.props;
+    let startOfWeek = moment().subtract((activeWeek+1) * 7, 'days').startOf('week').add(1, 'days');
+    let titles = [];
+    for (let i = 0; i <= 6; i++) {
+      let date = startOfWeek.add(1, 'days');
+      titles.push(
+          <div className="c-day-title">
+              <h3 className="title-day"><strong>{date.format('ddd')}</strong></h3>
+              <h3 className="title-date">{date.format('MMM D')}</h3>
+          </div>
+      );
+    }
+    return titles;
+  }
+
   returnDay(history, i) {
     let { activeWeek, taskDict, tsDict } = this.props;
     let startOfWeek = moment().subtract((activeWeek+1) * 7, 'days').startOf('week').add(1, 'days');
     let date = startOfWeek.add(i, 'days');
-    debugger;
+    // debugger;
     return <Day 
             history={history}
-            date={date}
-            activeWeek={activeWeek}
             taskDict={taskDict}
             tsDict={tsDict}
             key={`tsd-${i}`} />
@@ -56,8 +70,12 @@ export class Calendar extends Component {
     let { week } = this.props;
     return (
       <div className="c-calendar">
-        <TimeGraph />
+        <div className="c-day-titles">
+          {this.renderDayTitles()}
+        </div>
+
         <div className="c-week">
+          <TimeGraph />
           {week ? this.renderWeek() : ''}
         </div>
       </div>
