@@ -7,15 +7,6 @@ import Day from './Day';
 import TimeGraph from './TimeGraph';
 import { minutesElapsedInDay } from '../../../common/helpers/timeHelpers';
 
-
-var Scroll  = require('react-scroll');
-
-var Link       = Scroll.Link;
-var Element    = Scroll.Element;
-var Events     = Scroll.Events;
-var scroll     = Scroll.animateScroll;
-var scrollSpy  = Scroll.scrollSpy;
-
 export class Calendar extends Component {
 
   constructor(props) {
@@ -44,7 +35,7 @@ export class Calendar extends Component {
   }
 
   returnDay(history, i) {
-    let { activeWeek, taskDict, tsDict } = this.props;
+    let { activeWeek, taskDict, tsDict, dispatches } = this.props;
     let startOfWeek = moment().subtract((activeWeek+1) * 7, 'days').startOf('week').add(1, 'days');
     let date = startOfWeek.add(i, 'days');
     // debugger;
@@ -52,6 +43,7 @@ export class Calendar extends Component {
             history={history}
             taskDict={taskDict}
             tsDict={tsDict}
+            dispatches={dispatches}
             key={`tsd-${i}`} />
   }  
 
@@ -86,9 +78,10 @@ export class Calendar extends Component {
         </div>
 
         <div className="c-week">
-          <TimeGraph />
           {week ? this.renderWeek() : ''}
+          <TimeGraph />
         </div>
+        {this.props.children}
       </div>
     );
   }

@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import {hashHistory} from 'react-router';
 
 const multiplier = 2;
 
 class TimeBlock extends Component {
     constructor(props) {
         super(props);
+        this.editTimestamp = this.editTimestamp.bind(this);
     }
+
     getTotalMinutes(timeStr) {
         let mins = moment(timeStr).hours() * 60;
         mins += moment(timeStr).get('minutes');
@@ -34,9 +37,9 @@ class TimeBlock extends Component {
         };    
 
         return (     
-            <div className="time-blocks">
-                <div className="time-block" style={style1} onClick={this.editTimestamp}></div>
-                <div className="time-block" style={style2} onClick={this.editTimestamp}></div>
+            <div className="shape-time-blocks">
+                <div className="shape-time-block" style={style1} onClick={this.editTimestamp}></div>
+                <div className="shape-time-block" style={style2} onClick={this.editTimestamp}></div>
             </div>        
         );
     }
@@ -53,8 +56,13 @@ class TimeBlock extends Component {
             top: `${start}px`,
             height: `${height}px`
         };
-        return <div className="time-block" style={style} onClick={this.editTimestamp}></div>;
+        return <div className="shape-time-block" style={style} onClick={this.editTimestamp}></div>;
     }
+
+    editTimestamp() {
+        let {task, timestamp, dispatches} = this.props;
+        dispatches.populateTimestampEditorAndRedirect(task, timestamp);
+    }    
 
     render() {
         let {task, timestamp, special} = this.props;

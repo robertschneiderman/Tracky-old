@@ -8,7 +8,7 @@ class Day extends Component {
     }
 
     renderTimeBlocks() {
-        let { history, taskDict, tsDict } = this.props;
+        let { history, taskDict, tsDict, dispatches } = this.props;
         let timeBlocks = [];
         let tasks = history.tasks.map(taskId => taskDict[taskId]);
         tasks.forEach(task => {
@@ -18,8 +18,8 @@ class Day extends Component {
                     <TimeBlock 
                         task={task} 
                         timestamp={timestamp} 
-                        key={`${timestamp._id}-i`} 
-                        populateTimestampEditor={this.props.populateTimestampEditor} />
+                        dispatches={dispatches}
+                        key={`${timestamp.id}-i`} />
                     );
             });
         });

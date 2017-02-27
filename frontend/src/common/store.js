@@ -10,6 +10,7 @@ import userMiddleware from '../data/user/middleware';
 import goalMiddleware from '../data/goal/middleware';
 import timestampMiddleware from '../data/timestamp/middleware';
 import calendarMiddleware from '../pages/calendar/redux/middleware';
+import timestampEditorMiddleware from '../pages/timestampEditor/redux/middleware';
 
 const logger = createLogger();
 
@@ -24,6 +25,7 @@ const createStoreWithMiddleware = applyMiddleware(
   ,goalMiddleware
   ,timestampMiddleware
   ,calendarMiddleware
+  ,timestampEditorMiddleware
 )(createStore);
 
 const store = createStoreWithMiddleware(reducers);
