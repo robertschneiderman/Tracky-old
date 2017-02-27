@@ -5,21 +5,13 @@ import {hashHistory} from 'react-router';
 import moment from 'moment';
 import * as actions from '../redux/actions';
 
+import TimeInput from './TimeInput';
+
 export class TimestampEditor extends Component {
 
   componentWillMount() {
     let { selectedTask } = this.props;
     if (!selectedTask.name) hashHistory.push('calendar');
-  }
-
-  handleOnChange(e, idx, length) {
-    let input = e.target;
-    let inputContainer = input.parentElement;
-
-    if (input.value === length) {
-      let nextChild = inputContainer.children(idx+1);
-      nextChild.focus();
-    }
   }
 
   renderDateIncrementer(time) {
@@ -35,28 +27,8 @@ export class TimestampEditor extends Component {
     )
   }
 
-  renderTimeInput(time) {
-    // MMM DD YYYY 
-    let timeStr = moment(time).format("h mm A");
-    let fields = timeStr.split(" ");
-    let lengths = [2, 2, 2];
-    let inputs = [];
-    for (let i = 0; i < fields.length; i++) {
-      inputs.push(
-        <input 
-          onChange={e => this.handleOnChange(e)}
-          className="input-time-editor"
-          style={{width: `${1 * lengths[i]}rem`}}
-          type="text"
-          placeholder={fields[i]} />
-      )
-      if (i === 0) inputs.push(<span className="chars-input-time-editor">:</span>)
-    }
-    return inputs;
-  }
-
   render() {
-    let { selectedTask, timestamp } = this.props;
+    let { selectedTask, timestamp, dispatches } = this.props;
     let { name, icon, color } = selectedTask;
     let { start, end } = timestamp;
             // <p className="text-timestamp-editor">{start}</p>
@@ -72,29 +44,22 @@ export class TimestampEditor extends Component {
             </div>
           </div> 
 
-          <div className="r-timestamp-editor">
-            <p className="label-timestamp-editor">Start</p>
-            <div className="w-timestamp-editor-ui">
-              {selectedTask.name ? this.renderDateIncrementer(start) : ''}
-              <div className="w-timestamp-editor-inputs">
-                {selectedTask.name ? this.renderTimeInput(start) : ''}
-              </div>
-            </div>
-          </div> 
-
-          <div className="r-timestamp-editor">
-            <p className="label-timestamp-editor">End</p>
-            <div className="w-timestamp-editor-ui">
-              {selectedTask.name ? this.renderDateIncrementer(end) : ''}
-              <div className="w-timestamp-editor-inputs">
-                {selectedTask.name ? this.renderTimeInput(end) : ''}
-              </div>
-            </div>
-          </div>          
+          {selectedTask.name ? [
+          <TimeInput field={'start'} time={start} dispatches={dispatches} />,
+          <TimeInput field={'end'} time={end}  dispatches={dispatches} />] : ''}
 
         </div>
       </div>
     );
+          // <div className="r-timestamp-editor">
+          //   <p className="label-timestamp-editor">End</p>
+          //   <div className="w-timestamp-editor-ui">
+          //     {selectedTask.name ? this.renderDateIncrementer(end) : ''}
+          //     <div className="w-timestamp-editor-inputs">
+          //       {selectedTask.name ? this.renderTimeInput(end) : ''}
+          //     </div>
+          //   </div>
+          // </div>          
   }
 }
 
