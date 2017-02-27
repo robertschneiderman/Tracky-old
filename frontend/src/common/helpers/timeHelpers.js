@@ -66,3 +66,7 @@ export const secondsToTimeString = seconds => {
     let minutes = Math.floor(moment.duration(seconds, 'seconds').get('minutes'));
     return (hours > 0) ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
+
+export const minutesElapsedInDay = () => {
+    return moment.duration(moment().unix() - moment().startOf('day').unix(), 'seconds').asMinutes();    
+};

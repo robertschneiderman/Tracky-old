@@ -13,12 +13,12 @@ class Day extends Component {
         let tasks = history.tasks.map(taskId => taskDict[taskId]);
         tasks.forEach(task => {
             let timestamps = task.timestamps.map(tsId => tsDict[tsId]);
-            timestamps.forEach(timestamp => {
+            timestamps.forEach((timestamp, i) => {
                 timeBlocks.push(
                     <TimeBlock 
                         task={task} 
                         timestamp={timestamp} 
-                        key={timestamp._id} 
+                        key={`${timestamp._id}-i`} 
                         populateTimestampEditor={this.props.populateTimestampEditor} />
                     );
             });

@@ -5,6 +5,16 @@ import moment from 'moment';
 import * as actions from '../redux/actions';
 import Day from './Day';
 import TimeGraph from './TimeGraph';
+import { minutesElapsedInDay } from '../../../common/helpers/timeHelpers';
+
+
+var Scroll  = require('react-scroll');
+
+var Link       = Scroll.Link;
+var Element    = Scroll.Element;
+var Events     = Scroll.Events;
+var scroll     = Scroll.animateScroll;
+var scrollSpy  = Scroll.scrollSpy;
 
 export class Calendar extends Component {
 
@@ -12,18 +22,19 @@ export class Calendar extends Component {
       super(props);
   }
 
-  componentWillMount() {
-    // this.props.getWeek()
-  }
+  componentDidUpdate() {
+    window.scrollTo(0, minutesElapsedInDay() * 2);
+  }  
+
 
   renderDayTitles() {
     let { activeWeek } = this.props;
     let startOfWeek = moment().subtract((activeWeek+1) * 7, 'days').startOf('week').add(1, 'days');
     let titles = [];
     for (let i = 0; i <= 6; i++) {
-      let date = startOfWeek.add(1, 'days');
+      let date = i === 0 ? startOfWeek : startOfWeek.add(1, 'days');
       titles.push(
-          <div className="c-day-title">
+          <div className="c-day-title" key={`nvw-${i}`}>
               <h3 className="title-day"><strong>{date.format('ddd')}</strong></h3>
               <h3 className="title-date">{date.format('MMM D')}</h3>
           </div>
