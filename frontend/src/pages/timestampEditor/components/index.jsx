@@ -16,11 +16,19 @@ export class TimestampEditor extends Component {
     if (activeTaskIdx === undefined) hashHistory.push('calendar');
   }
 
+  isValidRange() {
+    let { timestamp } = this.props;
+    return moment(timestamp.start).unix() < moment(timestamp.end).unix()
+  }
+
   handleEdit() {
     let { dispatches, tasks, oldTaskId, activeTaskIdx, timestamp } = this.props;
     let task = tasks[activeTaskIdx];
-    dispatches.removeFromTimestampArr(oldTaskId, timestamp.id)
-    dispatches.updateTimestamp(task.id, timestamp)
+    if (this.isValidRange()) {
+      dispatches.removeFromTimestampArr(oldTaskId, timestamp.id)
+      dispatches.updateTimestamp(task.id, timestamp)
+      hashHistory.push('calendar');
+    }
   }
 
   handleClick() {
@@ -34,24 +42,17 @@ export class TimestampEditor extends Component {
     return (
       <div className="p-timestamp-editor">
         <img onClick={this.handleClick.bind(this)} src="./static/images/x.svg" alt="" className="btn-timestamp-editor-close"/>
+        
         <div className="c-timestamp-editor">
           {activeTaskIdx !== undefined ? [
           <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} />,
           <TimeInput field={'start'} time={start} dispatches={dispatches} />,
           <TimeInput field={'end'} time={end}  dispatches={dispatches} />] : ''}
-          <button onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">Update Timestamp</button>
+          <button disabled={!this.isValidRange()} onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">Update Timestamp</button>
         </div>
+
       </div>
-    );
-          // <div className="r-timestamp-editor">
-          //   <p className="label-timestamp-editor">End</p>
-          //   <div className="w-timestamp-editor-ui">
-          //     {selectedTask.name ? this.renderDateIncrementer(end) : ''}
-          //     <div className="w-timestamp-editor-inputs">
-          //       {selectedTask.name ? this.renderTimeInput(end) : ''}
-          //     </div>
-          //   </div>
-          // </div>          
+    );        
   }
 }
 

@@ -25,7 +25,8 @@ class TimeInput extends Component {
       time = moment(time);
 
       if (key === 'hours') {
-        value = (time.hours() > 12) ? value + 12 : value;
+        value = (time.hours() > 12) ? parseInt(value) + 12 : value;
+        // debugger;
         return time[key](value).format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
       }
       if (key === 'meridiem') {
@@ -48,7 +49,6 @@ class TimeInput extends Component {
 
       if (this.isValidChange(key, value)) {
 
-        debugger;
         let timestamp = this.tsFromCaseBasis(key, value);
         // timestamp = moment.utc(timestamp).format("YYYY-MM-DDTHH:mm:ss.SSSS");
 
