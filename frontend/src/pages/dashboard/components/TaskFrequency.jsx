@@ -12,7 +12,7 @@ class TaskFrequency extends Component {
     }
 
     handleClick() {
-        let { dispatches, task, goal } = this.props;
+        let { dispatches, task } = this.props;
         dispatches.createTimestamp({taskId: task.id});        
         dispatches.incrementGoals(task.id, 1);
     }

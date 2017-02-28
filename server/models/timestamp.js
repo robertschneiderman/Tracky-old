@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   var Timestamp = sequelize.define('Timestamp', {
     taskId: { type: DataTypes.INTEGER, allowNull: false },    
     start: DataTypes.DATE,
-    end: DataTypes.DATE
+    end: DataTypes.DATE,
   }, {
     classMethods: {
       associate: function(models) {  

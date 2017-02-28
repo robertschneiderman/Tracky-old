@@ -7,12 +7,22 @@ class Day extends Component {
         super(props);
     }
 
+    getTimestampStrikes(timestamps) {
+        let counts = {};
+        timestamps.forEach(ts => {
+            counts[ts.taskId] = counts[ts.taskId] ? counts[ts.taskId] + 1 : 1;
+            ts.strike = counts[ts.taskId];
+        });
+        return timestamps;
+    }
+
     renderTimeBlocks() {
         let { history, taskDict, tsDict, dispatches } = this.props;
         let timeBlocks = [];
         let tasks = history.tasks.map(taskId => taskDict[taskId]);
         tasks.forEach(task => {
             let timestamps = task.timestamps.map(tsId => tsDict[tsId]);
+            timestamps = this.getTimestampStrikes(timestamps);
             timestamps.forEach((timestamp, i) => {
                 timeBlocks.push(
                     <TimeBlock 

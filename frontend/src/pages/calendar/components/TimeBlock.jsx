@@ -45,24 +45,44 @@ class TimeBlock extends Component {
         );
     }
 
-    renderTimeBlock() {
-        let {task, timestamp, special} = this.props;
+    getStartAndEnd() {
+        let {task, timestamp} = this.props;
         let {start, end} = timestamp;
                 
         start = this.getTotalMinutes(start) * multiplier;
-        end = this.getTotalMinutes(end) * multiplier;
+        end = task.type === 'time' ? this.getTotalMinutes(end) * multiplier : start + (35 * 2);
+        return [start, end];
+    }
+
+    getStyle(start, end) {
+        let { task } = this.props;
         let height = (end - start > 2) ? end - start : 2;
-        let style = {
+        return {
             backgroundColor: task.color,
             top: `${start}px`,
             height: `${height}px`
-        };
+        };        
+    }
+
+    renderRange(start, end) {
+        let { task, timestamp } = this.props;
+        return task.type === 'time' ?
+        <p className="text-timeblock-time-range">{`${dateToTime(start)} - ${dateToTime(end)}`}</p> :
+        <p className="text-timeblock-time-range">{`${dateToTime(start)}`} <strong>({`${timestamp.strike}`})</strong></p>;
+    }
+
+    renderTimeBlock() {
+        let { task } = this.props;
+
+        let [start, end] = this.getStartAndEnd();
+        let style = this.getStyle(start, end);
+
         return (
             <div className="shape-time-block" style={style} onClick={this.editTimestamp}>
                 <div className="c-time-block-content">
                     <div className="w-timeblock-text">
                         <h3 className="title-timeblock">{`${task.name}`}</h3>
-                        <p className="text-timeblock-time-range">{`${dateToTime(timestamp.start)} - ${dateToTime(timestamp.end)}`}</p>
+                        {this.renderRange(start, end)}
                     </div>
                     <img src={`./static/images/task_icons/${task.icon}.svg`} alt="" className="icn-timeblock"/>
                 </div>
@@ -78,9 +98,8 @@ class TimeBlock extends Component {
     render() {
         let {task, timestamp, special} = this.props;
         let {start, end} = timestamp;
-        let result = (moment(start).get('date') !== moment(end).get('date')) ? this.renderTimeBlocks() : this.renderTimeBlock();
-
-        return result;
+        // let result = (moment(start).get('date') !== moment(end).get('date')) ? this.renderTimeBlocks() : this.renderTimeBlock();
+        return this.renderTimeBlock();
     }
 }
 
