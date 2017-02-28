@@ -1,4 +1,4 @@
-import { editStoredTimestamp, editStoredTaskId } from '../../timestampEditor/redux/actions';
+import { editStoredTimestamp, editStoredTaskId, storeOldTaskId} from '../../timestampEditor/redux/actions';
 import {hashHistory} from 'react-router';
 export const RECEIVE_WEEKS = 'RECEIVE_WEEKS';
 
@@ -9,7 +9,10 @@ export const receiveWeeks = payload => ({
 
 export const populateTimestampEditorAndRedirect = (task, timestamp) => {
   return (dispatch) => {
+    
+    dispatch(storeOldTaskId(task.id));
     dispatch(editStoredTaskId(task.id));
+    dispatch(editStoredTimestamp('id', timestamp.id));
     dispatch(editStoredTimestamp('start', timestamp.start));
     dispatch(editStoredTimestamp('end', timestamp.end));
 

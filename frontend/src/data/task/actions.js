@@ -7,6 +7,7 @@ export const RECEIVE_TASKS = 'RECEIVE_TASKS';
 export const RECEIVE_TASK = 'RECEIVE_TASK';
 export const REMOVE_TASK = 'REMOVE_TASKS';
 export const UPDATE_TIMESTAMP_ARR = 'UPDATE_TIMESTAMP_ARR';
+export const REMOVE_FROM_TIMESTAMP_ARR = 'REMOVE_FROM_TIMESTAMP_ARR';
 export const UPDATE_GOAL_ARR = 'UPDATE_GOAL_ARR';
 export const TASK_ERROR = 'TASK_ERROR';
 
@@ -58,6 +59,12 @@ export const updateGoalArr = (taskId, goalId) => ({
 
 export const updateTimestampArr = (taskId, timestampId) => ({
     type: UPDATE_TIMESTAMP_ARR,
+    taskId,
+    timestampId
+});
+
+export const removeFromTimestampArr = (taskId, timestampId) => ({
+    type: REMOVE_FROM_TIMESTAMP_ARR,
     taskId,
     timestampId
 });

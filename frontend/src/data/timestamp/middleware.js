@@ -27,6 +27,7 @@ import { requestTimestamps,
 export default ({getState, dispatch}) => next => action => {
   const timestampsSuccess = res => dispatch(receiveTimestamps(res.data));
   const timestampSuccess = res => {
+    debugger;
     dispatch(receiveTimestamp(res.data));
     dispatch(updateTimestampArr(res.data.taskId, res.data.id));
   };
@@ -46,7 +47,7 @@ export default ({getState, dispatch}) => next => action => {
     case FINISH_TIMESTAMP:
       finishTimestamp(action.timestamp, timestampUpdateSuccess);
     case UPDATE_TIMESTAMP:
-      updateTimestamp(action.id, action.timestamp, timestampUpdateSuccess);
+      updateTimestamp(action.id, action.timestamp, timestampSuccess);
       return next(action);
     case DESTROY_TIMESTAMP:
       destroyTimestamp(action.timestamp, timestampRemoved);

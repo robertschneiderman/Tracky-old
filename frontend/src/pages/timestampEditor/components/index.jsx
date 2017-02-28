@@ -17,8 +17,9 @@ export class TimestampEditor extends Component {
   }
 
   handleEdit() {
-    let { dispatches, tasks, activeTaskIdx, timestamp } = this.props;
+    let { dispatches, tasks, oldTaskId, activeTaskIdx, timestamp } = this.props;
     let task = tasks[activeTaskIdx];
+    dispatches.removeFromTimestampArr(oldTaskId, timestamp.id)
     dispatches.updateTimestamp(task.id, timestamp)
   }
 
@@ -53,7 +54,7 @@ export class TimestampEditor extends Component {
 /* istanbul ignore next */
 const mapStateToProps = (state) => {
   let {task, timestampEditor} = state;
-  let {taskId, timestamp} = timestampEditor;
+  let {taskId, oldTaskId, timestamp} = timestampEditor;
   let tasks = objToArr(task);
   let activeTaskIdx;
   tasks.forEach((task, i) => {
@@ -64,6 +65,7 @@ const mapStateToProps = (state) => {
 
   return {
     activeTaskIdx,
+    oldTaskId,
     tasks,
     timestamp
   };

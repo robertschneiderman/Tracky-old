@@ -5,6 +5,7 @@ import {
          EDIT_STORED_TIMESTAMP,
          EDIT_STORED_TASK_ID,
          STORE_TIMESTAMP,
+         STORE_OLD_TASK_ID,
        } from './actions';
 
 const timestampeditorReducer = (state = initialState, action) => {
@@ -18,6 +19,9 @@ const timestampeditorReducer = (state = initialState, action) => {
       return newState;
     case EDIT_STORED_TASK_ID:
       newState.taskId = action.payload;    
+      return newState;
+    case STORE_OLD_TASK_ID:
+      newState.oldTaskId = action.payload;    
       return newState;
     default:
       return state;

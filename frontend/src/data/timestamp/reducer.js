@@ -13,6 +13,7 @@ const timestampReducer = (state = initialState, action) => {
     case RECEIVE_TIMESTAMPS:
       return action.timestamps || newState;
     case RECEIVE_TIMESTAMP:
+    debugger;
       newState[action.timestamp.id] = action.timestamp;
       return newState;
     case REMOVE_TIMESTAMP:

@@ -30,9 +30,9 @@ class TimeInput extends Component {
       }
       if (key === 'meridiem') {
         if (value === 'AM') { /// make sure is a change
-          return time.subtract(12, 'hours');
+          return time.subtract(12, 'hours').format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
         } else {
-          return time.add(12, 'hours');
+          return time.add(12, 'hours').format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
         }
       } else {
         return time[key](value).format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
@@ -43,12 +43,14 @@ class TimeInput extends Component {
       let { field, dispatches } = this.props;
       let { time } = this.props;
       let key = this.getFieldKey(idx);
-      let value = parseInt(input.value);
+      let value = input.value;
+              // debugger;
+
       if (this.isValidChange(key, value)) {
 
+        debugger;
         let timestamp = this.tsFromCaseBasis(key, value);
         // timestamp = moment.utc(timestamp).format("YYYY-MM-DDTHH:mm:ss.SSSS");
-        debugger;
 
         dispatches.editStoredTimestamp(field, timestamp);
       }
@@ -58,11 +60,14 @@ class TimeInput extends Component {
     isValidChange(key, value) {
       return (key === 'hours') ? value >= 1 && value <= 12 :
              (key === 'minutes') ? value >= 0 && value <= 60 :
-             this.meridiemValidChange;
+             value === 'AM' || value === 'PM';
     }
 
     shiftFocus(input, idx) {
-        if (idx === 2) return;
+        if (idx === 2) {
+          input.blur();
+          return;
+        }
         let inputContainer = input.parentElement;
         let nextIdx = idx + 2; // adjusts for colon
         let nextChild = inputContainer.children[nextIdx];
