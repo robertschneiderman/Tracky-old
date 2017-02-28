@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import {hashHistory} from 'react-router';
+import {dateToTime} from '../../../common/helpers/timeHelpers';
 
 const multiplier = 2;
 
@@ -56,7 +57,17 @@ class TimeBlock extends Component {
             top: `${start}px`,
             height: `${height}px`
         };
-        return <div className="shape-time-block" style={style} onClick={this.editTimestamp}></div>;
+        return (
+            <div className="shape-time-block" style={style} onClick={this.editTimestamp}>
+                <div className="c-time-block-content">
+                    <div className="w-timeblock-text">
+                        <h3 className="title-timeblock">{`${task.name}`}</h3>
+                        <p className="text-timeblock-time-range">{`${dateToTime(timestamp.start)} - ${dateToTime(timestamp.end)}`}</p>
+                    </div>
+                    <img src={`./static/images/task_icons/${task.icon}.svg`} alt="" className="icn-timeblock"/>
+                </div>
+            </div>
+        );
     }
 
     editTimestamp() {

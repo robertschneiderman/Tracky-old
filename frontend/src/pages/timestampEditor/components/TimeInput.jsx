@@ -58,6 +58,7 @@ class TimeInput extends Component {
     }
 
     isValidChange(key, value) {
+      if (value === '') return false;
       return (key === 'hours') ? value >= 1 && value <= 12 :
              (key === 'minutes') ? value >= 0 && value <= 60 :
              value === 'AM' || value === 'PM';
@@ -81,7 +82,20 @@ class TimeInput extends Component {
         // debugger;
         this.shiftFocus(input, idx);
       }
-    }    
+    }  
+
+    handleOnBlur(e, idx, length) {
+      let input = e.target;
+      let value = input.value;
+
+      if (value.length < length) {
+        let key = this.getFieldKey(idx);
+        if (this.isValidChange(key, value)) {
+          debugger;
+          this.sendOffTimestamp(input, idx);          
+        }
+      }
+    }  
 
     renderTimeInput(time) {
       // MMM DD YYYY 
@@ -93,6 +107,7 @@ class TimeInput extends Component {
         inputs.push(
           <input 
             onChange={e => this.handleOnChange(e, i, lengths[i])}
+            onBlur={e => this.handleOnBlur(e, i, lengths[i])}
             className="input-time-editor"
             style={{width: `${Number(lengths[i])}rem`}}
             type="text"
