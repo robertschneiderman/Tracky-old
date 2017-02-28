@@ -21,15 +21,17 @@ class TaskDisplay extends Component {
 
     getCompletionString(goal) {
         let { task, timer } = this.props;
-        let timeToAdd = timer.running ? (timer.time / 1000) : 0;
-        // debugger;
-        return (task.type === 'frequency') ? 
-               `${goal.count} / ${goal.target}` :
-               `${secondsToTimeString(goal.count + timeToAdd)} / ${secondsToTimeString(goal.target)}`;
+        if (task.type === 'frequency') {
+            return `${goal.count} / ${goal.target}`;
+        } else {
+            let timeToAdd = timer && timer.running ? (timer.time / 1000) : 0;
+            return `${secondsToTimeString(goal.count + timeToAdd)} / ${secondsToTimeString(goal.target)}`;
+        }
     }
 
     renderGoals() {
         let { task, goalDictionary, timer } = this.props;
+        timer = timer || {running: false};
         let goals = (task && task.goals) || [];
         return goals.sort((a, b) => a > b).map(goalId => {
             let goal = goalDictionary[goalId];

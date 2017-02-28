@@ -20,7 +20,7 @@ class ProgressBar extends Component {
 
     getCompletedProgress() {
         let { goal, timer } = this.props;
-        let timeToAdd = timer.running ? (timer.time / 1000) : 0;
+        let timeToAdd = timer && timer.running ? (timer.time / 1000) : 0;
         
         return Math.min( (goal.count + timeToAdd) / goal.target, 1);
     }

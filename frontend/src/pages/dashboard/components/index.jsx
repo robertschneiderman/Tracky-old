@@ -22,8 +22,8 @@ export class Dashboard extends Component {
         <div className="text-message">{this.message || ''}</div>
           <div className="c-dashboard-main">
             {(tasks.length > 0) ? 
-              [<Tasks {...this.props} />,
-              <TaskDisplay timer={timers[activeTask]} task={taskDictionary[activeTask]} goalDictionary={goalDictionary} />
+              [<Tasks {...this.props} key="lks-1" />,
+              <TaskDisplay timer={timers[activeTask]} task={taskDictionary[activeTask]} goalDictionary={goalDictionary} key="lks-2" />
               ] : ''}
             
           </div>
