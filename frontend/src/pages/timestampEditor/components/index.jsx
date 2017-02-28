@@ -23,14 +23,18 @@ export class TimestampEditor extends Component {
     dispatches.updateTimestamp(task.id, timestamp)
   }
 
+  handleClick() {
+    hashHistory.push('calendar');
+  }
+
   render() {
     let { activeTaskIdx, timestamp, tasks, dispatches } = this.props;
     let { start, end } = timestamp;
             // <p className="text-timestamp-editor">{start}</p>
     return (
       <div className="p-timestamp-editor">
+        <img onClick={this.handleClick.bind(this)} src="./static/images/x.svg" alt="" className="btn-timestamp-editor-close"/>
         <div className="c-timestamp-editor">
-
           {activeTaskIdx !== undefined ? [
           <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} />,
           <TimeInput field={'start'} time={start} dispatches={dispatches} />,
