@@ -17,7 +17,7 @@ class TimeBlock extends Component {
         return mins;
     }
 
-    getStartAndEnd() {
+    getStartAndEndPos() {
         let {task, timestamp} = this.props;
         let {start, end} = timestamp;
                 
@@ -29,7 +29,6 @@ class TimeBlock extends Component {
     getStyle(start, end) {
         let { task } = this.props;
         let height = (end - start > 2) ? end - start : 2;
-        debugger;
         return {
             backgroundColor: task.color,
             top: `${start}px`,
@@ -39,6 +38,7 @@ class TimeBlock extends Component {
 
     renderRange(start, end) {
         let { task, timestamp } = this.props;
+        debugger;
         return task.type === 'time' ?
         <p className="text-timeblock-time-range">{`${dateToTime(start)} - ${dateToTime(end)}`}</p> :
         <p className="text-timeblock-time-range">{`${dateToTime(start)}`} <strong>({`${timestamp.strike}`})</strong></p>;
@@ -51,10 +51,10 @@ class TimeBlock extends Component {
     }    
 
     renderTimeBlock() {
-        let { task } = this.props;
-
-        let [start, end] = this.getStartAndEnd();
-        let style = this.getStyle(start, end);
+        let { task, timestamp } = this.props;
+        let { start, end } = timestamp;
+        let [startPos, endPos] = this.getStartAndEndPos();
+        let style = this.getStyle(startPos, endPos);
 
         return (
             <div className="shape-time-block" style={style} onClick={e => this.editTimestamp(e)}>
