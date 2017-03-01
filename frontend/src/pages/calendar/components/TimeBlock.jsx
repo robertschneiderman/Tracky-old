@@ -17,34 +17,6 @@ class TimeBlock extends Component {
         return mins;
     }
 
-    renderTimeBlocks() {
-        let {task, timestamp, special} = this.props;
-        let {start, end} = timestamp;
-
-        let s1 = this.getTotalMinutes(start) * multiplier;
-        let h1 = 2880 - s1;
-        let h2 = this.getTotalMinutes(end) * multiplier;
-        let style1 = {
-            backgroundColor: task.color,
-            top: s1,
-            height: h1
-        };
-        let style2 = {
-            backgroundColor: task.color,
-            top: 0,
-            height: h2,
-            transform: 'translateX(100%)',
-            left: '1px'
-        };    
-
-        return (     
-            <div className="shape-time-blocks">
-                <div className="shape-time-block" style={style1} onClick={this.editTimestamp}></div>
-                <div className="shape-time-block" style={style2} onClick={this.editTimestamp}></div>
-            </div>        
-        );
-    }
-
     getStartAndEnd() {
         let {task, timestamp} = this.props;
         let {start, end} = timestamp;
@@ -57,6 +29,7 @@ class TimeBlock extends Component {
     getStyle(start, end) {
         let { task } = this.props;
         let height = (end - start > 2) ? end - start : 2;
+        debugger;
         return {
             backgroundColor: task.color,
             top: `${start}px`,
@@ -71,6 +44,12 @@ class TimeBlock extends Component {
         <p className="text-timeblock-time-range">{`${dateToTime(start)}`} <strong>({`${timestamp.strike}`})</strong></p>;
     }
 
+    editTimestamp(e) {
+        let {task, timestamp, dispatches} = this.props;
+        e.stopPropagation();
+        dispatches.populateTimestampEditorAndRedirect('edit', task, timestamp);
+    }    
+
     renderTimeBlock() {
         let { task } = this.props;
 
@@ -78,7 +57,7 @@ class TimeBlock extends Component {
         let style = this.getStyle(start, end);
 
         return (
-            <div className="shape-time-block" style={style} onClick={this.editTimestamp}>
+            <div className="shape-time-block" style={style} onClick={e => this.editTimestamp(e)}>
                 <div className="c-time-block-content">
                     <div className="w-timeblock-text">
                         <h3 className="title-timeblock">{`${task.name}`}</h3>
@@ -90,10 +69,6 @@ class TimeBlock extends Component {
         );
     }
 
-    editTimestamp() {
-        let {task, timestamp, dispatches} = this.props;
-        dispatches.populateTimestampEditorAndRedirect(task, timestamp);
-    }    
 
     render() {
         let {task, timestamp, special} = this.props;

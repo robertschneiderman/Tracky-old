@@ -35,12 +35,26 @@ class Day extends Component {
         });
         return timeBlocks;
     }
+
+    timestampFromClick(y) {
+        let minutes = y / 2;
+        let clickTime = moment().startOf('day').add(minutes, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
+        return {start: clickTime, end: clickTime};
+    }
+
+    handleClick(e) {
+        let {history, dispatches} = this.props;
+        let taskId = history.tasks[0];
+        let timestamp = this.timestampFromClick(e.nativeEvent.offsetY);
+        
+        dispatches.populateTimestampEditorAndRedirect('create', {id: taskId}, timestamp);
+    }
     
     render() {
                 // {this.renderDayTitle()}
         return(
             <div className="c-day">
-                <div className="c-day-body">
+                <div className="c-day-body" onClick={(e) => this.handleClick(e)}>
                     {this.renderTimeBlocks()}
                 </div>
             </div>

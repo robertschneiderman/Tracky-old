@@ -34,6 +34,25 @@ export class Calendar extends Component {
     return titles;
   }
 
+  // isSplitDayTimestamp(ts) {
+  //   return moment(ts.start).get('date') !== moment(ts.end).get('date');
+  // }
+
+  // splitTimestamps(historys) {
+  //   // go through all timstamps and find ones that crossover
+  //   // create another timestamp in the next history
+
+  //   historys.forEach((history, histIdx) => {
+  //     history.tasks.forEach((task, taskIdx) => {
+  //       task.forEach(ts => {
+  //         if (this.isSplitDayTimestamp(ts)) {
+  //           history[histIdx+1]
+  //         }
+  //       })
+  //     })
+  //   })
+  // }
+
   returnDay(history, i) {
     let { activeWeek, taskDict, tsDict, dispatches } = this.props;
     let startOfWeek = moment().subtract((activeWeek+1) * 7, 'days').startOf('week').add(1, 'days');
@@ -65,6 +84,7 @@ export class Calendar extends Component {
   renderWeek() {
     let { week, historyDict } = this.props;
     let historys = week.map(histId => historyDict[histId]);
+    // historys = this.splitTimestamps(historys);
 
     return (week.length < 7) ? this.renderIncompleteWeek(historys) : this.renderCompleteWeek(historys);
   }

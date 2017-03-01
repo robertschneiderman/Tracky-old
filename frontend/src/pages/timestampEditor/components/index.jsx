@@ -6,6 +6,7 @@ import moment from 'moment';
 import * as actions from '../redux/actions';
 import { objToArr } from '../../../common/helpers/selectors'
 
+import TypeIncrementer from './TypeIncrementer';
 import TaskIncrementer from './TaskIncrementer';
 import TimeInput from './TimeInput';
 
@@ -22,11 +23,16 @@ export class TimestampEditor extends Component {
   }
 
   handleEdit() {
-    let { dispatches, tasks, oldTaskId, activeTaskIdx, timestamp } = this.props;
+    let { dispatches, tasks, oldTaskId, activeTaskIdx, timestamp, mode } = this.props;
     let task = tasks[activeTaskIdx];
     if (this.isValidRange()) {
-      dispatches.removeFromTimestampArr(oldTaskId, timestamp.id)
-      dispatches.updateTimestamp(task.id, timestamp)
+      if (mode === 'edit') {
+        dispatches.removeFromTimestampArr(oldTaskId, timestamp.id)
+        dispatches.updateTimestamp(task.id, timestamp)
+      } else {
+        timestamp.taskId = task.id
+        dispatches.createTimestamp(timestamp)
+      }
       hashHistory.push('calendar');
     }
   }
@@ -36,8 +42,10 @@ export class TimestampEditor extends Component {
   }
 
   render() {
-    let { activeTaskIdx, timestamp, tasks, dispatches } = this.props;
+    let { mode, activeTaskIdx, timestamp, tasks, dispatches } = this.props;
     let { start, end } = timestamp;
+    let task = tasks[activeTaskIdx];
+    end = end || start;
             // <p className="text-timestamp-editor">{start}</p>
     return (
       <div className="p-timestamp-editor">
@@ -45,10 +53,10 @@ export class TimestampEditor extends Component {
         
         <div className="c-timestamp-editor">
           {activeTaskIdx !== undefined ? [
-          <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} />,
-          <TimeInput field={'start'} time={start} dispatches={dispatches} />,
-          <TimeInput field={'end'} time={end}  dispatches={dispatches} />] : ''}
-          <button disabled={!this.isValidRange()} onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">Update Timestamp</button>
+          <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} key="osm-2" />,
+          <TimeInput field={'start'} time={start} dispatches={dispatches} key="osm-3" />] : ''}
+          {(activeTaskIdx !== undefined && task.type === 'time') ? <TimeInput field={'end'} time={end}  dispatches={dispatches} key="osm-4" /> : ''}
+          <button disabled={!this.isValidRange()} onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">{`${mode}`} Timestamp</button>
         </div>
 
       </div>
@@ -59,7 +67,7 @@ export class TimestampEditor extends Component {
 /* istanbul ignore next */
 const mapStateToProps = (state) => {
   let {task, timestampEditor} = state;
-  let {taskId, oldTaskId, timestamp} = timestampEditor;
+  let {mode, taskId, oldTaskId, timestamp} = timestampEditor;
   let tasks = objToArr(task);
   let activeTaskIdx;
   tasks.forEach((task, i) => {
@@ -72,7 +80,8 @@ const mapStateToProps = (state) => {
     activeTaskIdx,
     oldTaskId,
     tasks,
-    timestamp
+    timestamp,
+    mode
   };
 }
 

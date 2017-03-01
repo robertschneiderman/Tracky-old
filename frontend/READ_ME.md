@@ -1,21 +1,16 @@
-// add page
-// add data
+TO DOS
 
+DASHBOARD
+Timestamp end edgcases
+(flicker for timestamp update)
 
-frontend
+CALENDAR
+Text for timeblocks that are small
+Doubling up timeblocks
+Time timeblocks with no end
 
-    pages
-        Dashboard
-            components
-            redux
-        Calendar
-    data
-        Users
-            [redux files]
-        Histories
-        Tasks
-        Goals
-    common
-        entry
-        root_reducer
-        store
+CRON
+the whole thing
+
+NEW TASK
+Colors only used once

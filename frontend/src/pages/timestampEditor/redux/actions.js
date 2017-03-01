@@ -1,9 +1,8 @@
-export { updateTimestamp } from '../../../data/timestamp/actions';
+export { createTimestamp, updateTimestamp } from '../../../data/timestamp/actions';
 export { removeFromTimestampArr } from '../../../data/task/actions';
 export const EDIT_STORED_TIMESTAMP = 'EDIT_STORED_TIMESTAMP';
-export const EDIT_STORED_TASK_ID = 'EDIT_STORED_TASK_ID';
-export const STORE_TIMESTAMP = 'STORE_TIMESTAMP';
-export const STORE_OLD_TASK_ID = 'STORE_OLD_TASK_ID';
+export const EDIT_STORED_STATE = 'EDIT_STORED_STATE';
+export const POPULATE_STATE = 'POPULATE_STATE';
 
 export const editStoredTimestamp = (key, value) => ({
   type: EDIT_STORED_TIMESTAMP,
@@ -11,17 +10,13 @@ export const editStoredTimestamp = (key, value) => ({
   value
 });
 
-export const editStoredTaskId = payload => ({
-  type: EDIT_STORED_TASK_ID,
-  payload
+export const editStoredState = (key, value) => ({
+  type: EDIT_STORED_STATE,
+  key,
+  value
 });
 
-export const storeTimestamp = payload => ({
-  type: STORE_TIMESTAMP,
-  payload
-});
-
-export const storeOldTaskId = payload => ({
-  type: STORE_OLD_TASK_ID,
+export const populateState = payload => ({
+  type: POPULATE_STATE,
   payload
 });

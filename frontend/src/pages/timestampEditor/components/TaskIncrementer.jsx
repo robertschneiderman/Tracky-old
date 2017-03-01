@@ -14,20 +14,19 @@ class TaskIncrementer extends Component {
         if (activeTaskIdx === tasks.length) activeTaskIdx = 0;
 
         let task = tasks[activeTaskIdx];
-        dispatches.editStoredTaskId(task.id);
+        dispatches.editStoredState('taskId', task.id);
     }
 
     render() {
         let { tasks, activeTaskIdx } = this.props;
         let selectedTask = tasks[activeTaskIdx];
         let { name, icon, color } = selectedTask;
-
         return(
           <div className="r-timestamp-editor">
             <p className="label-timestamp-editor">Task</p>
             <div className="w-timestamp-task-value">
               <img className="img-timestamp-editor-task-icon" src={`./static/images/task_icons/${icon}.svg`} />
-              <p className="text-timestamp-editor">{name}</p>
+              <p className="text-timestamp-editor">{name} {`(${selectedTask.type})`}</p>
             </div>
             <IncrementBtns callback={this.rotateTask.bind(this)} />            
           </div>     

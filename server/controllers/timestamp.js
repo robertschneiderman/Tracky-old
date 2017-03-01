@@ -2,7 +2,10 @@ const Timestamp = require('../models').Timestamp;
 
 exports.create = function(req, res, next) {
   let timestamp = req.body;
-  Timestamp.create({taskId: timestamp.taskId, start: new Date()}).then(task => {
+  let start = timestamp.start || new Date();
+  let end = timestamp.end || null;
+
+  Timestamp.create({taskId: timestamp.taskId, start, end}).then(task => {
     res.status(201).json(task);
   }).catch((e) => {
     res.status(401).send(e);

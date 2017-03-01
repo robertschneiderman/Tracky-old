@@ -27,7 +27,6 @@ import { requestTimestamps,
 export default ({getState, dispatch}) => next => action => {
   const timestampsSuccess = res => dispatch(receiveTimestamps(res.data));
   const timestampSuccess = res => {
-    debugger;
     dispatch(receiveTimestamp(res.data));
     dispatch(updateTimestampArr(res.data.taskId, res.data.id));
   };

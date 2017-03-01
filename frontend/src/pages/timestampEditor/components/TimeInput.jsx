@@ -91,7 +91,6 @@ class TimeInput extends Component {
       if (value.length < length) {
         let key = this.getFieldKey(idx);
         if (this.isValidChange(key, value)) {
-          debugger;
           this.sendOffTimestamp(input, idx);          
         }
       }
