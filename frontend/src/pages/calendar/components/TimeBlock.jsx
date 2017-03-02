@@ -38,7 +38,6 @@ class TimeBlock extends Component {
 
     renderRange(start, end) {
         let { task, timestamp } = this.props;
-        debugger;
         return task.type === 'time' ?
         <p className="text-timeblock-time-range">{`${dateToTime(start)} - ${dateToTime(end)}`}</p> :
         <p className="text-timeblock-time-range">{`${dateToTime(start)}`} <strong>({`${timestamp.strike}`})</strong></p>;

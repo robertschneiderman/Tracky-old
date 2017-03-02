@@ -1,125 +1,152 @@
 var CronJob = require('cron').CronJob;
 var CronHelpers = require('./cron_helpers');
 var lodash = require('lodash');
+var moment = require('moment');
+var merge = lodash.merge;
+const dh = require('./date_helpers');
+
 // var MailGun = require('./mailgun_helpers');
 
-const User = require('./models/user');
+const User = require('./models').User;
+const History = require('./models').History;
+const Task = require('./models').Task;
+const Goal = require('./models').Goal;
+const Timestamp = require('./models').Timestamp;
 
 const config = require('./environment');
 
 let todayInteger = new Date().getMinutes();
 
-var duplicateHistory = history => {
-    let newTasks = [];
-    history.tasks.forEach(task => {
-        let newTask = lodash.merge({}, task.toObject());
-        let newGoals = [];
-        task.goals.forEach(goal => {
-            let newGoal = lodash.merge({}, goal.toObject());
-            newGoals.push(newGoal);
-        });
-        newTask.goals = newGoals;
-        newTask.timestamps = [];        
-        newTasks.push(newTask);
-    });
-    return { tasks: newTasks };
+// email
+// one history, goals that apply to history by interval
+
+const stripId = obj => {
+    delete obj.id;
 };
 
-var job = new CronJob('50 * * * * *', function() {
+const assess = (tasks, emailText, goal) => {
+    let task = tasks.find(task => task.id === goal.taskId);
+    if (goal.count >= goal.target) {
+        emailText.content += `${task.name} complete! (${goal.count} / ${goal.target})`;
+    } else {
+        emailText.content += `${task.name} failed! (${goal.count} / ${goal.target})`;
+    }
+    goal.count = 0;
+    return emailText;
+};
+
+const sendEmail = (user, emailText) => {
+    var helper = require('sendgrid').mail;
+    
+    let fromEmail = new helper.Email("robert.a.schneiderman@gmail.com");
+    let toEmail = new helper.Email(`${user.email}`);
+    let subject = "Tracky Update";
+    let content = new helper.Content("text/html", `${emailText.content}`);
+    let mail = new helper.Mail(fromEmail, subject, toEmail, content);
+
+    var sg = require('sendgrid')(config.sgApiKey);
+    var request = sg.emptyRequest({
+        method: 'POST',
+        path: '/v3/mail/send',
+        body: mail.toJSON()
+    });
+
+    sg.API(request, function(error, response) {
+        console.log(response.statusCode);
+        console.log(response.body);
+        console.log(response.headers);
+    });    
+};
+
+
+var job = new CronJob('05 * * * * *', function() {
     todayInteger = new Date().getMinutes();
 
-    User.find({}, function(err, users) {
-        users.forEach(function(user) { 
-            let emailText = '';
+    User.find({ where: {id: 68}, 
+        include: [
+            {model: History, as: 'historys', include: [
+                {model: Task, as: 'tasks', include: [
+                    {model: Goal, as: 'goals'},
+                    {model: Timestamp, as: 'timestamps'},
+                ]}
+            ]}
+        ] 
+    }).then(user => {
+        let emailText = {content: ''};
+        let goalsGrouped = {daily: [], weekly: [], monthly: []};
 
-            User.findById(user.buddy).then(buddy => {
-                let people = (buddy) ? [user, buddy] : [user];
-                people.forEach((person, index) => {
-                    emailText += `<br/><b>${person.email}</b><br/><br/>`;
+        let lastHistory = user.historys[user.historys.length -1];
+        let tasks = lastHistory.tasks;
 
-                    let duplicated;
-                    if (index === 0) {  // ADD COPY OF HISTORY IF USER
-                        duplicated = duplicateHistory(person.histories[0]);
-                    }
-                    let tasks = (duplicated) ? duplicated.tasks : person.histories[0].tasks;
-
-                    if (false) {
-                        let monthlyGoals = CronHelpers.getGoalObjs(tasks, 'monthly');
-                        emailText += `<br/><b>Monthly:</b><br/><br/>`;                    
-                        monthlyGoals.forEach(goalObj => {
-                            emailText += CronHelpers.assess(goalObj, 'montly');
-                        });                 
-                    }
-
-                    if (false) {
-                        let weeklyGoals = CronHelpers.getGoalObjs(tasks, 'weekly');
-                        emailText += `<br/><b>Weekly:</b><br/><br/>`;                    
-                        weeklyGoals.forEach(goalObj => {
-                            emailText += CronHelpers.assess(goalObj, 'weekly');
-                        });
-                    }
-
-                    let dailyGoals = CronHelpers.getGoalObjs(tasks, 'daily');
-                    emailText += `<br/><b>Daily:</b><br/><br/>`;                    
-                    dailyGoals.forEach(goalObj => {
-                        emailText += CronHelpers.assess(goalObj, 'daily');
-                    });
-
-                    if (index === 0) {
-                        let lastDate = user.histories[0].date;
-                        let testingDate = new Date(lastDate.getFullYear(), lastDate.getMonth(), lastDate.getDate() + 1);                        
-                        user.histories.unshift({date: testingDate, tasks: tasks});
-                    }
-                });         
-     
+        // let tasksDup = tasks.slice().map(task => {
+        //     let task = merge(task);
+        //     task.goals.map(goal => {
+        //         let goal = merge(goal);
+        //     });
+        // });
 
 
+        tasks = tasks.map(task => task.toJSON());
 
-                var helper = require('sendgrid').mail;
-                
-                let fromEmail = new helper.Email("robert.a.schneiderman@gmail.com");
-                let toEmail = new helper.Email(`${user.email}`);
-                let subject = "Tracky Update";
-                let content = new helper.Content("text/html", `${emailText}`);
-                let mail = new helper.Mail(fromEmail, subject, toEmail, content);
-
-                var sg = require('sendgrid')(config.sgApiKey);
-                var request = sg.emptyRequest({
-                    method: 'POST',
-                    path: '/v3/mail/send',
-                    body: mail.toJSON()
-                });
-
-                sg.API(request, function(error, response) {
-                    console.log(response.statusCode);
-                    console.log(response.body);
-                    console.log(response.headers);
-                });
-
-                // var mailOptions = {
-                //     from: '"Tracky" <robert.a.schneiderman@gmail.com>',
-                //     to: `${user.email}`,
-                //     subject: 'Tracky',
-                //     html: `${emailText}`
-                // };
-
-                // MailGun.transporter.sendMail(mailOptions, function(error, info){
-                //     if(error){
-                //         return console.log(error);
-                //     }
-                //     console.log('Message sent: ' + info.response);
-                // });
-
-                user.save(function(err2) {
-                    // if (err) { return next(err); }                
-                }).catch((e) => {
-                    // res.status(401).send();
-                });        
-
+        tasks.forEach(task => {
+            task.goals.forEach(goal => {
+                stripId(goal);
+                goalsGrouped[goal.interval].push(goal);
             });
-            
+        });
+
+
+        if (false) { //month
+
+        }
+
+        if (false) { //week
+
+        }
+
+        // emailText += `<br/><b>Daily:</b><br/><br/>`;                    
+
+        goalsGrouped['daily'].forEach(goal => assess(tasks, emailText, goal));
+        tasks.forEach(task => stripId(task));
+
+        let now = moment(lastHistory.date);
+        now.add(1, 'days');
+
+        // let date = now;
+        let year = now.get('year');
+        let month = now.get('month');
+        let week = now.get('week');
+        let day = dh.adjustedDay(now.get('day'));
+        let date = now.format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
+
+            //     Task.create(task).then(task => {
+            //         task.goals.forEach(goal => {
+            //             Goal.create(goal);
+            //         });
+            //     });
+            // });
+
+        // sendEmail(user, emailText);
+
+
+        History.create(
+            {date, userId: user.id, day, week, month, year, tasks},
+            {include: [
+                {model: Task, as: 'tasks', include: [
+                    {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'}
+                ]}
+            ]}
+        ).then(history => {
+            history;
+        }).catch(e => {
+            e;
         });
     });
 }, null, true, 'America/Los_Angeles');
 
-
+//   Task.create(task, {include: [ {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'} ]})
+//   .then(task => {
+//       res.status(201).json(task);
+//   }).catch((e) => {
+//     res.status(401).send(e);
+//   });

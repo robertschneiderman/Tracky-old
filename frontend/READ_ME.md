@@ -14,3 +14,4 @@ the whole thing
 
 NEW TASK
 Colors only used once
+Bug where no history received after login

@@ -45,6 +45,7 @@ export default ({getState, dispatch}) => next => action => {
       return next(action);
     case FINISH_TIMESTAMP:
       finishTimestamp(action.timestamp, timestampUpdateSuccess);
+      return next(action);
     case UPDATE_TIMESTAMP:
       updateTimestamp(action.id, action.timestamp, timestampSuccess);
       return next(action);

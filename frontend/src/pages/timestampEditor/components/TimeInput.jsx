@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import DateIncrementer from './DateIncrementer';
+import { upperFirst } from 'lodash';
 
 class TimeInput extends Component {
     constructor(props) {
@@ -122,7 +123,7 @@ class TimeInput extends Component {
       let { time, dispatches, field } = this.props;
         return(
           <div className="r-timestamp-editor">
-            <p className="label-timestamp-editor">{field}</p>
+            <p className="label-timestamp-editor">{upperFirst(field)}</p>
             <div className="w-timestamp-editor-ui">
               <DateIncrementer field={field} time={time} dispatches={dispatches} />
               <div className="w-timestamp-editor-inputs">

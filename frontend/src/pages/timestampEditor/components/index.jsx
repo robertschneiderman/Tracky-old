@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {hashHistory} from 'react-router';
 import moment from 'moment';
+import { upperFirst } from 'lodash';
 import * as actions from '../redux/actions';
 import { objToArr } from '../../../common/helpers/selectors'
 
@@ -56,7 +57,7 @@ export class TimestampEditor extends Component {
           <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} key="osm-2" />,
           <TimeInput field={'start'} time={start} dispatches={dispatches} key="osm-3" />] : ''}
           {(activeTaskIdx !== undefined && task.type === 'time') ? <TimeInput field={'end'} time={end}  dispatches={dispatches} key="osm-4" /> : ''}
-          <button disabled={!this.isValidRange()} onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">{`${mode}`} Timestamp</button>
+          <button disabled={!this.isValidRange()} onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">{upperFirst(`${mode}`)} Timestamp</button>
         </div>
 
       </div>

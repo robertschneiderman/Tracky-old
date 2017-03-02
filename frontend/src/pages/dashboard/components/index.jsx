@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
 import { requestUser } from '../../../data/user/actions';
 import { createTimestamp } from '../../../data/timestamp/actions';
+import { objToArr } from '../../../common/helpers/selectors';
 import Tasks from './Tasks';
 import TaskDisplay from './TaskDisplay';
 
@@ -35,11 +36,14 @@ export class Dashboard extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   let { user, history, task, goal, timestamp, dashboard } = state
-  let currentHistory = history[Object.keys(history)[0]];
+  let historyLength = Object.keys(history).length;
+  let currentHistory = objToArr(history)[historyLength-1];
+  // debugger;
   let tasks = []
   if (currentHistory) {
     tasks = currentHistory.tasks.map(taskId => task[taskId]);
   }
+
 
   return {
     user,
