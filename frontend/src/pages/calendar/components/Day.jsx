@@ -16,7 +16,7 @@ class Day extends Component {
         return timestamps;
     }
 
-    renderTimeBlocks() {
+    renderTimeBlocksContainers() {
         let { history, taskDict, tsDict, dispatches } = this.props;
         let timeBlocks = [];
         let tasks = history.tasks.map(taskId => taskDict[taskId]);
@@ -55,7 +55,7 @@ class Day extends Component {
         return(
             <div className="c-day">
                 <div className="c-day-body" onClick={(e) => this.handleClick(e)}>
-                    {this.renderTimeBlocks()}
+                    {this.renderTimeBlocksContainers()}
                 </div>
             </div>
         );

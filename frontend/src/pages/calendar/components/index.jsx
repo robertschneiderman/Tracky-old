@@ -13,6 +13,13 @@ export class Calendar extends Component {
       super(props);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.historys.length !== nextProps.historys.length) {
+      // let maxWeek = historys.reduce((accum, history) => Math.max(accum, history.week), 0);
+      // axioss.post(`users/week/${maxWeek}`);
+    }
+  }
+
   componentDidUpdate() {
     window.scrollTo(0, minutesElapsedInDay() * 2);
   }

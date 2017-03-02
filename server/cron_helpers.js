@@ -65,12 +65,16 @@ const getNewHistoryInfo = date => {
 
     let day = dh.adjustedDay(now.get('day'));
     let week = now.get('week');
-    week = day === 6 ? week : (week - 1);
+    week = day === 6 ? (week - 1) : week;
     let month = now.get('month');
     let year = now.get('year');
     date = now.format("YYYY-MM-DDTHH:mm:ss.SSSSZ");    
 
     return {day, week, month, year, date};
+};
+
+const isFirstDayOfMonth = () => {
+    return moment().get('date') === 1;
 };
 
 exports.cronTask = user => {
@@ -81,13 +85,13 @@ exports.cronTask = user => {
     tasks = tasks.map(task => task.toJSON());
 
     let goalsGrouped = groupGoals(tasks);
+    let {day, week, month, year, date} = getNewHistoryInfo(lastHistory.date);
 
-    if (false) goalsGrouped['monthly'].forEach(goal => assess(tasks, emailText, goal));
-    if (false) goalsGrouped['weekly'].forEach(goal => assess(tasks, emailText, goal));
+    if (isFirstDayOfMonth()) goalsGrouped['monthly'].forEach(goal => assess(tasks, emailText, goal));
+    if (day === 0) goalsGrouped['weekly'].forEach(goal => assess(tasks, emailText, goal));
     goalsGrouped['daily'].forEach(goal => assess(tasks, emailText, goal));
 
     tasks.forEach(task => stripId(task));
-    let {day, week, month, year, date} = getNewHistoryInfo(lastHistory.date);
 
     // sendEmail(user, emailText);
 

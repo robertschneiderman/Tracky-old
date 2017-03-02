@@ -3,6 +3,7 @@ const jwt = require('jwt-simple');
 
 const config = require('../environment');
 const bcrypt = require('bcrypt-nodejs');
+const moment = require('moment');
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
@@ -19,6 +20,11 @@ module.exports = {
 
         let salt = bcrypt.genSaltSync(10);
         let hash = bcrypt.hashSync(password, salt, null);
+
+        // let now = moment();
+        // let day = now.get('day');
+        // let week = now.get('week');
+        // let devWeek = (day === 0) ? week - 1 : week;
 
         User.findOrCreate({ where: {email}, defaults: {name, password: hash}}).spread((user, created) => {
             // if (err) { return next(err); }

@@ -26,3 +26,13 @@ User.find({ where: {id: req.params.id},
     res.status(401).send(e);
   });
 };
+
+exports.adjustWeek = function(req, res, next) {
+  var token = req.header('x-auth');
+  User.findByToken(token).then((user) => {
+    user.devWeek = req.params.week;
+    user.save({fields: ['devWeek']}).then(function() {
+    
+    });    
+  });
+};

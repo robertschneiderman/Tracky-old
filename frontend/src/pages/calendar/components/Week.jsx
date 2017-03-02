@@ -39,7 +39,6 @@ class Week extends Component {
 
     renderWeek() {
         let { week, historyDict } = this.props;
-        debugger;
         let historys = week.map(histId => historyDict[histId]);
         // historys = this.splitTimestamps(historys);
         return (week.length < 7) ? this.renderIncompleteWeek(historys) : this.renderCompleteWeek(historys);
