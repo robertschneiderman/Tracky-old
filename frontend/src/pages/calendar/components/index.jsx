@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import * as actions from '../redux/actions';
-import Day from './Day';
-import TimeGraph from './TimeGraph';
+import Week from './Week';
+// import TimeGraph from './TimeGraph';
 import { minutesElapsedInDay } from '../../../common/helpers/timeHelpers';
 
 export class Calendar extends Component {
@@ -18,12 +18,13 @@ export class Calendar extends Component {
   }
 
   getStartOfWeek() {
-    let { historys } = this.props;
-    debugger;
+    let { historys, activeWeekIdx } = this.props;
     let mode;
-    return (mode === 'production') ?
-            moment().startOf('week').add(1, 'days') :
-            moment(historys[0].date);
+    return moment().startOf('week').add(1, 'days').subtract(activeWeekIdx, 'weeks');
+
+    // return (mode === 'production') ?
+            // moment().startOf('week').add(1, 'days').subtract(activeWeekIdx, 'weeks') :
+            // moment(historys[0].date);
   }
 
 
@@ -62,42 +63,6 @@ export class Calendar extends Component {
     //   })
     // })
   }
-
-  returnDay(history, i) {
-    let { activeWeek, taskDict, tsDict, dispatches } = this.props;
-    let startOfWeek = moment().subtract((activeWeek+1) * 7, 'days').startOf('week').add(1, 'days');
-    let date = startOfWeek.add(i, 'days');
-    // debugger;
-    return <Day 
-            history={history}
-            taskDict={taskDict}
-            tsDict={tsDict}
-            dispatches={dispatches}
-            key={`tsd-${i}`} />
-  }  
-
-  renderIncompleteWeek(historys) {
-    let days = [];
-    let j = 0;
-    for (let i = 0; i <= 6; i++) {
-      let history = historys[j];
-      (history && history.day === i) ? j++ : history = {tasks: [], timestamps: []}
-      days.push(this.returnDay(history, i))
-    }      
-    return days;
-  }
-
-  renderCompleteWeek(historys) {
-    return historys.map(history => this.returnDay(history));
-  }
-
-  renderWeek() {
-    let { week, historyDict } = this.props;
-    let historys = week.map(histId => historyDict[histId]);
-    // historys = this.splitTimestamps(historys);
-
-    return (week.length < 7) ? this.renderIncompleteWeek(historys) : this.renderCompleteWeek(historys);
-  }
   
   render() {
     let { historys } = this.props;
@@ -108,10 +73,8 @@ export class Calendar extends Component {
               {this.renderDayTitles()}
             </div>
 
-            <div className="c-week">
-              {this.renderWeek()}
-              <TimeGraph />
-            </div>
+            <Week {...this.props}/>
+
             {this.props.children}
           </div> 
           : <div></div>;
