@@ -24,6 +24,7 @@ export class Calendar extends Component {
     let titles = [];
     for (let i = 0; i <= 6; i++) {
       let date = i === 0 ? startOfWeek : startOfWeek.add(1, 'days');
+      // debugger;
       titles.push(
           <div className="c-day-title" key={`nvw-${i}`}>
               <h3 className="title-day"><strong>{date.format('ddd')}</strong></h3>

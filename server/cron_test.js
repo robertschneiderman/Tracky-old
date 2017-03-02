@@ -114,9 +114,10 @@ var job = new CronJob('05 * * * * *', function() {
 
         // let date = now;
         let year = now.get('year');
-        let month = now.get('month');
-        let week = now.get('week');
         let day = dh.adjustedDay(now.get('day'));
+        let week = now.get('week');
+        week = day === 6 ? week : (week - 1);
+        let month = now.get('month');
         let date = now.format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
 
             //     Task.create(task).then(task => {
