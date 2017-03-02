@@ -1,4 +1,5 @@
 const Auth = require('./controllers').auth;
+const Cron = require('./controllers').cron;
 const User = require('./controllers').user;
 const Historyy = require('./controllers').history;
 const Task = require('./controllers').task;
@@ -36,4 +37,7 @@ module.exports = function(app) {
   app.patch('/tasks/:taskId/timestamps', requireAuth, Timestamp.update);
   // app.patch('/timestamp', requireAuth, Timestamp.edit);
   app.delete('/tasks/:taskId/timestamps/:id', requireAuth, Timestamp.delete);
+
+
+  app.post('/cron', requireAuth, Cron.create);
 };

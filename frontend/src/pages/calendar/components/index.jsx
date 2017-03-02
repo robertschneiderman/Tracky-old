@@ -15,12 +15,21 @@ export class Calendar extends Component {
 
   componentDidUpdate() {
     window.scrollTo(0, minutesElapsedInDay() * 2);
-  }  
+  }
+
+  getStartOfWeek() {
+    let { historys } = this.props;
+    debugger;
+    let mode;
+    return (mode === 'production') ?
+            moment().startOf('week').add(1, 'days') :
+            moment(historys[0].date);
+  }
 
 
   renderDayTitles() {
     let { activeWeek } = this.props;
-    let startOfWeek = moment().startOf('week').add(1, 'days');
+    let startOfWeek = this.getStartOfWeek();
     let titles = [];
     for (let i = 0; i <= 6; i++) {
       let date = i === 0 ? startOfWeek : startOfWeek.add(1, 'days');
@@ -91,21 +100,21 @@ export class Calendar extends Component {
   }
   
   render() {
-    let { week } = this.props;
-    return (
-      <div className="c-calendar">
+    let { historys } = this.props;
+      return (historys.length > 0) ?
+          <div className="c-calendar">
 
-        <div className="c-day-titles">
-          {this.renderDayTitles()}
-        </div>
+            <div className="c-day-titles">
+              {this.renderDayTitles()}
+            </div>
 
-        <div className="c-week">
-          {week ? this.renderWeek() : ''}
-          <TimeGraph />
-        </div>
-        {this.props.children}
-      </div>
-    );
+            <div className="c-week">
+              {this.renderWeek()}
+              <TimeGraph />
+            </div>
+            {this.props.children}
+          </div> 
+          : <div></div>;
   }
 }
 

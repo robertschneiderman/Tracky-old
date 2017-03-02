@@ -1,81 +1,109 @@
-const msInDay = (24 * 60 * 60 * 1000);
+const User = require('./models').User;
+const History = require('./models').History;
+const Task = require('./models').Task;
+const Goal = require('./models').Goal;
+const Timestamp = require('./models').Timestamp;
+const dh = require('./date_helpers');
+const config = require('./environment');
+var moment = require('moment');
 
-exports.getNextDay = (today = new Date()) => {
-    let nextDay = new Date(today.getTime() + msInDay);
-    nextDay.setHours(0,0,0,0);
-    return nextDay;    
+const stripId = obj => {
+    delete obj.id;
 };
 
-exports.getNextWeek = (today = new Date()) => {
-    let nextWeek = new Date(today.getTime() + 7 * msInDay);
-    nextWeek.setHours(0,0,0,0);
-    return nextWeek;    
-};
+const assess = (tasks, emailText, goal) => {
+    let task = tasks.find(task => task.id === goal.taskId);
 
-exports.getNextMonth = (today = new Date()) => {
-    let nextMonth;    
-    if (today.getMonth() === 11) {
-        return new Date(today.getFullYear() + 1, 0, 1);
+    emailText += `<br/><b>${goal.interval}:</b><br/><br/>`;
+    if (goal.count >= goal.target) {
+        emailText.content += `${task.name} complete! (${goal.count} / ${goal.target})`;
     } else {
-        return new Date(today.getFullYear(), today.getMonth() + 1, 1);
-    }    
-};
-
-exports.isTimeOfWeek = (today = new Date()) => {
-    return (today.getDay() === 1);
-};
-
-exports.isTimeOfMonth = (today = new Date()) => {
-    return (today.getDate() === 1);
-};
-
-exports.compareDates = (date1, date2) => {
-    return (date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate());
-};
-
-exports.assess = (goalObj, interval) => {
-    let goal = goalObj.goal;
-    let task = goalObj.task;
-    let message;
-
-    if (goal.count < goal.goal) {
-        goal.streak = 0;
-        message = `<span style="color: red;">Incomplete: ${task.name} (${goal.count} of ${goal.goal})</span><br/>`;                
-    } else {
-        goal.streak += 1;
-        message = `<span style="color: green;">Complete: ${task.name} (${goal.count} of ${goal.goal}) <b>Streak: ${goal.streak}</span><b><br/>`;                
+        emailText.content += `${task.name} failed! (${goal.count} / ${goal.target})`;
     }
-    
-    setValuesAfterAssessment(goal, interval);
-
-    return message;
-};
-
-const setValuesAfterAssessment = (goal, interval) => {
-    let next;
-    if (interval === 'daily') {
-        next = exports.getNextDay();
-    } else if (interval === 'weekly') {
-        next = exports.getNextWeek();            
-    } else {
-        next = exports.getNextMonth();            
-    }
-    
-    goal.assessed = { last: (new Date()), next };
     goal.count = 0;
+    return emailText;
 };
 
-exports.getGoalObjs = (tasks, interval) => {
-    return tasks.map(task => {
-        for (let i = 0; i < task.goals.length; i++) {
-            let goal = task.goals[i];
-            if (goal.interval === interval) {
-                return { task, goal: goal };
-            } else {
+const sendEmail = (user, emailText) => {
+    var helper = require('sendgrid').mail;
+    
+    let fromEmail = new helper.Email("robert.a.schneiderman@gmail.com");
+    let toEmail = new helper.Email(`${user.email}`);
+    let subject = "Tracky Update";
+    let content = new helper.Content("text/html", `${emailText.content}`);
+    let mail = new helper.Mail(fromEmail, subject, toEmail, content);
 
-            }
-        }
-    }).filter(task => {
-        return (task !== undefined);
+    var sg = require('sendgrid')(config.sgApiKey);
+    var request = sg.emptyRequest({
+        method: 'POST',
+        path: '/v3/mail/send',
+        body: mail.toJSON()
     });
+
+    sg.API(request, function(error, response) {
+        console.log(response.statusCode);
+        console.log(response.body);
+        console.log(response.headers);
+    });    
 };
+
+const groupGoals = tasks => {
+    let goalsGrouped = {daily: [], weekly: [], monthly: []};
+    tasks.forEach(task => {
+        task.goals.forEach(goal => {
+            stripId(goal);
+            goalsGrouped[goal.interval].push(goal);
+        });
+    }); 
+
+    return goalsGrouped;   
+};
+
+const getNewHistoryInfo = date => {
+    let now = moment(date);
+    now.add(1, 'days');
+
+    let day = dh.adjustedDay(now.get('day'));
+    let week = now.get('week');
+    week = day === 6 ? week : (week - 1);
+    let month = now.get('month');
+    let year = now.get('year');
+    date = now.format("YYYY-MM-DDTHH:mm:ss.SSSSZ");    
+
+    return {day, week, month, year, date};
+};
+
+exports.cronTask = user => {
+    let emailText = {content: ''};
+
+    let lastHistory = user.historys[user.historys.length-1];
+    let tasks = lastHistory.tasks;
+    tasks = tasks.map(task => task.toJSON());
+
+    let goalsGrouped = groupGoals(tasks);
+
+    if (false) goalsGrouped['monthly'].forEach(goal => assess(tasks, emailText, goal));
+    if (false) goalsGrouped['weekly'].forEach(goal => assess(tasks, emailText, goal));
+    goalsGrouped['daily'].forEach(goal => assess(tasks, emailText, goal));
+
+    tasks.forEach(task => stripId(task));
+    let {day, week, month, year, date} = getNewHistoryInfo(lastHistory.date);
+
+    // sendEmail(user, emailText);
+
+    History.create(
+        {date, userId: user.id, day, week, month, year, tasks},
+        {include: [
+            {model: Task, as: 'tasks', include: [
+                {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'}
+            ]}
+        ]}
+    ).then(history => {
+        history;
+    }).catch(e => {
+        e;
+    });    
+};
+
+        // message = `<span style="color: red;">Incomplete: ${task.name} (${goal.count} of ${goal.goal})</span><br/>`;                
+        // message = `<span style="color: green;">Complete: ${task.name} (${goal.count} of ${goal.goal}) <b>Streak: ${goal.streak}</span><b><br/>`;                

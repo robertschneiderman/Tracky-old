@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Navbar from './Navbar';
 import {connect} from 'react-redux';
 import { requestUser } from '../data/user/actions';
+import { axioss } from './config';
 
 class App extends Component {
   constructor(props) {
@@ -18,10 +19,15 @@ class App extends Component {
     }
   }
 
+  handleClick() {
+    axioss.post(`cron`);
+  }
+
   render() {
     return(
       <div className="c-app">
         <Navbar />
+        <button onClick={this.handleClick.bind(this)} className="btn-cron-btn">Next Day</button>
         {this.props.children}
       </div>
     );
