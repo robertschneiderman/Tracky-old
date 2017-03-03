@@ -33,4 +33,4 @@ exports.adjustedDay= day => {
 };
 
 
-exports.artificialWeek = 10;
+exports.artificialWeek = 9;

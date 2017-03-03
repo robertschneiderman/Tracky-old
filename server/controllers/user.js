@@ -10,7 +10,7 @@ const moment = require('moment');
 const week = dh.artificialWeek;
 
 exports.find = function(req, res, next) {
-  User.find({ where: {id: req.params.id}, 
+  User.find({ where: {id: parseInt(req.params.id)}, 
     include: [
       {model: History, as: 'historys', where: {week}, include: [
         {model: Task, as: 'tasks', include: [

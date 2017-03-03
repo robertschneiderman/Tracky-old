@@ -15,6 +15,7 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.authenticated !== this.props.authenticated) {
+
       this.props.requestUser(localStorage.getItem('currentUser'));      
     }
   }

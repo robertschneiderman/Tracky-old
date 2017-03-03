@@ -29,11 +29,11 @@ export function signupUser({ email, name, password }) {
       .then(response => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('currentUser', response.data.id);        
-        dispatch({ type: 'AUTH_USER' });
         // dispatch({ type: 'CREATE_HISTORY', id: response.data.id});
             // dispatch({ type: 'RECEIVE_HISTORY', history: res.data});
         createHistory(response.data.id, 
           res => {
+            dispatch({ type: 'AUTH_USER' });
             hashHistory.push('dashboard');
           }, err => console.log(err)
         );
