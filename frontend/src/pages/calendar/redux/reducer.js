@@ -3,6 +3,7 @@ import initialState from './initialState';
 
 import {
          RECEIVE_WEEKS,
+         TOGGLE_WEEK,
        } from './actions';
 
 const calendarReducer = (state = initialState, action) => {
@@ -10,6 +11,9 @@ const calendarReducer = (state = initialState, action) => {
   switch(action.type){
     case RECEIVE_WEEKS:
       newState.weeks.push(action.payload);
+      return newState;
+    case TOGGLE_WEEK:
+      newState.activeWeek += action.payload;
       return newState;
     default:
       return state;

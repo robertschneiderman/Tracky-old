@@ -2,7 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import _ from 'lodash';
 import * as actions from '../redux/actions';
+import WeekToggler from './WeekToggler';
+import DayTitles from './DayTitles';
 import Week from './Week';
 // import TimeGraph from './TimeGraph';
 import { minutesElapsedInDay } from '../../../common/helpers/timeHelpers';
@@ -20,14 +23,17 @@ export class Calendar extends Component {
     }
   }
 
-  componentDidUpdate() {
-    window.scrollTo(0, minutesElapsedInDay() * 2);
+  componentDidMount() {
+    // debugger
+    setTimeout(() => {
+      window.scrollTo(0, minutesElapsedInDay() * 2);
+    }, 100);
   }
 
   getStartOfWeek() {
-    let { historys, activeWeekIdx } = this.props;
+    let { historys, activeWeek } = this.props;
     let mode;
-    return moment().startOf('week').add(1, 'days').subtract(activeWeekIdx, 'weeks');
+    return moment().startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
 
     // return (mode === 'production') ?
             // moment().startOf('week').add(1, 'days').subtract(activeWeekIdx, 'weeks') :
@@ -35,21 +41,15 @@ export class Calendar extends Component {
   }
 
 
-  renderDayTitles() {
+  getWeek() {
     let { activeWeek } = this.props;
-    let startOfWeek = this.getStartOfWeek();
-    let titles = [];
+    let dates = [];
     for (let i = 0; i <= 6; i++) {
-      let date = i === 0 ? startOfWeek : startOfWeek.add(1, 'days');
-      // debugger;
-      titles.push(
-          <div className="c-day-title" key={`nvw-${i}`}>
-              <h3 className="title-day"><strong>{date.format('ddd')}</strong></h3>
-              <h3 className="title-date">{date.format('MMM D')}</h3>
-          </div>
-      );
+      let startOfWeek = this.getStartOfWeek();
+      let date = i === 0 ? startOfWeek : startOfWeek.add(i, 'days');
+      dates.push(date)
     }
-    return titles;
+    return dates;
   }
 
   // isSplitDayTimestamp(ts) {
@@ -72,18 +72,19 @@ export class Calendar extends Component {
   }
   
   render() {
-    let { historys } = this.props;
+    let { historys, week, historyDict, dispatches } = this.props;
+    let dates = this.getWeek();
+
       return (historys.length > 0) ?
           <div className="c-calendar">
 
-            <div className="c-day-titles">
-              {this.renderDayTitles()}
-            </div>
-
+            <WeekToggler dates={dates} dispatches={dispatches} />
+            <DayTitles dates={dates} />
             <Week {...this.props}/>
 
             {this.props.children}
           </div> 
+
           : <div></div>;
   }
 }
@@ -96,10 +97,9 @@ function mapStateToProps(state) {
     historys = historyIds.slice(0, 7).map(historyId => state.history[historyId]);
   }
   historys = historys || [];
-  // state.calendar.activeWeek;
-    // history:
+
   return {
-    week: state.calendar.weeks[state.calendar.activeWeek],
+    week: state.calendar.weeks[state.calendar.activeWeek] || [],
     activeWeek: state.calendar.activeWeek,
     historys,
     historyDict: state.history,

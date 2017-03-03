@@ -44,9 +44,6 @@ export const firstDayOfWeek = () => {
   return result;
 };
 
-export const minutesPassedInDay = () => {
-  return Math.floor(moment.duration(moment().unix() - moment().startOf('day').unix(), 'seconds').asMinutes());
-};
 
 export const hoursPassedSince = date => {
   return Math.floor(moment.duration(moment().unix() - date.unix(), 'seconds').asHours());
@@ -69,4 +66,8 @@ export const secondsToTimeString = seconds => {
 
 export const minutesElapsedInDay = () => {
     return moment.duration(moment().unix() - moment().startOf('day').unix(), 'seconds').asMinutes();    
+};
+
+export const minutesPassedInDay = () => {
+  return Math.floor(moment.duration(moment().unix() - moment().startOf('day').unix(), 'seconds').asMinutes());
 };

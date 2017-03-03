@@ -1,9 +1,15 @@
 import { editStoredTimestamp, populateState} from '../../timestampEditor/redux/actions';
 import {hashHistory} from 'react-router';
 export const RECEIVE_WEEKS = 'RECEIVE_WEEKS';
+export const TOGGLE_WEEK = 'TOGGLE_WEEK';
 
 export const receiveWeeks = payload => ({
   type: RECEIVE_WEEKS,
+  payload
+});
+
+export const toggleWeek = payload => ({
+  type: TOGGLE_WEEK,
   payload
 });
 
