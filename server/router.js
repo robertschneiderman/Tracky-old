@@ -22,8 +22,8 @@ module.exports = function(app) {
   app.post('/signup', Auth.signup);
 
   app.get('/users/:id', User.find);
-  app.post('/users/week/:week', User.adjustWeek);
 
+  app.get('/historys/:week', requireAuth, Historyy.get);
   app.post('/historys', requireAuth, Historyy.create);
 
   app.post('/tasks', requireAuth, Task.create);

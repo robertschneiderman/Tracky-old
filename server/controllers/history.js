@@ -1,48 +1,32 @@
 const History = require('../models').History;
+const Task = require('../models').Task;
+const Goal = require('../models').Goal;
+const Timestamp = require('../models').Timestamp;
 const dh = require('../date_helpers');
 var _ = require('lodash');
 var moment = require('moment');
 
+const week = dh.artificialWeek;
+
+
 exports.get = function(req, res, next) {
-  var token = req.header('x-auth');
-  User.findByToken(token).then((user) => {
-    if (!user) {
-      return Promise.reject();
-    }
-    User.findById(user.buddy).then(buddy => {
-      let histories = user.histories.slice(req.params.index, parseInt(req.params.index) + 7);
-      let userHistories = [];
-      histories.forEach(history => {
-          history = history.toObject();
-          history.date = dh.formattedDate(history.date);
-          userHistories.push(history);
-      });
 
-      if (buddy) {    
-        histories = buddy.histories.slice(req.params.index, parseInt(req.params.index) + 7);
-        let buddyHistories = [];
-        histories.forEach(history => {
-            history = history.toObject();
-            history.date = dh.formattedDate(history.date);
-            buddyHistories.push(history);
-        });
-        user.histories = userHistories;
-        buddy.histories = buddyHistories;
-
-        res.json({ users: [user, buddy] });        
-      } else {
-        res.json({ user: [user] });
-      }
-
-    }).catch((e) => {
-      res.status(401).send();
-    });
+  History.findAll({ 
+    where: {week: req.params.week}, 
+    include: [
+      {model: Task, as: 'tasks', include: [
+        {model: Goal, as: 'goals'},
+        {model: Timestamp, as: 'timestamps'},
+      ]}
+    ],
+    order: [ [ 'createdAt', 'ASC' ] ]
+  })
+  .then((historys) => {
+    res.status(201).json(historys);      
   }).catch((e) => {
-    res.status(401).send();
-  });    
+    res.status(401).send(e);
+  }); 
 };
-
-
 
 exports.create = function(req, res, next) {
   let userId = req.body.id;

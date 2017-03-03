@@ -2,6 +2,7 @@ import merge from 'lodash/merge';
 import initialState from './initialState';
 
 import { RECEIVE_TASKS,
+         MERGE_TASKS,
          RECEIVE_TASK,
          REMOVE_TASK,
          UPDATE_TIMESTAMP_ARR,      
@@ -16,6 +17,11 @@ const taskReducer = (state = initialState, action) => {
   switch(action.type){
     case RECEIVE_TASKS:
       return action.tasks || newState;
+    case MERGE_TASKS:
+      action.tasks.forEach(task => {
+        newState[task.id] = task;
+      });
+      return newState;         
     case RECEIVE_TASK:
       const newTemplate = {[action.task.id]: action.task};
       return merge({}, state, newTemplate);

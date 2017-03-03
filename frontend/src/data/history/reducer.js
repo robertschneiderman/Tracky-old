@@ -2,6 +2,7 @@ import merge from 'lodash/merge';
 import initialState from './initialState';
 
 import { RECEIVE_HISTORYS,
+         MERGE_HISTORYS,
          RECEIVE_HISTORY,
          REMOVE_HISTORY,
          UPDATE_TASK_ARR,
@@ -14,6 +15,11 @@ const historyReducer = (state = initialState, action) => {
   switch(action.type){
     case RECEIVE_HISTORYS:
       return action.historys || newState;
+    case MERGE_HISTORYS:
+      action.historys.forEach(history => {
+        newState[history.id] = history;
+      });
+      return newState;    
     case RECEIVE_HISTORY:
       const newTemplate = {[action.history.id]: action.history};
       return merge({}, state, newTemplate);

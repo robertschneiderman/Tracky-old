@@ -1,7 +1,7 @@
 import { axioss, ROOT_URL } from '../../common/config';
 
-export const fetchHistorys = (success) => {
-  axioss.get(`historys`)
+export const fetchHistorys = (week, success) => {
+  axioss.get(`historys/${week}`)
   .then(success)
   .catch(function(error) {
     console.log(error);

@@ -1,17 +1,39 @@
 import { editStoredTimestamp, populateState} from '../../timestampEditor/redux/actions';
 import {hashHistory} from 'react-router';
+import { normalize, Schema } from 'normalizr';
+import {userSchema, historySchema, taskSchema, goalSchema, timestampSchema} from '../../../data/user/schemas';
+import { objToArr } from '../../../common/helpers/selectors';
+import { mergeHistorys } from '../../../data/history/actions';
+import { mergeTasks } from '../../../data/task/actions';
+import { mergeGoals } from '../../../data/goal/actions';
+import { mergeTimestamps } from '../../../data/timestamp/actions';
+import {axioss} from '../../../common/config';
 export const RECEIVE_WEEKS = 'RECEIVE_WEEKS';
 export const TOGGLE_WEEK = 'TOGGLE_WEEK';
 
-export const receiveWeeks = payload => ({
-  type: RECEIVE_WEEKS,
-  payload
-});
+export const receiveWeeks = (payload) => {
+  return {
+    type: RECEIVE_WEEKS,
+    payload
+  };
+};
 
-export const toggleWeek = payload => ({
-  type: TOGGLE_WEEK,
-  payload
-});
+export const requestAndToggleWeek = (inc, week) => {
+  return dispatch => {
+    axioss.get(`historys/${week}`).then(res => {
+      const normalized = normalize(res.data, [historySchema]);
+      let {historys, tasks, goals, timestamps} = normalized.entities; 
+    // debugger;
+
+      dispatch(mergeTimestamps(objToArr(timestamps)));
+      // dispatch(mergeGoals(goals));
+      dispatch(mergeTasks(objToArr(tasks)));
+      dispatch(mergeHistorys(objToArr(historys)));
+      dispatch(receiveWeeks(Object.keys(historys)));
+      dispatch({type: TOGGLE_WEEK, payload: inc });
+    });
+  };
+};
 
 export const populateTimestampEditorAndRedirect = (mode, task, timestamp) => {
   return (dispatch) => {

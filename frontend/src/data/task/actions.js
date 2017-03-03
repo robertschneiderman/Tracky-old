@@ -4,6 +4,7 @@ export const CREATE_TASK = 'CREATE_TASK';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const DESTROY_TASK = 'DESTROY_TASK';
 export const RECEIVE_TASKS = 'RECEIVE_TASKS';
+export const MERGE_TASKS = 'MERGE_TASKS';
 export const RECEIVE_TASK = 'RECEIVE_TASK';
 export const REMOVE_TASK = 'REMOVE_TASKS';
 export const UPDATE_TIMESTAMP_ARR = 'UPDATE_TIMESTAMP_ARR';
@@ -22,6 +23,11 @@ export const requestTask = id => ({
 
 export const receiveTasks = tasks => ({
     type: RECEIVE_TASKS,
+    tasks
+});
+
+export const mergeTasks = tasks => ({
+    type: MERGE_TASKS,
     tasks
 });
 

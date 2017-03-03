@@ -71,3 +71,7 @@ export const minutesElapsedInDay = () => {
 export const minutesPassedInDay = () => {
   return Math.floor(moment.duration(moment().unix() - moment().startOf('day').unix(), 'seconds').asMinutes());
 };
+
+export const artificialWeek = numToAdd => {
+    return moment().add(numToAdd, 'weeks');
+};

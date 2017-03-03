@@ -5,6 +5,7 @@ export const UPDATE_TIMESTAMP = 'UPDATE_TIMESTAMP';
 export const FINISH_TIMESTAMP = 'FINISH_TIMESTAMP';
 export const DESTROY_TIMESTAMP = 'DESTROY_TIMESTAMP';
 export const RECEIVE_TIMESTAMPS = 'RECEIVE_TIMESTAMPS';
+export const MERGE_TIMESTAMPS = 'MERGE_TIMESTAMPS';
 export const RECEIVE_TIMESTAMP = 'RECEIVE_TIMESTAMP';
 export const REMOVE_TIMESTAMP = 'REMOVE_TIMESTAMPS';
 export const TIMESTAMP_ERROR = 'TIMESTAMP_ERROR';
@@ -20,6 +21,11 @@ export const requestTimestamp = id => ({
 
 export const receiveTimestamps = timestamps => ({
     type: RECEIVE_TIMESTAMPS,
+    timestamps
+});
+
+export const mergeTimestamps = timestamps => ({
+    type: MERGE_TIMESTAMPS,
     timestamps
 });
 

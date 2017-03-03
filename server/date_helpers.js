@@ -31,3 +31,6 @@ exports.adjustedDay= day => {
     if (day === 0) return 6;
     return day - 1;
 };
+
+
+exports.artificialWeek = 10;

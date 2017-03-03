@@ -8,7 +8,7 @@ import WeekToggler from './WeekToggler';
 import DayTitles from './DayTitles';
 import Week from './Week';
 // import TimeGraph from './TimeGraph';
-import { minutesElapsedInDay } from '../../../common/helpers/timeHelpers';
+import { minutesElapsedInDay, artificialWeek } from '../../../common/helpers/timeHelpers';
 
 export class Calendar extends Component {
 
@@ -17,10 +17,10 @@ export class Calendar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.historys.length !== nextProps.historys.length) {
+    // if (this.props.historys.length !== nextProps.historys.length) {
       // let maxWeek = historys.reduce((accum, history) => Math.max(accum, history.week), 0);
       // axioss.post(`users/week/${maxWeek}`);
-    }
+    // }
   }
 
   componentDidMount() {
@@ -31,13 +31,13 @@ export class Calendar extends Component {
   }
 
   getStartOfWeek() {
-    let { historys, activeWeek } = this.props;
+    let { activeWeek } = this.props;
     let mode;
-    return moment().startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
+    // return moment().startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
 
-    // return (mode === 'production') ?
-            // moment().startOf('week').add(1, 'days').subtract(activeWeekIdx, 'weeks') :
-            // moment(historys[0].date);
+    return (mode === 'production') ?
+            moment().startOf('week').add(1, 'days').subtract(activeWeek, 'weeks'):
+            artificialWeek(1).startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
   }
 
 
@@ -72,10 +72,10 @@ export class Calendar extends Component {
   }
   
   render() {
-    let { historys, week, historyDict, dispatches } = this.props;
+    let { week, historyDict, dispatches } = this.props;
     let dates = this.getWeek();
 
-      return (historys.length > 0) ?
+      return (week.length > 0) ?
           <div className="c-calendar">
 
             <WeekToggler dates={dates} dispatches={dispatches} />
@@ -93,10 +93,10 @@ export class Calendar extends Component {
 function mapStateToProps(state) {
   let historyIds = state.user.historys;
   let historys;
-  if (historyIds) {
-    historys = historyIds.slice(0, 7).map(historyId => state.history[historyId]);
-  }
-  historys = historys || [];
+  // if (historyIds) {
+  //   historys = historyIds.slice(0, 7).map(historyId => state.history[historyId]);
+  // }
+  // historys = historys || [];
 
   return {
     week: state.calendar.weeks[state.calendar.activeWeek] || [],

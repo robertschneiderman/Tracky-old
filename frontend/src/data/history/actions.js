@@ -4,6 +4,7 @@ export const CREATE_HISTORY = 'CREATE_HISTORY';
 export const UPDATE_HISTORY = 'UPDATE_HISTORY';
 export const DESTROY_HISTORY = 'DESTROY_HISTORY';
 export const RECEIVE_HISTORYS = 'RECEIVE_HISTORYS';
+export const MERGE_HISTORYS = 'MERGE_HISTORYS';
 export const RECEIVE_HISTORY = 'RECEIVE_HISTORY';
 export const REMOVE_HISTORY = 'REMOVE_HISTORY';
 export const UPDATE_TASK_ARR = 'UPDATE_TASK_ARR';
@@ -20,6 +21,11 @@ export const requestHistory = id => ({
 
 export const receiveHistorys = historys => ({
     type: RECEIVE_HISTORYS,
+    historys
+});
+
+export const mergeHistorys = historys => ({
+    type: MERGE_HISTORYS,
     historys
 });
 
