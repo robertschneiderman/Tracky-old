@@ -9,9 +9,14 @@ class TaskDisplay extends Component {
         this.state = {
             caughtUp: true
         };
+        this.newRender = false;
     }
 
     componentWillReceiveProps(nextProps) {
+        // debugger;
+        if (this.props.task) {
+            this.newRender = (this.props.task.name !== nextProps.task.name);
+        }
         // if (this.props.task.goals[0].count !== nextProps.task.goals[0].count) {
         //     this.setState({caughtUp: true});
         // } else {
@@ -51,16 +56,18 @@ class TaskDisplay extends Component {
         let { timer, task } = this.props;
         task = task || {name: '', icon: ''};
         let timeVisibility = task.type === 'frequency' ? {visibility: 'hidden'} : {};
+
+        let animation = this.newRender ? 'slideRight' : '';
         return(
-            <div className="c-task-display">
+            <div className={`c-task-display ${animation}`}>
                 <div className="c-task-display-time" style={timeVisibility}>{msToLongerTime(timer && timer.time)}</div>
                 <div className="c-task-display-time-main">
-                    {(task.icon) ? <img src={`./static/images/task_icons/${task.icon}.svg`} alt="" className="img-task-display-icon"/> : ''}
                     <div className="c-task-display-text">
+                        {(task.icon) ? <img src={`./static/images/task_icons/${task.icon}.svg`} alt="" className="img-task-display-icon"/> : ''}
                         <h3 className="title-task-diplay">{task.name}</h3>
-                        <div className="c-task-display-goals">
-                            {this.renderGoals()}
-                        </div>
+                    </div>
+                    <div className="c-task-display-goals">
+                        {this.renderGoals()}
                     </div>
                 </div>
             </div>

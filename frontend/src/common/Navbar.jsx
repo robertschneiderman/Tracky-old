@@ -8,13 +8,19 @@ class Navbar extends Component {
     if (this.props.authenticated) {
       return [
         <li className="item-navbar" key={'nvb-23jnk'}>
-          <Link className="link-navbar" to="/dashboard">Dashboard</Link>
+          <Link className="link-navbar" to="/dashboard">
+            <img src="./static/images/dashboard.svg" alt="" className="icn-dashboard"/>
+          </Link>
         </li>,
         <li className="item-navbar" key={'nvb-8fu'}>        
-          <Link className="link-navbar" to="/calendar">Calendar</Link>
+          <Link className="link-navbar" to="/calendar">
+            <img src="./static/images/calendar.svg" alt="" className="icn-calendar"/>          
+          </Link>
         </li>,
         <li className="item-navbar" key={'nvb-jh1b'}>              
-          <Link className="link-navbar" to="/new-task">New Task</Link>
+          <Link className="link-navbar" to="/new-task">
+            <img src="./static/images/plus.svg" alt="" className="icn-calendar"/>          
+          </Link>
         </li>,
         <li className="item-navbar" key={'nvb-n919'}>        
           <Link className="link-navbar" to="/signout">Sign Out</Link>
@@ -35,7 +41,10 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="c-navbar">
-        <Link to="/" className="text-logo">Tracky :)</Link>
+        <Link to="/" className="text-logo">
+          <img className="img-logo" src="./static/images/logo.png" alt=""/>
+          Tracky
+        </Link>
         <ul className="list-navbar">
           {this.renderLinks()}
         </ul>

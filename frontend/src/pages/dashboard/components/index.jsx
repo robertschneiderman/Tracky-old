@@ -24,6 +24,7 @@ export class Dashboard extends Component {
           <div className="c-dashboard-main">
             {(tasks.length > 0) ? 
               [<Tasks {...this.props} key="lks-1" />,
+              <div className="shape-dashboard-divider"></div>,
               <TaskDisplay timer={timers[activeTask]} task={taskDictionary[activeTask]} goalDictionary={goalDictionary} key="lks-2" />
               ] : ''}
             

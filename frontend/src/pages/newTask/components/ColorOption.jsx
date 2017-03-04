@@ -11,7 +11,7 @@ class ColorOption extends Component {
 
     renderColorOptions() {
         let { selectedColor } = this.props;
-        let colorOptions = ['red', 'orange', 'green', 'blue', 'yellow', 'teal', 'grey', 'purple'];
+        let colorOptions = ['red', 'orange', 'green', 'blue', 'yellow', 'teal', 'pink', 'purple'];
         return colorOptions.map((color, i) => {
             let className=`btn-choose-color ${color}`;
             if (selectedColor === color) className += ' selected';

@@ -23,12 +23,12 @@ export const requestAndToggleWeek = (inc, week) => {
     axioss.get(`historys/${week}`).then(res => {
       const normalized = normalize(res.data, [historySchema]);
       let {historys, tasks, goals, timestamps} = normalized.entities; 
-    // debugger;
 
-      dispatch(mergeTimestamps(objToArr(timestamps)));
-      // dispatch(mergeGoals(goals));
-      dispatch(mergeTasks(objToArr(tasks)));
-      dispatch(mergeHistorys(objToArr(historys)));
+      if (timestamps) dispatch(mergeTimestamps(objToArr(timestamps)));
+      if (tasks) dispatch(mergeTasks(objToArr(tasks)));
+      if (historys) dispatch(mergeHistorys(objToArr(historys)));
+
+      historys = historys || [];
       dispatch(receiveWeeks(Object.keys(historys)));
       dispatch({type: TOGGLE_WEEK, payload: inc });
     });

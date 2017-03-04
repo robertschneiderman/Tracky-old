@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import {hashHistory} from 'react-router';
 import {dateToTime} from '../../../common/helpers/timeHelpers';
+import { COLOR_MAP } from '../../../common/helpers/maps';
 
 const multiplier = 2;
 
@@ -30,7 +31,7 @@ class TimeBlock extends Component {
         let { task } = this.props;
         let height = (end - start > 2) ? end - start : 2;
         return {
-            backgroundColor: task.color,
+            backgroundColor: COLOR_MAP[task.color],
             top: `${start}px`,
             height: `${height}px`
         };        

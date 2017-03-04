@@ -37,7 +37,7 @@ export class Calendar extends Component {
 
     return (mode === 'production') ?
             moment().startOf('week').add(1, 'days').subtract(activeWeek, 'weeks'):
-            artificialWeek(1).startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
+            artificialWeek(0).startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
   }
 
 
@@ -75,7 +75,7 @@ export class Calendar extends Component {
     let { week, historyDict, dispatches } = this.props;
     let dates = this.getWeek();
 
-      return (week.length > 0) ?
+      return (week) ?
           <div className="c-calendar">
 
             <WeekToggler dates={dates} dispatches={dispatches} />

@@ -1,12 +1,13 @@
 const icons = [
-    'agenda',
-    'clock',
-    'coding',
-    'dumbbell',
-    'edit',
-    'running',
-    'share',
-    'theatre',
-    'users'
+    'book',
+    'camera',
+    'iron',
+    'meditation',
+    'music',
+    'pan',
+    'shoe',
+    'suitcase',
+    'weight',
+    'yoga'  
 ];
 export default icons;
