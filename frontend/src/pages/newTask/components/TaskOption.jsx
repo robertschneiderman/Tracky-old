@@ -19,7 +19,7 @@ class TaskOptions extends Component {
         return options.map((option, i) => {
             return (
                 <div className="c-task-option" key={`taskOptions-${i}`}>
-                    <label className="label-goal-option">
+                    <label className="label-goal-option radio">
                         <span className="text-task-option-text">{option}</span>
                         <input
                             id="temp"
@@ -29,6 +29,7 @@ class TaskOptions extends Component {
                             checked={(selected === option) ? 'checked' : ''}
                             onChange={(e) => this.handleChange(e)}
                             value={option.toLowerCase()} />
+                        <span className="outer"><span className="inner"></span></span>
                     </label>
                 </div>
             );    
@@ -39,7 +40,9 @@ class TaskOptions extends Component {
         return (
             <div className="c-task-option-group">
                 <h3 className="hl-task-option">{name}</h3>
-                {this.renderOptions()}
+                <div className="w-task-options">
+                    {this.renderOptions()}
+                </div>
             </div>      
         );
     }

@@ -7,8 +7,8 @@ class IncrementBtns extends Component {
         let { callback } = this.props;        
         return(
             <div className="w-incrementer-btns">
-                <img onClick={callback.bind(this, 1)} src="./static/images/task_icons/up_arrow.svg" className="btn-incrementer-btn" />
-                <img onClick={callback.bind(this, -1)} src="./static/images/task_icons/down_arrow.svg" className="btn-incrementer-btn" />
+                <img onClick={callback.bind(this, 1)} src="./static/images/up_arrow.svg" className="btn-incrementer-btn" />
+                <img onClick={callback.bind(this, -1)} src="./static/images/down_arrow.svg" className="btn-incrementer-btn" />
             </div>
         );
     }

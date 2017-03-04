@@ -9,9 +9,9 @@ class DayTitles extends Component {
         return dates.map((date, i) => {
             return (
                 <div className="c-day-title" key={`nvw-${i}`}>
-                    <h3 className="title-day">{date.format('dd')}</h3>
-                    <span className="chars-day-title-hypen">-</span>
-                    <h3 className="title-date">{date.format('MMM D')}</h3>
+                    <h3 className="title-day">{date.format('ddd')}</h3>
+                    <span className="chars-day-title-hypen"></span>
+                    <h3 className="title-date">{date.format('Do')}</h3>
                 </div>        
             );
         });

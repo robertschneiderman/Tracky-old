@@ -18,8 +18,8 @@ class WeekToggler extends Component {
         let firstDate = dates[0];
         let lastDate = dates[dates.length-1];
 
-        firstDate = moment(firstDate).format('MMM D');
-        lastDate = moment(lastDate).format('MMM D');
+        firstDate = moment(firstDate).format('MMM Do');
+        lastDate = moment(lastDate).format('MMM Do');
 
         return(
             <div className="w-week-toggler">

@@ -65,7 +65,7 @@ class TimeBlock extends Component {
 
         return task.type === 'time' ?
         <p className="text-timeblock-time-range" style={style}>{`${dateToTime(start)} - ${dateToTime(end)}`}</p> :
-        <p className="text-timeblock-time-range" style={style}>{`${dateToTime(start)}`} <strong>({`${timestamp.strike}`})</strong></p>;
+        <p className="text-timeblock-time-range" style={style}>{`${dateToTime(start)}`}   <strong style={{marginRight: '.5rem'}}>{`${timestamp.strike}`}</strong></p>;
     }
 
     editTimestamp(e) {

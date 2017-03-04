@@ -24,11 +24,13 @@ class TaskIncrementer extends Component {
         return(
           <div className="r-timestamp-editor">
             <p className="label-timestamp-editor">Task</p>
-            <div className="w-timestamp-task-value">
-              <img className="img-timestamp-editor-task-icon" src={`./static/images/task_icons/${icon}.svg`} />
-              <p className="text-timestamp-editor">{name} {`(${selectedTask.type})`}</p>
+            <div className="w-task-editor-ui">
+                <div className="w-timestamp-task-value">
+                <img className="img-timestamp-editor-task-icon" src={`./static/images/task_icons/${icon}.svg`} />
+                <p className="text-timestamp-editor">{name} {`(${selectedTask.type})`}</p>
+                </div>
+                <IncrementBtns callback={this.rotateTask.bind(this)} />
             </div>
-            <IncrementBtns callback={this.rotateTask.bind(this)} />            
           </div>     
         );
             // <div className="w-task-incrementer">
