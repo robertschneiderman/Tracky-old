@@ -34,12 +34,19 @@ class TaskDisplay extends Component {
         }
     }
 
-    renderGoals() {
-        let { task, goalDictionary, timer } = this.props;
-        timer = timer || {running: false};
+    getGoals() {
+        let { task, goalDictionary } = this.props;
+        
         let goals = (task && task.goals) || [];
-        return goals.sort((a, b) => a > b).map(goalId => {
-            let goal = goalDictionary[goalId];
+        return goals.sort((a, b) => a > b).map(goalId => goalDictionary[goalId]);
+    }
+
+    renderGoals() {
+        let { timer } = this.props;
+        timer = timer || {running: false};        
+        let goals= this.getGoals();
+
+        return goals.map(goal => {
             return (
                 <div className="c-task-display-goal" key={`sdk-${goal.id}`}>
                     <h3 className="title-task-display-goal">{startCase(goal.interval)}</h3>
@@ -54,6 +61,7 @@ class TaskDisplay extends Component {
     
     render() {
         let { timer, task } = this.props;
+        let firstGoal = this.getGoals()[0] || [];
         task = task || {name: '', icon: ''};
         let timeVisibility = task.type === 'frequency' ? {visibility: 'hidden'} : {};
 
@@ -66,8 +74,20 @@ class TaskDisplay extends Component {
                         {(task.icon) ? <img src={`./static/images/task_icons/${task.icon}.svg`} alt="" className="img-task-display-icon"/> : ''}
                         <h3 className="title-task-diplay">{task.name}</h3>
                     </div>
+
                     <div className="c-task-display-goals">
                         {this.renderGoals()}
+                    </div>
+
+                    <div className="w-task-display-streaks-records">
+                        <div className="w-record">
+                            <img src="./static/images/medal.svg" alt="" className="icn-record"/>
+                            <span className="text-streak">0</span>
+                        </div>
+                        <div className="w-record">
+                            <img src="./static/images/fire.svg" alt="" className="icn-record"/>
+                            <span className="text-streak">{firstGoal.streak}</span>
+                        </div>                        
                     </div>
                 </div>
             </div>
