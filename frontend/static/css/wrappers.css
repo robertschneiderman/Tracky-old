@@ -1,0 +1,26 @@
+.w-timestamp-editor-inputs {
+
+}
+.w-task-incrementer {
+
+}
+.w-task-column-1 {
+
+}
+.w-task-column-2 {
+
+}
+.w-task-display-goal {display: flex;justify-content: space-between;margin-bottom: 0.5rem;}
+.w-task-display-streaks-records {display: flex;}
+.w-record {display: flex;align-items: center;margin-right: 1.5rem;}
+.w-streak {display: flex;align-items: center;}
+.w-task-options {display: flex;}
+.w-task-editor-ui {display: flex;align-items: center;}
+.w-week-toggler {display: flex;margin: 1rem 0 2rem;justify-content: center;}
+.w-timeblock-text {/* height: 100%; *//* font-size: 1vh; */}
+
+.w-widget {}
+.w-date-incrementer {display: flex;align-items: center;margin-right: 1rem;}
+.w-incrementer-btns {/* position: absolute; *//* right: 0.9rem; */margin-left: 0.4rem;}
+.w-timestamp-editor-ui {display: flex;}
+.w-timestamp-task-value {display: flex;align-items: center;}

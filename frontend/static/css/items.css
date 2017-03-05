@@ -1,0 +1,3 @@
+.item-navbar {margin-right: 2rem;}
+
+.item-navbar:last-child {margin-right: 0;}

@@ -11,12 +11,12 @@ class Home extends Component {
     }
     
     render() {
+                    // <h1 className="hl-home">Welcome to Tracky!</h1>
         return(
-            <div className="home-page">
+            <div className="p-home">
                 <div className="c-home">
-                    <h1 className="hl-home">Welcome to Tracky!</h1>
-                    <p className="text-home">Where all your tracking needs come true and so much more!</p>
-                    <div onClick={this.handeClick} className="btn-home">Get Started</div>
+                    <h1 className="hl-home">Get started with <strong>Tracky</strong> the app that makes it fun and easy to track your goals</h1>
+                    <button onClick={this.handleClick} className="btn-home">Get Started</button>
                 </div>
             </div>
         );

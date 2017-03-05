@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "./server/index.js",
+  "bin": {
+    "rapidCSS": "./bin/rapidCSS.js"
+  },  
   "scripts": {
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d",
     "start": "node ./tools/server.js",

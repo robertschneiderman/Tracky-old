@@ -49,10 +49,12 @@ class TaskDisplay extends Component {
         return goals.map(goal => {
             return (
                 <div className="c-task-display-goal" key={`sdk-${goal.id}`}>
-                    <h3 className="title-task-display-goal">{startCase(goal.interval)}</h3>
-                    <p className="text-task-display-goal">
-                        {this.getCompletionString(goal)}
-                    </p>
+                    <div className="w-task-display-goal">
+                        <h3 className="title-task-display-goal">{startCase(goal.interval)}</h3>
+                        <p className="text-task-display-goal">
+                            {this.getCompletionString(goal)}
+                        </p>
+                    </div>
                     <ProgressBar goal={goal} timer={timer} />
                 </div>
             );
@@ -63,7 +65,7 @@ class TaskDisplay extends Component {
         let { timer, task } = this.props;
         let firstGoal = this.getGoals()[0] || [];
         task = task || {name: '', icon: ''};
-        let timeVisibility = task.type === 'frequency' ? {visibility: 'hidden'} : {};
+        let timeVisibility = (task.type === 'time' && timer && timer.running) ? {} : {visibility: 'hidden'};
 
         let animation = this.newRender ? 'slideRight' : '';
         return(

@@ -87,12 +87,12 @@ class TaskTime extends Component {
             <div className="c-task" onClick={this.handleClick.bind(this)} onMouseEnter={this.handleMouseEnter.bind(this)}>
                 <img src={`./static/images/task_icons/${icon}.svg`} className="img-task-icon" />
                 <div className="c-task-text">
-                    <div className="c-task-row-1">
+                    <div className="w-task-column-1">
                         <h3 className="title-task-name">{name}</h3>
-                        <p className="text-task-timer">{msToTime(timer)}</p>
-                    </div>
-                    <div className="c-task-row-2">
                         {this.renderTimestampDisplay()}
+                    </div>
+                    <div className="w-task-column-2">
+                        <p className="text-task-timer">{msToTime(timer)}</p>
                         <p className="text-total-time">{msToTime(totalTime)}</p>
                     </div>
                 </div>

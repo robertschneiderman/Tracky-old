@@ -45,8 +45,7 @@ class Navbar extends Component {
     return (
       <nav className="c-navbar">
         <Link to="/" className="text-logo">
-          <img className="img-logo" src="./static/images/logo.png" alt=""/>
-          Tracky
+          <img className="img-logo" src="./static/images/logo.svg" alt=""/>
         </Link>
         <ul className="list-navbar">
           {this.renderLinks()}

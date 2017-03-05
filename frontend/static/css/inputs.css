@@ -1,0 +1,16 @@
+.input {
+
+}
+.input-goal {
+    padding: 0.5rem;
+    border: 0;
+    text-align: center;
+    width: 40%;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+}
+.input-time-editor {padding: 0.1rem 0;border: 0;margin-right: 0.2em;align-items: baseline;text-align: center;font-size: 1.3rem;/* width: 40%; */width: 4rem;outline: 0;display: inline-block;border-bottom: 1px solid #ccc;}
+.input-icon-option {border: 0;border-bottom: 1px solid #ccc;outline: 0;height: 1.8rem;width: 5rem;}
+.input-task-name {border: 0;border-bottom: 1px solid #ccc;margin-bottom: 1rem;padding: 0.9rem .5rem;font-size: 1.4rem;outline: 0;width: 80%;}
+.input-goal-option {margin-right: 2rem;}
+.input-auth {width: 100%;padding: 0.6rem;}

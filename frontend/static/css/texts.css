@@ -1,0 +1,44 @@
+.text-goal-input {
+
+}
+.text-task-option-text {margin-right: 0.6rem;}
+.text-home {font-size: 2.2rem;color: #888;margin: 0 0 1.6rem;font-weight: 700;}
+.text-logo {text-decoration: none;font-size: 2rem;}
+
+.text-auth-error {
+    color: red;
+    transform: translate3d(100%, -50%, 0);
+    slateX(-100%);
+    right: -0.6rem;
+    top: 50%;
+    position: absolute;
+}
+.text-task-timer {color: #777;font-weight: 300;margin-bottom: .6rem;}
+.text-timestamp-display {font-weight: 300;font-size: .9rem;}
+.text-total-time {color: #777;font-weight: 300;}
+.text-message {
+
+}
+.text-task-display-goal {top: 2.2rem;left: -9.3rem;z-index: 9999;color: #aaa;}
+.text-timestamp-f-display {font-weight: 300;}
+.text-task-count {
+    font-weight: 300;
+}
+.text-day-label-day {
+
+}
+.text-day-label-date {
+
+}
+.text-timestamp-editor {
+
+}
+.text-widget-text {
+
+}
+.text-signout {color: #aaa;font-size: 2.7rem;margin: 1.3rem 0 0 2rem;font-style: italic;}
+.text-streak {font-weight: 700;}
+.text-timeblock-time-range {font-size: 0.8rem;/* font-size: 1vh; */font-weight: 300;}
+.text-date-incrementer {color: darkgrey;font-size: 1.3rem;/* margin-right: 2rem; */}
+
+span.text-auth-error {}

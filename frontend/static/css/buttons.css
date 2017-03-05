@@ -1,0 +1,73 @@
+.btn-create-task {padding: 0.9rem;background-color: #97f1ff;color: #fff;}
+.btn-auth {background: #8ddaff;border-radius: 5px;color: #fff;padding: 1rem;margin-top: 0.6rem;}
+.btn-home {
+    padding: 1rem;
+    background: #8ddaff;
+    color: #fff;
+    width: 11rem;
+    font-size: 1.1rem;
+    padding: 1.3rem 2rem;
+    /* display: block; */
+    /* margin: 0 auto; */
+    cursor: pointer;
+}
+
+.btn-home:hover {
+    background: hsla(199, 100%, 65%, 1);
+}
+
+.btn-choose-color.selected::after {
+    content: "x";
+    position: absolute;
+    /* width: calc(100% - 3px); */
+    /* height: calc(100% - 3px); */
+    /* border: 3px solid yellow; */
+    left: 50%;
+    font-weight: 700;
+    transform: translate3d(-50%, -50%, 0);
+    top: 50%;
+}
+.btn-goal-input {
+
+}
+.btn-incrementer-btn {display: block;/* color: darkgrey; */width: 0.7rem;cursor: pointer;}
+
+.btn-incrementer-btn:first-child {
+    margin-bottom: 0.3rem;
+}
+.btn-wiget-button {background: #9c9cff;}
+.btn-timestamp-editor-close {width: 1.7rem;height: 1.7rem;position: fixed;top: 4rem;right: 6rem;cursor: pointer;z-index: 9999;}
+.btn-edit-timestamp {background-color: #91f5ff;color: #ffffff;padding: 1rem;}
+
+.btn-choose-color {padding: 0rem;margin-right: 1rem;width: 2rem;height: 2rem;transition: all .3s;display: block;background-color: #e2e2e2;}
+
+.btn-choose-color:hover {
+    transform: scale(1.15);
+}
+
+.btn-choose-color.red {background-color: #f36a6a;}
+
+.btn-choose-color.orange {background-color: #ffc862;}
+
+.btn-choose-color.green {background-color: #8ad68a;}
+
+.btn-choose-color.blue {background-color: #5fa7f1;}
+
+.btn-choose-color.yellow {background-color: #ffff77;}
+
+.btn-choose-color.teal {background-color: #7de4e4;}
+
+.btn-choose-color.pink {background-color: #eb9dff;}
+
+.btn-choose-color.purple {background-color: #bfa7fb;}
+
+.btn-cron-btn {
+    padding: 1rem;
+    background: #4abcde;
+    color: #fff;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 9999;
+}
+.btn-week-toggler {color: #777;}
