@@ -109,15 +109,11 @@
 .c-calendar {
 
 }
-.c-fieldset-auth {
-
-}
+.c-fieldset-auth {margin-bottom: 1rem;text-align: left;}
 .c-app {
 
 }
-.c-home {
-
-}
+.c-home {text-align: center;margin: 0 auto;max-width: 880px;width: 90%;}
 .c-navbar {
 
 }
@@ -494,9 +490,14 @@
         
     }
     .c-home {
-        
+        /* text-align: center; */
+        /* margin: 0 auto; */
+        /* max-width: 880px; */
     }
     .c-navbar {
-        
+        display: flex;
+        justify-content: space-between;
+        padding: 1.5rem 2.5rem;
+        align-items: center;
     }
 } /* xLarge */

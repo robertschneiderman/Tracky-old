@@ -5,16 +5,18 @@ import { createHistory } from '../../../data/history/api_util';
 const ROOT_URL = (process.env.NODE_ENV !== "production") ? 'http://localhost:3090' : 'https://trackyy.herokuapp.com';
 // const ROOT_URL = 'https://trackyy.herokuapp.com';
 
-export function signinUser({ email, name, password }) {
+export function signinUser({ email, password }) {
   return function(dispatch) {
-    axios.post(`${ROOT_URL}/signin`, { email, name, password })
+        debugger;
+    axios.post(`${ROOT_URL}/signin`, { email, password })
       .then(response => {
-        dispatch({ type: 'AUTH_USER', payload: response.data.user });
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('currentUser', response.data.id);
+        localStorage.setItem('currentUser', response.data.user.id);
         
         const currentUser = localStorage.getItem('currentUser');        
-        dispatch({ type: 'REQUEST_USER', payload: currentUser });        
+        dispatch({ type: 'REQUEST_USER', id: currentUser });
+
+        dispatch({ type: 'AUTH_USER', payload: response.data.user });
         hashHistory.push('dashboard');
       })
       .catch(() => {

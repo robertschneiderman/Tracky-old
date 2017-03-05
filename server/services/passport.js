@@ -8,7 +8,7 @@ const config = require('../environment');
 
 const localOptions = { usernameField: 'email' };
 const localLogin = new LocalStrategy({ usernameField: 'email' }, function(email, password, done) {
-  User.findOne({email: email}).then(user => {
+  User.find({where: {email: email}}).then(user => {
     user.comparePasswords(password, user.password, function(err, isMatch) {
       if (err) { return done(null, false); }
       if (!isMatch) { return done(null, false); }
