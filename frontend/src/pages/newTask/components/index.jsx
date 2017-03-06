@@ -10,9 +10,9 @@ import { createTask } from '../../../data/task/actions';
 export class NewTask extends Component {
 
   taskAreaComplete() {
-    let { name, color, type, interval } = this.props;
-    // return name && color && type && interval;
-    return true;
+    let { type, interval } = this.props;
+    return type && interval;
+    // return true;
   }
 
   handleCreate() {
@@ -31,12 +31,11 @@ export class NewTask extends Component {
   render() {
     return (
       <div className="c-new-task">
-        <h1 className="hl-new-task">Create New Task</h1>
         <div className="c-task-and-goal-area">
           <TaskArea {...this.props} />
           {(this.taskAreaComplete()) ? <GoalArea {...this.props} /> : ''}
-        </div>  
           {(this.taskAreaComplete()) ? <button onClick={this.handleCreate.bind(this)} className="btn-create-task">Add Task</button> : ''}
+        </div>  
       </div>
     );
   }
