@@ -91,18 +91,15 @@
 .c-time-block-content {
 
 }
-.c-time-graph-line {
-
+.c-time-graph-line {width: 100%;/* position: absolute; */height: 60px;border-bottom: 1px solid #e4e4e4;}
+.c-time-graph-line.dotted {
+    border-bottom: 1px dashed #e4e4e4;
 }
-.c-time-graph {
-
-}
+.c-time-graph {width: 100%;height: 100%;position: absolute;z-index: 8000;pointer-events: none;}
 .c-week {
 
 }
-.c-calendar {
-
-}
+.c-calendar {max-width: 1300px;margin: 0 auto;}
 .c-fieldset-auth {margin-bottom: 1rem;text-align: left;}
 .c-app {
 
@@ -118,7 +115,13 @@
 
 @media (min-width: 600px) {
     .c-timestamp-editor {
-        
+        border: 1px solid #eee;
+        top: 50%;
+        left: 50%;
+        max-width: 680px;
+        padding: 3rem 4rem;
+        background-color: #fff;
+        transform: translate3d(-50%,-50%,0);
     }
     .c-color-options {
         
@@ -215,16 +218,22 @@
         margin: 0 auto;
     }
     .c-day {
-        
+        background-color: #f1f1f1;
+        width: 14.28%;
     }
+
+.c-day:nth-child(odd) {
+    background-color: hsla(0, 0%, 96%, 1);
+}
     .c-day-body {
         
     }
     .c-day-title {
-        
+        display: flex;
     }
     .c-day-titles {
-        
+        display: flex;
+        justify-content: space-between;
     }
     .c-time-block-content {
         
@@ -236,7 +245,9 @@
         
     }
     .c-week {
-        
+        display: flex;
+        height: 2880px;
+        justify-content: space-between;
     }
     .c-calendar {
         

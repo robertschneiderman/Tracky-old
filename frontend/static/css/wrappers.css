@@ -21,6 +21,6 @@
 
 .w-widget {}
 .w-date-incrementer {display: flex;align-items: center;margin-right: 1rem;}
-.w-incrementer-btns {/* position: absolute; *//* right: 0.9rem; */margin-left: 0.4rem;}
+.w-incrementer-btns {/* position: absolute; *//* right: 0.9rem; */margin-left: 0.6rem;}
 .w-timestamp-editor-ui {display: flex;}
 .w-timestamp-task-value {display: flex;align-items: center;}
