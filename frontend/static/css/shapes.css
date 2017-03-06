@@ -9,7 +9,7 @@
 .shape-progress-bar-completed {background-color: #92ef92;height: 100%;position: absolute;transition: all .3s;}
 .shape-navbar-divider {
     background-color: #ccc;
-    height: 50%;
+    height: 22px;
     left: -1rem;
     top: -7%;
     width: 1px;

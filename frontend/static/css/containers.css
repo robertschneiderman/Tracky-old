@@ -73,9 +73,7 @@
 .c-task-text {
 
 }
-.c-tasks {
-
-}
+.c-tasks {width: 45%;}
 .c-dashboard {
 
 }
@@ -181,7 +179,8 @@
         
     }
     .c-task {
-        
+        background-color: #fff;
+        width: 100%;
     }
     .c-task-frequency {
         
@@ -202,7 +201,11 @@
         
     }
     .c-dashboard-main {
-        
+        padding: 4rem;
+        max-width: 1300px;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
     }
     .c-day {
         
@@ -241,7 +244,11 @@
         
     }
     .c-navbar {
-        
+        display: flex;
+        justify-content: space-between;
+        padding: 1.5rem 2.5rem;
+        z-index: 8000;
+        align-items: center;
     }
 } /* Medium */
 
@@ -495,9 +502,5 @@
         /* max-width: 880px; */
     }
     .c-navbar {
-        display: flex;
-        justify-content: space-between;
-        padding: 1.5rem 2.5rem;
-        align-items: center;
     }
 } /* xLarge */
