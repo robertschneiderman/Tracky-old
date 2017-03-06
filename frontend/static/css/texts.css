@@ -19,10 +19,11 @@
 .text-message {
 
 }
-.text-task-display-goal {top: 2.2rem;left: -9.3rem;z-index: 9999;color: #aaa;}
+.text-task-display-goal {top: 2.45rem;left: -9.3rem;z-index: 9999;color: #aaa;}
 .text-timestamp-f-display {font-weight: 300;}
 .text-task-count {
     font-weight: 300;
+    font-size: 1.4rem;
 }
 .text-day-label-day {
 

@@ -68,8 +68,9 @@ class TaskDisplay extends Component {
         let timeVisibility = (task.type === 'time' && timer && timer.running) ? {} : {visibility: 'hidden'};
 
         let animation = this.newRender ? 'slideRight' : '';
+        let className= `c-task-display` + ' ' + animation;
         return(
-            <div className={`c-task-display ${animation}`}>
+            <div className={className}>
                 <div className="c-task-display-time" style={timeVisibility}>{msToLongerTime(timer && timer.time)}</div>
                 <div className="c-task-display-time-main">
                     <div className="c-task-display-text">

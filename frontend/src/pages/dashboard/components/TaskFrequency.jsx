@@ -40,7 +40,7 @@ class TaskFrequency extends Component {
         return(
             <div className="c-task" onClick={this.handleClick.bind(this)} onMouseEnter={this.handleMouseEnter.bind(this)}>
                 <img src={`./static/images/task_icons/${icon}.svg`} className="img-task-icon" />
-                <div className="c-task-frequency">
+                <div className="c-task-text">
                     <div className="c-task-column-1">
                         <h3 className="title-task-name">{name}</h3>
                         <p className="text-timestamp-f-display">

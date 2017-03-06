@@ -40,9 +40,7 @@
 .c-task-and-goal-area {
 
 }
-.c-progress-bar {
-
-}
+.c-progress-bar {background-color: #f1f1f1;height: 2.4rem;margin-bottom: 1rem;width: 100%;}
 .c-task-display-goal {
 
 }
@@ -67,9 +65,7 @@
 .c-task-column-1 {
 
 }
-.c-task-column-2 {
-
-}
+.c-task-column-2 {display: flex;align-items: center;}
 .c-task-text {
 
 }
@@ -113,6 +109,9 @@
 }
 .c-home {text-align: center;margin: 0 auto;max-width: 880px;width: 90%;}
 .c-navbar {
+
+}
+.c-task-display {
 
 }
 /* Small */
@@ -167,7 +166,7 @@
         
     }
     .c-task-display-time {
-        
+        position: absolute;
     }
     .c-task-display-time-main {
         
@@ -179,7 +178,13 @@
         
     }
     .c-task {
+        border: 1px solid #eee;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
         background-color: #fff;
+        margin-bottom: 1rem;
+        padding: 1.2rem;
         width: 100%;
     }
     .c-task-frequency {
@@ -192,7 +197,9 @@
         
     }
     .c-task-text {
-        
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
     }
     .c-tasks {
         
@@ -249,6 +256,9 @@
         padding: 1.5rem 2.5rem;
         z-index: 8000;
         align-items: center;
+    }
+    .c-task-display {
+        width: 35%;
     }
 } /* Medium */
 
@@ -308,7 +318,7 @@
         
     }
     .c-task-display-text {
-        
+        display: flex;
     }
     .c-task-display-goals {
         
@@ -374,6 +384,9 @@
         
     }
     .c-navbar {
+        
+    }
+    .c-task-display {
         
     }
 } /* Large */
@@ -502,5 +515,8 @@
         /* max-width: 880px; */
     }
     .c-navbar {
+    }
+    .c-task-display {
+        
     }
 } /* xLarge */
