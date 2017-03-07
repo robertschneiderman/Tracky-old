@@ -2,8 +2,8 @@ import React from 'react';
 
 export const renderField = ({ input, label, type, meta: { touched, error, warning } }) => {
     return (
-        <div className="c-fieldset-auth">
-            <label className="label-auth">{label}</label>
+        <div className="c-fieldset-auth input input--hoshi">
+            <label className="label-auth input__label input__label--hoshi input__label--hoshi-color-1">{label}</label>
             <div>
                 <input className="input-auth" {...input} placeholder={label} type={type}/>
             {touched && ((error && <span className="text-auth-error">{error}</span>) || (warning && <span>{warning}</span>))}

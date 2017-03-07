@@ -13,13 +13,13 @@ class TaskIncrementer extends Component {
         if (activeTaskIdx < 0) activeTaskIdx = (tasks.length - 1);
         if (activeTaskIdx === tasks.length) activeTaskIdx = 0;
 
-        let task = tasks[activeTaskIdx];
+        let task = tasks[activeTaskIdx] || tasks[0];
         dispatches.editStoredState('taskId', task.id);
     }
 
     render() {
         let { tasks, activeTaskIdx } = this.props;
-        let selectedTask = tasks[activeTaskIdx];
+        let selectedTask = tasks[activeTaskIdx] || tasks[0];
         let { name, icon, color } = selectedTask;
         return(
           <div className="r-timestamp-editor">

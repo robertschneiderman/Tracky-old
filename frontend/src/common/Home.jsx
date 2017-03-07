@@ -14,7 +14,7 @@ class Home extends Component {
                     // <h1 className="hl-home">Welcome to Tracky!</h1>
         return(
             <div className="p-home">
-                <div className="c-home">
+                <div className="c-home fadeInUp">
                     <h1 className="hl-home">Get started with <strong>Tracky</strong> the app that makes it fun and easy to track your goals</h1>
                     <button onClick={this.handleClick} className="btn-home">Get Started</button>
                 </div>

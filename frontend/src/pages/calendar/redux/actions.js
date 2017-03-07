@@ -37,7 +37,6 @@ export const requestAndToggleWeek = (inc, week) => {
 
 export const populateTimestampEditorAndRedirect = (mode, task, timestamp) => {
   return (dispatch) => {
-
     dispatch(populateState({
         mode,
         oldTaskId: task.id,

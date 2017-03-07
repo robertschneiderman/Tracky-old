@@ -6,8 +6,8 @@
 }
 .title-task-name {color: #444;font-weight: 300;margin-bottom: .6rem;}
 .title-task-display-goal {font-weight: 400;}
-.title-day {margin-bottom: 0.1rem;font-weight: 400;}
-.title-date {font-weight: 400;}
+.title-day {margin-bottom: 0.1rem;font-weight: 400;display: inline-block;}
+.title-date {font-weight: 400;display: inline-block;}
 .title-week-toggler {color: #777;font-size: 1.6rem;font-weight: 500;margin: 0 2rem;}
 .title-widget {margin-bottom: 1rem;}
 .title-timeblock {font-weight: 300;margin-bottom: 0.15rem;font-size: 1rem;/* font-size: 1vh; *//* font-size: inherit; */}

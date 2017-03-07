@@ -13,9 +13,9 @@ import TimeInput from './TimeInput';
 
 export class TimestampEditor extends Component {
 
-  componentWillMount() {
-    let { activeTaskIdx } = this.props;
-    if (activeTaskIdx === undefined) hashHistory.push('calendar');
+  componentDidMount() {
+    let { mode } = this.props;
+    if (mode === undefined) hashHistory.push('calendar');
   }
 
   isValidRange() {
@@ -25,7 +25,7 @@ export class TimestampEditor extends Component {
 
   handleEdit() {
     let { dispatches, tasks, oldTaskId, activeTaskIdx, timestamp, mode } = this.props;
-    let task = tasks[activeTaskIdx];
+    let task = tasks[activeTaskIdx] || tasks[0];
     if (this.isValidRange()) {
       if (mode === 'edit') {
         dispatches.removeFromTimestampArr(oldTaskId, timestamp.id)
@@ -45,7 +45,8 @@ export class TimestampEditor extends Component {
   render() {
     let { mode, activeTaskIdx, timestamp, tasks, dispatches } = this.props;
     let { start, end } = timestamp;
-    let task = tasks[activeTaskIdx];
+
+    let task = tasks[activeTaskIdx] || tasks[0];
     end = end || start;
             // <p className="text-timestamp-editor">{start}</p>
     return (
@@ -53,10 +54,10 @@ export class TimestampEditor extends Component {
         <img onClick={this.handleClick.bind(this)} src="./static/images/x.svg" alt="" className="btn-timestamp-editor-close"/>
         
         <div className="c-timestamp-editor">
-          {activeTaskIdx !== undefined ? [
+          {mode !== undefined ? [
           <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} key="osm-2" />,
           <TimeInput field={'start'} time={start} dispatches={dispatches} key="osm-3" />] : ''}
-          {(activeTaskIdx !== undefined && task.type === 'time') ? <TimeInput field={'end'} time={end}  dispatches={dispatches} key="osm-4" /> : ''}
+          {(mode !== undefined && task.type === 'time') ? <TimeInput field={'end'} time={end}  dispatches={dispatches} key="osm-4" /> : ''}
           <button disabled={!this.isValidRange()} onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">{upperFirst(`${mode}`)} Timestamp</button>
         </div>
 

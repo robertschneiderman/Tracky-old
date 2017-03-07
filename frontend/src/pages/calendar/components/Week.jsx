@@ -11,10 +11,11 @@ class Week extends Component {
 
     returnDay(history, i) {
         let { activeWeek, taskDict, tsDict, dispatches } = this.props;
-        let startOfWeek = moment().subtract((activeWeek+1) * 7, 'days').startOf('week').add(1, 'days');
+        let startOfWeek = moment().subtract((activeWeek) * 7, 'days').startOf('week').add(1, 'days');
         let date = startOfWeek.add(i, 'days');
         // debugger;
         return <Day 
+                date={date}
                 history={history}
                 taskDict={taskDict}
                 tsDict={tsDict}
@@ -25,16 +26,18 @@ class Week extends Component {
     renderIncompleteWeek(historys) {
         let days = [];
         let j = 0;
+                // debugger;
+
         for (let i = 0; i <= 6; i++) {
-        let history = historys[j];
-        (history && history.day === i) ? j++ : history = {tasks: [], timestamps: []};
-        days.push(this.returnDay(history, i));
+            let history = historys[j];
+            (history && history.day === i) ? j++ : history = {tasks: [], timestamps: []};
+            days.push(this.returnDay(history, i));
         }      
         return days;
     }
 
     renderCompleteWeek(historys) {
-        return historys.map(history => this.returnDay(history));
+        return historys.map((history, i) => this.returnDay(history, i));
     }
 
     renderWeek() {

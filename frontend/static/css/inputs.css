@@ -2,6 +2,7 @@
 
 }
 .input-goal {
+    background-color: transparent;
     padding: 0.5rem;
     border: 0;
     text-align: center;
@@ -10,8 +11,20 @@
     font-size: 1.2rem;
     border-bottom: 1px solid #ccc;
 }
+
+input.input-goal:focus {
+    border-bottom: 1px solid #6cffa0;
+}
 .input-time-editor {padding: 0.1rem 0;border: 0;margin-right: 0.2em;align-items: baseline;text-align: center;font-size: 1.3rem;/* width: 40%; */width: 4rem;outline: 0;display: inline-block;border-bottom: 1px solid #ccc;}
 .input-icon-option {border: 0;border-bottom: 1px solid #ccc;outline: 0;height: 1.8rem;width: 5rem;}
-.input-task-name {border: 0;border-bottom: 1px solid #ccc;margin-bottom: 2rem;padding: 0.9rem .5rem;font-size: 1.4rem;outline: 0;width: 30%;}
+.input-task-name {border: 0;border-bottom: 1px solid #ccc;margin-bottom: 2rem;padding: 0.9rem .5rem;font-size: 1.4rem;outline: 0;width: 77%;background-color: transparent;}
+
+input.input-task-name:focus {
+    border-bottom: 1px solid #7bffaa;
+}
 .input-goal-option {margin-right: 2rem;}
-.input-auth {width: 100%;padding: 0.6rem;}
+.input-auth {width: 100%;padding: 0.6rem;border: 0;background: transparent;border-bottom: 1px solid #eee;}
+
+input.input-auth:focus {
+    border-bottom: 1px solid #7bffaa;
+}
