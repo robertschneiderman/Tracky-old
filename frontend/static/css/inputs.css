@@ -23,7 +23,7 @@ input.input-task-name:focus {
     border-bottom: 1px solid #7bffaa;
 }
 .input-goal-option {margin-right: 2rem;}
-.input-auth {width: 100%;padding: 0.6rem;border: 0;background: transparent;border-bottom: 1px solid #eee;}
+.input-auth {width: 100%;padding: 0.6rem;outline: 0;border: 0;background: transparent;border-bottom: 1px solid #ddd;}
 
 input.input-auth:focus {
     border-bottom: 1px solid #7bffaa;
