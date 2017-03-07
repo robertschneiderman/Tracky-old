@@ -11,6 +11,13 @@ class App extends Component {
 
   componentDidMount() {
     this.props.requestUser(localStorage.getItem('currentUser'));
+    document.addEventListener('keyup', (e) => {
+      if (e.key === '`') {
+        let button = document.getElementsByClassName('btn-cron-btn')[0];
+        button.style.visibility = button.style.visibility === 'hidden' ? 'visible' : 'hidden';
+        // debugger;
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,7 +35,7 @@ class App extends Component {
     return(
       <div className="c-app">
         <Navbar />
-        <button onClick={this.handleClick.bind(this)} className="btn-cron-btn">Next Day</button>
+        <button onClick={this.handleClick.bind(this)} style={{visibility: 'hidden'}} className="btn-cron-btn">Next Day</button>
         {this.props.children}
       </div>
     );
