@@ -15,7 +15,6 @@ class App extends Component {
       if (e.key === '`') {
         let button = document.getElementsByClassName('btn-cron-btn')[0];
         button.style.visibility = button.style.visibility === 'hidden' ? 'visible' : 'hidden';
-        // debugger;
       }
     });
   }
@@ -28,6 +27,7 @@ class App extends Component {
   }
 
   handleClick() {
+        debugger;
     axioss.post(`cron`);
   }
 

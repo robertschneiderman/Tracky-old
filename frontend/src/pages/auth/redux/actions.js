@@ -7,7 +7,6 @@ const ROOT_URL = (process.env.NODE_ENV !== "production") ? 'http://localhost:309
 
 export function signinUser({ email, password }) {
   return function(dispatch) {
-        debugger;
     axios.post(`${ROOT_URL}/signin`, { email, password })
       .then(response => {
         localStorage.setItem('token', response.data.token);

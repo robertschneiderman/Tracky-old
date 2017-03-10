@@ -35,22 +35,29 @@ class TaskTime extends Component {
     }
 
     timerStart() {
-        let { dispatches, task } = this.props;
+        let { dispatches, task, history } = this.props;
         this.setState({running: true});
         this.interval = setInterval(() => {
             this.setState({timer: this.state.timer + 10});
             dispatches.startTimer({id: task.id});
             dispatches.updateTimer({id: task.id, time: this.state.timer + 10});
         }, 10);
-        dispatches.createTimestamp({taskId: task.id});        
+
+        let currentDevDate = moment(history.date).get('date');
+        let start = moment().set('date', currentDevDate);
+
+        dispatches.createTimestamp({start, taskId: task.id});        
     }
 
     timerEnd() {
-        let { dispatches, task } = this.props;
+        let { dispatches, task, history } = this.props;
         let lastTimestamp = this.getLastTimestamp();
 
+        let currentDevDate = moment(history.date).get('date');
+        let end = moment().set('date', currentDevDate);   
+
         dispatches.stopTimer({id: task.id});
-        dispatches.finishTimestamp({id: lastTimestamp.id});
+        dispatches.finishTimestamp({id: lastTimestamp.id, end});
         dispatches.incrementGoals(task.id, Math.floor(this.state.timer/ 1000));
         clearInterval(this.interval);
         let totalTime = this.state.totalTime + this.state.timer;

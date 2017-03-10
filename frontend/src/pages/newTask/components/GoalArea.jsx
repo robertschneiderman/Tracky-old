@@ -63,7 +63,7 @@ class GoalArea extends React.Component {
     render() {
         return (
             <div className="c-goal-area">
-                <h2 className="title-task-area">Goals</h2>        
+                <h2 className="title-goal-area">Goals</h2>        
                 <div className="c-goals">
                     {this.renderGoals(this.props.state)}
                 </div>

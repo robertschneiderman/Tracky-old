@@ -26,15 +26,16 @@ exports.update = function(req, res, next) {
 
 exports.finish = function(req, res, next) {
   let timestamp = req.body;
-  let key = Object.keys(req.body)[0];
-  let value = req.body[key];
+  let end = timestamp.end || null;  
+  // let key = Object.keys(req.body)[0];
+  // let value = req.body[key];
 
-  if (Object.keys(req.body).length === 0) {
-    key = 'end';
-    value = new Date();
-  }
+  // if (Object.keys(req.body).length === 0) {
+  //   key = 'end';
+  //   value = new Date();
+  // }
 
-  Timestamp.update({[key]: value}, {where: {id: req.params.id}, plain: true, returning: true }).then(timestamp => {
+  Timestamp.update({end}, {where: {id: req.params.id}, plain: true, returning: true }).then(timestamp => {
     res.status(201).json(timestamp[1]);
   }).catch((e) => {
     res.status(401).send(e);

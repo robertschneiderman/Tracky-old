@@ -17,13 +17,13 @@ class TimeGraph extends Component {
         for (let i = 30; i <= 1410; i+=30) {
             if (i % 60 === 0) {
                 lines.push(
-                    <div className="c-time-graph-line" key={`nos-${i}`}>
+                    <div className="c-time-graph-line dotted" key={`nos-${i}`}>
                         <label className="label-time-graph">{hourCount} {meridiem}</label>
                     </div>
                 );
                 hourCount++;
             } else {
-                lines.push(<div className="c-time-graph-line dotted" key={i}></div>);
+                lines.push(<div className="c-time-graph-line" key={i}></div>);
             }
             
             if (hourCount === 12 && i % 60 === 0) meridiem = meridiem === 'AM' ? 'PM' : 'AM';

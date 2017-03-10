@@ -1,9 +1,7 @@
 .title-a {
 
 }
-.title-goal-area {
-
-}
+.title-goal-area {font-weight: 400;margin-bottom: 2.1rem;}
 .title-task-name {color: #444;font-weight: 300;margin-bottom: .6rem;}
 .title-task-display-goal {font-weight: 400;}
 .title-day {margin-bottom: 0.1rem;font-weight: 400;display: inline-block;}

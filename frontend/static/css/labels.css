@@ -8,7 +8,7 @@
     color: #666;
 }
 .label-timestamp-editor {font-size: 1rem;/* font-weight: 700; */text-transform: uppercase;}
-.label-time-graph {position: absolute;left: -0.7rem;transform: translate3d(-100%, -50%, 0);}
+.label-time-graph {position: absolute;z-index: 9999;left: -0.7rem;transform: translate3d(-100%, -50%, 0);}
 .label-icon-option {margin-right: 1em;font-size: 1.17rem;font-weight: 700;}
 .label-goal-option {font-weight: 400;display: flex;margin-right: 0.6rem;}
 .label-auth {text-transform: uppercase;font-weight: 700;color: #444;font-size: .8rem;margin-bottom: 0.5rem;display: block;}

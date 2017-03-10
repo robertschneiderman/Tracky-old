@@ -1,3 +1,6 @@
+var moment = require('moment');
+
+
 const months = {
     0: 'January',
     1: 'February',
@@ -32,5 +35,18 @@ exports.adjustedDay= day => {
     return day - 1;
 };
 
+const padNumber = (number) => {
+    return (number < 10) ? `0${number}` : number;
+};
 
-exports.artificialWeek = 9;
+const msToTime = (totalMilliSeconds) => {
+    let duration = moment.duration(totalMilliSeconds);
+    return `${padNumber(duration.hours())}:${padNumber(duration.minutes())}`;
+};
+
+exports.minutesToTime = (totalMinutes) => {
+    return msToTime(totalMinutes * 60 * 1000);
+};
+
+
+exports.artificialWeek = 10;

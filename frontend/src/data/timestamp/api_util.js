@@ -23,7 +23,7 @@ export const createTimestamp = (timestamp, success, error) => {
 };
 
 export const finishTimestamp = (timestamp, success) => {
-  axioss.patch(`timestamps/${timestamp.id}`)
+  axioss.patch(`timestamps/${timestamp.id}`, timestamp)
   .then(success)
   .catch(function (error) {
     console.log(error);

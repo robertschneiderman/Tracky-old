@@ -5,6 +5,7 @@ const Goal = require('./models').Goal;
 const Timestamp = require('./models').Timestamp;
 const dh = require('./date_helpers');
 const config = require('./environment');
+const _ = require('lodash');
 var moment = require('moment');
 
 const stripId = obj => {
@@ -13,14 +14,16 @@ const stripId = obj => {
 
 const assess = (tasks, emailText, goal) => {
     let task = tasks.find(task => task.id === goal.taskId);
+    let count = dh.minutesToTime(goal.count);
+    let target = dh.minutesToTime(goal.target);
 
-    emailText += `<br/><b>${goal.interval}:</b><br/><br/>`;
     if (goal.count >= goal.target) {
-        emailText.content += `${task.name} complete! (${goal.count} / ${goal.target})`;
+        emailText.content += `<span style="color: green;">${task.name} complete! (${count} / ${target})</span>`;
     } else {
-        emailText.content += `${task.name} failed! (${goal.count} / ${goal.target})`;
+        emailText.content += `<span style="color: red;">${task.name} failed! (${count} / ${target})</span>`;
     }
     goal.count = 0;
+    emailText.content += `<br/>`;
     return emailText;
 };
 
@@ -28,7 +31,8 @@ const sendEmail = (user, emailText) => {
     var helper = require('sendgrid').mail;
     
     let fromEmail = new helper.Email("robert.a.schneiderman@gmail.com");
-    let toEmail = new helper.Email(`${user.email}`);
+    let toEmail = new helper.Email(`robert.a.schneiderman@gmail.com`);
+    // let toEmail = new helper.Email(`${user.email}`);
     let subject = "Tracky Update";
     let content = new helper.Content("text/html", `${emailText.content}`);
     let mail = new helper.Mail(fromEmail, subject, toEmail, content);
@@ -87,13 +91,20 @@ exports.cronTask = user => {
     let goalsGrouped = groupGoals(tasks);
     let {day, week, month, year, date} = getNewHistoryInfo(lastHistory.date);
 
-    if (isFirstDayOfMonth()) goalsGrouped['monthly'].forEach(goal => assess(tasks, emailText, goal));
-    if (day === 0) goalsGrouped['weekly'].forEach(goal => assess(tasks, emailText, goal));
+    if (isFirstDayOfMonth()) {
+        emailText.content += `<br/><b>Monthly:</b><br/><br/>`;
+        goalsGrouped['monthly'].forEach(goal => assess(tasks, emailText, goal));
+    }
+    if (day === 0) {
+        emailText.content += `<br/><b>Weekly:</b><br/><br/>`;        
+        goalsGrouped['weekly'].forEach(goal => assess(tasks, emailText, goal));
+    }
+    emailText.content += `<br/><b>Daily:</b><br/><br/>`;            
     goalsGrouped['daily'].forEach(goal => assess(tasks, emailText, goal));
 
     tasks.forEach(task => stripId(task));
 
-    // sendEmail(user, emailText);
+    sendEmail(user, emailText);
 
     History.create(
         {date, userId: user.id, day, week, month, year, tasks},

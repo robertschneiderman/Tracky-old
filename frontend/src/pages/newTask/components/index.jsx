@@ -21,8 +21,12 @@ export class NewTask extends Component {
     let lastKey = Object.keys(history)[0];
     let lastHistory = history[lastKey]
 
+    debugger;
+
     if (interval === 'weekly' || interval === 'monthly') delete goals.daily;
     if (interval === 'monthly') delete goals.weekly;
+
+    debugger;
 
     this.props.createTaskAndGoals({name, color, icon, type, historyId: lastHistory.id}, goals)
     hashHistory.push('dashboard');
