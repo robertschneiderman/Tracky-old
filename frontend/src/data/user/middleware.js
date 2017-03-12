@@ -31,7 +31,6 @@ import { requestUsers,
 export default ({getState, dispatch}) => next => action => {
   const usersSuccess = res => dispatch(receiveUsers(res.data));
   const userSuccess = res => {
-    debugger;
     const normalized = normalize(res.data, userSchema);
     let {users, historys, tasks, goals, timestamps} = normalized.entities;
     let user = objToArr(users)[0];

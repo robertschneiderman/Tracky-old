@@ -18,24 +18,35 @@ export class TimestampEditor extends Component {
     if (mode === undefined) hashHistory.push('calendar');
   }
 
-  isValidRange() {
+  getElapsedTime() {
     let { timestamp } = this.props;
-    return moment(timestamp.start).unix() < moment(timestamp.end).unix()
+    return moment(timestamp.end).unix() - moment(timestamp.start).unix();
+  }
+
+  isValidRange() {
+    return this.getElapsedTime() > 0;
+  }
+
+  handleCreate() {
+    let { dispatches, tasks, oldTaskId, activeTaskIdx, timestamp, mode } = this.props;
+    timestamp.taskId = task.id;
+    dispatches.createTimestamp(timestamp);
+    (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
   }
 
   handleEdit() {
     let { dispatches, tasks, oldTaskId, activeTaskIdx, timestamp, mode } = this.props;
     let task = tasks[activeTaskIdx] || tasks[0];
-    if (this.isValidRange()) {
-      if (mode === 'edit') {
-        dispatches.removeFromTimestampArr(oldTaskId, timestamp.id)
-        dispatches.updateTimestamp(task.id, timestamp)
-      } else {
-        timestamp.taskId = task.id
-        dispatches.createTimestamp(timestamp)
-      }
+    let elapsedSeconds = this.getElapsedTime();
+    if (elapsedSeconds > 0) {
+      dispatches.removeFromTimestampArr(oldTaskId, timestamp.id);
+      dispatches.updateTimestamp(task.id, timestamp);
       hashHistory.push('calendar');
     }
+  }
+
+  handleRemove() {
+    
   }
 
   handleClick() {
@@ -59,6 +70,7 @@ export class TimestampEditor extends Component {
           <TimeInput field={'start'} time={start} dispatches={dispatches} key="osm-3" />] : ''}
           {(mode !== undefined && task.type === 'time') ? <TimeInput field={'end'} time={end}  dispatches={dispatches} key="osm-4" /> : ''}
           <button disabled={!this.isValidRange()} onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">{upperFirst(`${mode}`)} Timestamp</button>
+          <a onClick={(e) => this.handleRemove(e)} className="link-remove-timestamp">Remove Timestamp</a>
         </div>
 
       </div>

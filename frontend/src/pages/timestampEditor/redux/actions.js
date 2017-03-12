@@ -1,5 +1,6 @@
 export { createTimestamp, updateTimestamp } from '../../../data/timestamp/actions';
 export { removeFromTimestampArr } from '../../../data/task/actions';
+export { incrementGoals } from '../../../data/goal/actions';
 export const EDIT_STORED_TIMESTAMP = 'EDIT_STORED_TIMESTAMP';
 export const EDIT_STORED_STATE = 'EDIT_STORED_STATE';
 export const POPULATE_STATE = 'POPULATE_STATE';

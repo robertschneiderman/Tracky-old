@@ -16,9 +16,7 @@
 .text-task-timer {color: #777;font-weight: 300;margin-bottom: .6rem;}
 .text-timestamp-display {font-weight: 300;font-size: .9rem;}
 .text-total-time {color: #777;font-weight: 300;}
-.text-message {
-
-}
+.text-message {font-size: 1.6rem;color: #888;margin: 2rem 3rem;}
 .text-task-display-goal {top: 2.45rem;left: -9.3rem;z-index: 9999;color: #aaa;}
 .text-timestamp-f-display {font-weight: 300;}
 .text-task-count {
