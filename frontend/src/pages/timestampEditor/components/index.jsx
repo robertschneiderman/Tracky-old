@@ -47,8 +47,10 @@ export class TimestampEditor extends Component {
       dispatches.updateTimestamp(task.id, timestamp);
       if (oldTaskId !== task.id) {
         (task.type === 'time') ? dispatches.incrementGoals(oldTaskId, -originalElapsedSeconds) : dispatches.incrementGoals(oldTaskId, -1);
+        (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
+      } else {
+        (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds - originalElapsedSeconds) : dispatches.incrementGoals(task.id, 1);
       }
-      (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds - originalElapsedSeconds) : dispatches.incrementGoals(task.id, 1);
       hashHistory.push('calendar');
     }
   }
