@@ -18,35 +18,43 @@ export class TimestampEditor extends Component {
     if (mode === undefined) hashHistory.push('calendar');
   }
 
-  getElapsedTime() {
-    let { timestamp } = this.props;
+  getElapsedTime(timestamp) {
     return moment(timestamp.end).unix() - moment(timestamp.start).unix();
   }
 
   isValidRange() {
-    return this.getElapsedTime() > 0;
+    let { timestamp } = this.props;
+    return this.getElapsedTime(timestamp) > 0;
   }
 
   handleCreate() {
-    let { dispatches, tasks, oldTaskId, activeTaskIdx, timestamp, mode } = this.props;
+    let { dispatches, task, timestamp } = this.props;
+    let elapsedSeconds = this.getElapsedTime(timestamp);
     timestamp.taskId = task.id;
-    dispatches.createTimestamp(timestamp);
-    (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
-  }
+    if (elapsedSeconds >= 0) {    
+      dispatches.createTimestamp(timestamp);
+      (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
+    }
+}
 
   handleEdit() {
-    let { dispatches, tasks, oldTaskId, activeTaskIdx, timestamp, mode } = this.props;
-    let task = tasks[activeTaskIdx] || tasks[0];
-    let elapsedSeconds = this.getElapsedTime();
-    if (elapsedSeconds > 0) {
+    let { dispatches, task, oldTaskId, timestamp, originalTimestamp } = this.props;
+    let elapsedSeconds = this.getElapsedTime(timestamp);
+    let originalElapsedSeconds = this.getElapsedTime(originalTimestamp);
+
+    if (elapsedSeconds >= 0) {
       dispatches.removeFromTimestampArr(oldTaskId, timestamp.id);
       dispatches.updateTimestamp(task.id, timestamp);
+      if (oldTaskId !== task.id) {
+        (task.type === 'time') ? dispatches.incrementGoals(oldTaskId, -originalElapsedSeconds) : dispatches.incrementGoals(oldTaskId, -1);
+      }
+      (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds - originalElapsedSeconds) : dispatches.incrementGoals(task.id, 1);
       hashHistory.push('calendar');
     }
   }
 
   handleRemove() {
-    
+
   }
 
   handleClick() {
@@ -54,10 +62,9 @@ export class TimestampEditor extends Component {
   }
 
   render() {
-    let { mode, activeTaskIdx, timestamp, tasks, dispatches } = this.props;
+    let { mode, activeTaskIdx, timestamp, task, tasks, dispatches } = this.props;
     let { start, end } = timestamp;
 
-    let task = tasks[activeTaskIdx] || tasks[0];
     end = end || start;
             // <p className="text-timestamp-editor">{start}</p>
     return (
@@ -81,7 +88,7 @@ export class TimestampEditor extends Component {
 /* istanbul ignore next */
 const mapStateToProps = (state) => {
   let {task, timestampEditor} = state;
-  let {mode, taskId, oldTaskId, timestamp} = timestampEditor;
+  let {mode, taskId, oldTaskId, timestamp, originalTimestamp} = timestampEditor;
   let tasks = objToArr(task);
   let activeTaskIdx;
   tasks.forEach((task, i) => {
@@ -90,10 +97,14 @@ const mapStateToProps = (state) => {
   // let selectedTask = task[taskId];
   // let selectedTaskIndex = fil
 
+  let activeTask = tasks[activeTaskIdx] || tasks[0];
+
   return {
     activeTaskIdx,
     oldTaskId,
+    task: activeTask,
     tasks,
+    originalTimestamp,
     timestamp,
     mode
   };

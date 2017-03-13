@@ -41,6 +41,10 @@ export const populateTimestampEditorAndRedirect = (mode, task, timestamp) => {
         mode,
         oldTaskId: task.id,
         taskId: task.id,
+        originalTimestamp: {
+            start: timestamp.start,
+            end: timestamp.end,
+        },
         timestamp: {
             id: timestamp.id,
             start: timestamp.start,

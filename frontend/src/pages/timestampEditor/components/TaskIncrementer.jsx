@@ -7,13 +7,12 @@ class TaskIncrementer extends Component {
     }
 
     rotateTask(num) {
-        let { activeTaskIdx, tasks, dispatches } = this.props;
+        let { activeTaskIdx, tasks, task, dispatches } = this.props;
 
         activeTaskIdx = activeTaskIdx + num;
         if (activeTaskIdx < 0) activeTaskIdx = (tasks.length - 1);
         if (activeTaskIdx === tasks.length) activeTaskIdx = 0;
 
-        let task = tasks[activeTaskIdx] || tasks[0];
         dispatches.editStoredState('taskId', task.id);
     }
 
