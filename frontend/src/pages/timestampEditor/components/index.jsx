@@ -19,6 +19,7 @@ export class TimestampEditor extends Component {
   }
 
   getElapsedTime(timestamp) {
+    // debugger;
     return moment(timestamp.end).unix() - moment(timestamp.start).unix();
   }
 
@@ -43,14 +44,17 @@ export class TimestampEditor extends Component {
     let originalElapsedSeconds = this.getElapsedTime(originalTimestamp);
 
     if (elapsedSeconds >= 0) {
-      dispatches.removeFromTimestampArr(oldTaskId, timestamp.id);
-      dispatches.updateTimestamp(task.id, timestamp);
       if (oldTaskId !== task.id) {
+        // debugger;
+        dispatches.removeFromTimestampArr(oldTaskId, timestamp.id);
         (task.type === 'time') ? dispatches.incrementGoals(oldTaskId, -originalElapsedSeconds) : dispatches.incrementGoals(oldTaskId, -1);
         (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
       } else {
         (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds - originalElapsedSeconds) : dispatches.incrementGoals(task.id, 1);
       }
+
+      dispatches.updateTimestamp(task.id, timestamp);
+
       hashHistory.push('calendar');
     }
   }
@@ -77,7 +81,7 @@ export class TimestampEditor extends Component {
           {mode !== undefined ? [
           <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} key="osm-2" />,
           <TimeInput field={'start'} time={start} dispatches={dispatches} key="osm-3" />] : ''}
-          {(mode !== undefined && task.type === 'time') ? <TimeInput field={'end'} time={end}  dispatches={dispatches} key="osm-4" /> : ''}
+          {(task && task.type === 'time') ? <TimeInput field={'end'} time={end}  dispatches={dispatches} key="osm-4" /> : ''}
           <button disabled={!this.isValidRange()} onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">{upperFirst(`${mode}`)} Timestamp</button>
           <a onClick={(e) => this.handleRemove(e)} className="link-remove-timestamp">Remove Timestamp</a>
         </div>

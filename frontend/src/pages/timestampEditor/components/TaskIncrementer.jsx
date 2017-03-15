@@ -8,7 +8,7 @@ class TaskIncrementer extends Component {
 
     rotateTask(num) {
         let { activeTaskIdx, tasks, dispatches } = this.props;
-
+        // debugger;
         activeTaskIdx = activeTaskIdx + num;
         if (activeTaskIdx < 0) activeTaskIdx = (tasks.length - 1);
         if (activeTaskIdx === tasks.length) activeTaskIdx = 0;

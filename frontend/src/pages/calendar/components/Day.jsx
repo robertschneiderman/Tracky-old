@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import TimeBlock from './TimeBlock';
 import moment from 'moment';
+import { objToArr } from '../../../common/helpers/selectors';
 
 class Day extends Component {
     constructor(props) {
@@ -45,9 +46,9 @@ class Day extends Component {
     }
 
     handleClick(e) {
-        let {history, dispatches} = this.props;
-        let taskId = history.tasks[0];
+        let {history, dispatches, taskDict} = this.props;
         let timestamp = this.timestampFromClick(e.nativeEvent.offsetY);
+        let taskId = objToArr(taskDict)[0].id;
         
         dispatches.populateTimestampEditorAndRedirect('create', {id: taskId}, timestamp);
     }

@@ -60,7 +60,6 @@ class TimeBlock extends Component {
 
     renderRange(start, end, textStyle) {
         let { task, timestamp } = this.props;
-        // debugger;
         let style = {fontSize: `${parseFloat(textStyle.fontSize) * .8}rem`};
 
         return task.type === 'time' ?
@@ -82,8 +81,6 @@ class TimeBlock extends Component {
 
         let textStyle = this.getTextSyle(style.height);
         let iconStyle = this.getIconStyle(style.height);
-
-        // debugger;
 
         return (
             <div className="shape-time-block" style={style} onClick={e => this.editTimestamp(e)}>
