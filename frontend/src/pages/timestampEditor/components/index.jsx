@@ -60,7 +60,13 @@ export class TimestampEditor extends Component {
   }
 
   handleRemove() {
-
+    let { dispatches, task, oldTaskId, timestamp, originalTimestamp } = this.props;
+    let originalElapsedSeconds = this.getElapsedTime(originalTimestamp);
+    
+    dispatches.removeFromTimestampArr(oldTaskId, timestamp.id);
+    dispatches.destroyTimestamp({id: timestamp.id});
+    (task.type === 'time') ? dispatches.incrementGoals(oldTaskId, -originalElapsedSeconds) : dispatches.incrementGoals(oldTaskId, -1);
+    hashHistory.push('calendar');
   }
 
   handleClick() {

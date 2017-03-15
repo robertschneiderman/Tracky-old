@@ -1,4 +1,4 @@
-export { createTimestamp, updateTimestamp } from '../../../data/timestamp/actions';
+export { createTimestamp, updateTimestamp, destroyTimestamp } from '../../../data/timestamp/actions';
 export { removeFromTimestampArr } from '../../../data/task/actions';
 export { incrementGoals } from '../../../data/goal/actions';
 export const EDIT_STORED_TIMESTAMP = 'EDIT_STORED_TIMESTAMP';

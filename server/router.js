@@ -37,7 +37,7 @@ module.exports = function(app) {
   app.patch('/timestamps/:id', requireAuth, Timestamp.finish);
   app.patch('/tasks/:taskId/timestamps', requireAuth, Timestamp.update);
   // app.patch('/timestamp', requireAuth, Timestamp.edit);
-  app.delete('/tasks/:taskId/timestamps/:id', requireAuth, Timestamp.delete);
+  app.delete('/timestamps/:id', requireAuth, Timestamp.delete);
 
 
   app.post('/cron', requireAuth, Cron.create);
