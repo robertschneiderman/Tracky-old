@@ -25,7 +25,6 @@ class Week extends Component {
     renderIncompleteWeek(historys) {
         let days = [];
         let j = 0;
-                // debugger;
 
         for (let i = 0; i <= 6; i++) {
             let history = historys[j];
@@ -41,9 +40,10 @@ class Week extends Component {
 
     renderWeek() {
         let { week, historyDict } = this.props;
-        let historys = week.map(histId => historyDict[histId]);
+        // let historys = week.map(histId => historyDict[histId]);
+        // debugger;
         // historys = this.splitTimestamps(historys);
-        return (week.length < 7) ? this.renderIncompleteWeek(historys) : this.renderCompleteWeek(historys);
+        return (week.length < 7) ? this.renderIncompleteWeek(week) : this.renderCompleteWeek(week);
     }
 
     render() {

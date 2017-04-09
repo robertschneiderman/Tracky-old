@@ -72,17 +72,23 @@ export class Calendar extends Component {
     // })
   }
 
+  getStartOfWeek() {
+    let { activeWeek } = this.props;
+    let now = moment();
+    let weeksToSubtract = (now.get('day') === 0) ? activeWeek + 1 : activeWeek;
+    return now.startOf('week').subtract(weeksToSubtract, 'weeks').add(1, 'days');  
+  }
+
   getDates() {
-      let { week, activeWeek } = this.props;
+      // let { week, activeWeek } = this.props;
       let dates = [];
-      if (week[0]) {
+      // if (week[0]) {
           for (let i = 0; i <= 6; i++) {
-              let startOfWeek = moment(week[0].date).subtract(activeWeek, 'weeks');  
-              // let startOfWeek = moment(week[0].date);
+              let startOfWeek = this.getStartOfWeek();
               let date = i === 0 ? startOfWeek : startOfWeek.add(i, 'days');
               dates.push(date)
           }
-      }
+      // }
       return dates;
   }    
   
