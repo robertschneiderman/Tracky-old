@@ -75,3 +75,8 @@ export const minutesPassedInDay = () => {
 export const artificialWeek = numToAdd => {
     return moment().add(numToAdd, 'weeks');
 };
+
+export const adjustedWeek = (day, week) => {
+  if (day === 0) return week - 1;
+  return week;
+}

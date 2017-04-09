@@ -6,7 +6,8 @@ const dh = require('../date_helpers');
 var _ = require('lodash');
 var moment = require('moment');
 
-const week = dh.artificialWeek;
+// const week = dh.artificialWeek;
+// const week = moment().get('week');
 
 
 exports.get = function(req, res, next) {
@@ -32,7 +33,7 @@ exports.create = function(req, res, next) {
   let userId = req.body.id;
   let date = moment().startOf('day');
   let day = dh.adjustedDay(date.get('day'));
-  let week = date.get('week');
+  let week = dh.adjustedWeek(date.get('day'), date.get('week'));
   let year = date.get('year');
 
   History.create({userId, date, day, week, year}).then(history => {

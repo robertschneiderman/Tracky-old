@@ -35,6 +35,15 @@ exports.adjustedDay= day => {
     return day - 1;
 };
 
+exports.adjustedWeek= () => {
+    let date = moment().startOf('day');
+    let day = date.get('day');
+    let week = date.get('week');
+
+    if (day === 0) return week - 1;
+    return week;
+};
+
 const padNumber = (number) => {
     return (number < 10) ? `0${number}` : number;
 };

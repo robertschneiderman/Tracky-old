@@ -13,7 +13,6 @@ class Week extends Component {
         let { activeWeek, taskDict, tsDict, dispatches } = this.props;
         let startOfWeek = moment().subtract((activeWeek) * 7, 'days').startOf('week').add(1, 'days');
         let date = startOfWeek.add(i, 'days');
-        // debugger;
         return <Day 
                 date={date}
                 history={history}

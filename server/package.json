@@ -37,7 +37,7 @@
     "passport-jwt": "^2.2.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "pg": "^6.1.2",
+    "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "sendgrid": "^4.7.1",
     "sequelize": "^3.30.2"

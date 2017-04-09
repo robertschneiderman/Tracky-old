@@ -42,14 +42,15 @@ export class Calendar extends Component {
 
 
   getWeek() {
-    let { activeWeek } = this.props;
-    let dates = [];
-    for (let i = 0; i <= 6; i++) {
-      let startOfWeek = this.getStartOfWeek();
-      let date = i === 0 ? startOfWeek : startOfWeek.add(i, 'days');
-      dates.push(date)
-    }
-    return dates;
+    // let { week } = this.props;
+    // let dates = [];
+    // for (let i = 0; i <= 6; i++) {
+    //   let startOfWeek = this.getStartOfWeek();
+    //   let date = i === 0 ? startOfWeek : startOfWeek.add(i, 'days');
+    //   dates.push(date)
+    // }
+    // return dates;
+    // return week;
   }
 
   // isSplitDayTimestamp(ts) {
@@ -73,13 +74,14 @@ export class Calendar extends Component {
   
   render() {
     let { week, historyDict, dispatches } = this.props;
-    let dates = this.getWeek();
+    // let dates = this.getWeek();
+    // debugger;
 
+            {/*<WeekToggler {...this.props} dispatches={dispatches} />*/}
       return (week) ?
           <div className="c-calendar">
 
-            <WeekToggler dates={dates} dispatches={dispatches} />
-            <DayTitles dates={dates} />
+            <DayTitles {...this.props} />
             <Week {...this.props}/>
 
             {this.props.children}
@@ -91,15 +93,18 @@ export class Calendar extends Component {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  let historyIds = state.user.historys;
+  let historyDict = state.history;
   let historys;
-  // if (historyIds) {
-  //   historys = historyIds.slice(0, 7).map(historyId => state.history[historyId]);
+  // if (historyDict) {
+  //   historys = historyDict.slice(0, 7).map(historyId => state.history[historyId]);
   // }
   // historys = historys || [];
 
+  let week = state.calendar.weeks[state.calendar.activeWeek] || [];
+  week = week.map(histId => historyDict[histId]);
+
   return {
-    week: state.calendar.weeks[state.calendar.activeWeek] || [],
+    week: week || [],
     activeWeek: state.calendar.activeWeek,
     historys,
     historyDict: state.history,
