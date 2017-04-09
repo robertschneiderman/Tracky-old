@@ -7,9 +7,11 @@ class WeekToggler extends Component {
     }
 
     handleClick(e, inc) {
-        let { dispatches, toggleWeek, dates } = this.props;
-        let date = dates[1].subtract(inc, 'weeks');
-        dispatches.requestAndToggleWeek(inc, date.get('week'));
+        let { dispatches, toggleWeek, week } = this.props;
+        let weekNum = week[0].week;
+        // debugger;
+        // let date = dates[1].subtract(inc, 'weeks');
+        dispatches.requestAndToggleWeek(inc, weekNum);
     }
 
     render() {

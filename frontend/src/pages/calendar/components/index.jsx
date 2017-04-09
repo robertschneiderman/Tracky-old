@@ -71,17 +71,31 @@ export class Calendar extends Component {
     //   })
     // })
   }
+
+  getDates() {
+      let { week, activeWeek } = this.props;
+      let dates = [];
+      if (week[0]) {
+          for (let i = 0; i <= 6; i++) {
+              let startOfWeek = moment(week[0].date).subtract(activeWeek, 'weeks');  
+              // let startOfWeek = moment(week[0].date);
+              let date = i === 0 ? startOfWeek : startOfWeek.add(i, 'days');
+              dates.push(date)
+          }
+      }
+      return dates;
+  }    
   
   render() {
     let { week, historyDict, dispatches } = this.props;
-    // let dates = this.getWeek();
+    let dates = this.getDates();
     // debugger;
 
-            {/*<WeekToggler {...this.props} dispatches={dispatches} />*/}
       return (week) ?
           <div className="c-calendar">
 
-            <DayTitles {...this.props} />
+            <WeekToggler dates={dates} {...this.props} dispatches={dispatches} />
+            <DayTitles dates={dates} {...this.props} />
             <Week {...this.props}/>
 
             {this.props.children}
