@@ -34,11 +34,17 @@ class TaskDisplay extends Component {
         }
     }
 
+    goalSort(a, b) {
+        let intervalValues = {'daily': 1, 'weekly': 2, 'monthly': 3};
+        return intervalValues[a.interval] > intervalValues[b.interval];
+    }
+
     getGoals() {
         let { task, goalDictionary } = this.props;
         
         let goals = (task && task.goals) || [];
-        return goals.sort((a, b) => a > b).map(goalId => goalDictionary[goalId]);
+        // debugger;
+        return goals.map(goalId => goalDictionary[goalId]).sort(this.goalSort);
     }
 
     renderGoals() {
