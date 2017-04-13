@@ -43,13 +43,12 @@ class TaskDisplay extends Component {
         let { task, goalDictionary } = this.props;
         
         let goals = (task && task.goals) || [];
-        // debugger;
         return goals.map(goalId => goalDictionary[goalId]).sort(this.goalSort);
     }
 
     renderGoals() {
         let { timer } = this.props;
-        timer = timer || {running: false};        
+        timer = timer || {running: false};    
         let goals= this.getGoals();
 
         return goals.map(goal => {
@@ -70,6 +69,7 @@ class TaskDisplay extends Component {
     render() {
         let { timer, task } = this.props;
         let firstGoal = this.getGoals()[0] || [];
+        debugger;            
         task = task || {name: '', icon: ''};
         let timeVisibility = (task.type === 'time' && timer && timer.running) ? {} : {visibility: 'hidden'};
 

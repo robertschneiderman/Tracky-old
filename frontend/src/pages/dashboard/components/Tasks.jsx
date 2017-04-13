@@ -7,11 +7,16 @@ class Tasks extends Component {
         super(props);
     }
 
+    goalSort(a, b) {
+        let intervalValues = {'daily': 1, 'weekly': 2, 'monthly': 3};
+        return intervalValues[a.interval] > intervalValues[b.interval];
+    }    
+
     renderTasks() {
         let { tasks, dispatches, timestamp, goalDictionary } = this.props;
         return tasks.map((task, i) => {
             let timestamps = task.timestamps.map(id => timestamp[id]);
-            let goals = task.goals.sort((a, b) => a > b).map(goalId => goalDictionary[goalId]);  
+            let goals = task.goals.map(goalId => goalDictionary[goalId]).sort(this.goalSort);  
             let shortestDurationGoal = goals[0];
                   
             if (task.type === 'time') {

@@ -104,7 +104,7 @@ exports.cronTask = user => {
 
     tasks.forEach(task => stripId(task));
 
-    sendEmail(user, emailText);
+    // sendEmail(user, emailText);
 
     History.create(
         {date, userId: user.id, day, week, month, year, tasks},
