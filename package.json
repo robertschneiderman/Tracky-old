@@ -2,7 +2,7 @@
   "name": "tracking_app",
   "version": "1.0.0",
   "description": "",
-  "main": "./index.js",
+  "main": "./server/index.js",
   "scripts": {
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d",
     "start": "node ./server/index.js",
