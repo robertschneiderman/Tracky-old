@@ -13,9 +13,11 @@ const app = express();
 const db = require('./models');
 const path = require('path');
 
-app.use(express.static(path.join(__dirname, '../')));
+app.use(express.static(path.join(__dirname, '../frontend/')));
 
-const indexPath = path.join(__dirname, '/../index.html');
+// console.log('__dirname: ', path.join(__dirname, '../'));
+
+const indexPath = path.join(__dirname, '../index.html');
 
 app.get('/', function(req, res) {
     res.sendFile(indexPath);

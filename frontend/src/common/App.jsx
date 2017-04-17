@@ -27,7 +27,6 @@ class App extends Component {
   }
 
   handleClick() {
-        debugger;
     axioss.post(`cron`);
   }
 

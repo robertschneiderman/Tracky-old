@@ -8,6 +8,7 @@ frontend/tools
 frontend/dist
 
 server/node_modules
+node_modules
 
 
 coverage
