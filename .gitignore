@@ -8,6 +8,8 @@ frontend/tools
 frontend/dist
 
 server/node_modules
+server/config.js
+server/config
 node_modules
 
 
@@ -15,4 +17,3 @@ coverage
 .nyc_output
 .tmp
 .DS_Store
-travis
