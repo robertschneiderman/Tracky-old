@@ -1,4 +1,4 @@
-var config = require('./frontend/webpack.config.js');
+var config = require('./webpack.config.js');
 var webpack = require('webpack');
 
 config.plugins.push(
