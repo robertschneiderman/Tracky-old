@@ -23,7 +23,7 @@ class GoalTime extends React.Component {
     let [hours, minutes] = this.getHoursAndMinutes(e);
 
     if (e.target.value.length > 1) {
-      this.props.changeGoal(name, this.validNumberOfTime(`${hours}:${minutes}`));
+      this.props.changeGoal(name, hoursAndMinsToNumber(`${hours}:${minutes}`));
       e.target.value = '';
       (key === 'hours') ? e.target.parentElement.childNodes[2].focus() : e.target.blur();
     }    

@@ -14,7 +14,10 @@ export const msToTime = (totalMilliSeconds) => {
 };
 
 export const minutesToTime = (totalMinutes) => {
-    return msToTime(totalMinutes * 60 * 1000);
+    // debugger;
+    let hours = Math.floor(totalMinutes / 60);
+    let minutes = Math.floor(totalMinutes - hours * 60);
+    return `${padNumber(hours)}:${padNumber(minutes)}`;
 };
 
 export const msToLongerTime = (totalMilliSeconds) => {
@@ -79,4 +82,4 @@ export const artificialWeek = numToAdd => {
 export const adjustedWeek = (day, week) => {
   if (day === 0) return week - 1;
   return week;
-}
+};
