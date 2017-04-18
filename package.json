@@ -24,7 +24,8 @@
     "test": "node ./frontend/tools/run_test.js app",
     "test:app": "node ./frontend/tools/run_test.js app",
     "test:cli": "node ./frontend/tools/run_test.js cli",
-    "cron": "node ./server/cron.js"    
+    "cron": "node ./server/cron.js",
+    "postinstall": "webpack -p"
   },
   "repository": {
     "type": "git",
