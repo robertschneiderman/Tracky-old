@@ -1,4 +1,4 @@
-import App from './app';
+import App from './App';
 import Home from './Home';
 import PageNotFound from './PageNotFound';
 import Signup from '../pages/auth/components/Signup';
