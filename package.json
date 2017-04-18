@@ -25,7 +25,7 @@
     "test:app": "node ./frontend/tools/run_test.js app",
     "test:cli": "node ./frontend/tools/run_test.js cli",
     "cron": "node ./server/cron.js",
-    "postinstall": "webpack -p"
+    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress"
   },
   "repository": {
     "type": "git",
