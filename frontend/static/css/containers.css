@@ -83,7 +83,7 @@
 .c-time-graph-line.dotted {
     border-bottom: 1px dashed #e4e4e4;
 }
-.c-time-graph {width: 100%;height: 100%;position: absolute;z-index: 9999;pointer-events: none;}
+.c-time-graph {width: 100%;height: 100%;position: absolute;z-index: 8000;pointer-events: none;}
 .c-week {
 
 }
