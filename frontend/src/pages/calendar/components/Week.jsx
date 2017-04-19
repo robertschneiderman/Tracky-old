@@ -18,21 +18,15 @@ class Week extends Component {
         week.forEach(history => {
             arrangedHistorys[history.day] = history;
         });
-        // debugger;
         return arrangedHistorys;
     }
 
     renderWeek() {
         let { week, historyDict, activeWeek, taskDict, tsDict, dispatches } = this.props;
-        // let historys = week.map(histId => historyDict[histId]);
-        // debugger;
-        // historys = this.splitTimestamps(historys);
-        let startOfWeek = moment().subtract((activeWeek) * 7, 'days').startOf('week').add(1, 'days');
         let historys = this.arrangeHistorys();
 
         return historys.map((history, i) => {
-            let date = startOfWeek.add(i, 'days');
-
+            let date = moment().subtract(activeWeek, 'weeks').startOf('week').add(1, 'days').add(i, 'days');
             return <Day 
                     date={date}
                     history={history}
