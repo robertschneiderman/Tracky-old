@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     name: { type: DataTypes.STRING, allowNull: false },
     type: { type: DataTypes.STRING, allowNull: false },
     icon: { type: DataTypes.STRING, allowNull: false },
-    color: { type: DataTypes.STRING, allowNull: false }
+    color: { type: DataTypes.STRING, allowNull: false },
+    taskOrder: { type: DataTypes.INTEGER, allowNull: false }
   }, {
     classMethods: {
       associate: function(models) {
