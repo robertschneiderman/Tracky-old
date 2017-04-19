@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import TaskFrequency from './TaskFrequency';
 import TaskTime from './TaskTime';
+import { sortTasks } from '../../../common/helpers/common';
+
 
 class Tasks extends Component {
     constructor(props) {
@@ -14,7 +16,7 @@ class Tasks extends Component {
 
     renderTasks() {
         let { tasks, dispatches, timestamp, goalDictionary } = this.props;
-        return tasks.map((task, i) => {
+        return sortTasks(tasks).map((task, i) => {
             let timestamps = task.timestamps.map(id => timestamp[id]);
             let goals = task.goals.map(goalId => goalDictionary[goalId]).sort(this.goalSort);  
             let shortestDurationGoal = goals[0];

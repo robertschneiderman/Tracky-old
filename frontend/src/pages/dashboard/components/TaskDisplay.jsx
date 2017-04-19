@@ -69,7 +69,7 @@ class TaskDisplay extends Component {
     render() {
         let { timer, task } = this.props;
         let firstGoal = this.getGoals()[0] || [];
-        debugger;            
+        
         task = task || {name: '', icon: ''};
         let timeVisibility = (task.type === 'time' && timer && timer.running) ? {} : {visibility: 'hidden'};
 

@@ -6,6 +6,8 @@ import * as actions from '../redux/actions';
 import TaskArea from './TaskArea';
 import GoalArea from './GoalArea';
 import { createTask } from '../../../data/task/actions';
+import { objToArr } from '../../../common/helpers/selectors';
+import { sortTasks } from '../../../common/helpers/common';
 
 export class NewTask extends Component {
 
@@ -13,6 +15,14 @@ export class NewTask extends Component {
     let { type, interval } = this.props;
     return type && interval;
     // return true;
+  }
+
+  getTaskOrder() {
+    let { tasks } = this.props;
+    let sortedTasks = sortTasks(tasks);
+    let lastHighest = sortedTasks[sortedTasks.length-1];
+
+    return lastHighest ? lastHighest.taskOrder + 1 : 0;
   }
 
   handleCreate() {
@@ -24,7 +34,9 @@ export class NewTask extends Component {
     if (interval === 'weekly' || interval === 'monthly') delete goals.daily;
     if (interval === 'monthly') delete goals.weekly;
 
-    this.props.createTaskAndGoals({name, color, icon, type, historyId: lastHistory.id}, goals)
+    let taskOrder = this.getTaskOrder();
+
+    this.props.createTaskAndGoals({name, color, icon, type, historyId: lastHistory.id, taskOrder}, goals);
     hashHistory.push('dashboard');
   }
 
@@ -47,7 +59,19 @@ NewTask.propTypes = {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  return {...state.newTask, history: state.history};
+  let tasks = []
+  
+  let historyLength = Object.keys(state.history).length;
+  let currentHistory = objToArr(state.history)[historyLength-1];  
+  if (currentHistory) {
+    tasks = currentHistory.tasks.map(taskId => state.task[taskId]);
+  }
+
+  // tasks;
+  // currentHistory;
+  // debugger;
+
+  return {...state.newTask, history: state.history, tasks};
 }
 
 /* istanbul ignore next */
