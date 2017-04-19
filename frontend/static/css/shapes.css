@@ -3,7 +3,7 @@
 }
 .shape-dashboard-divider {height: 400px;border-left: 1px solid #ddd;}
 .shape-time-block {flex-grow: 1;cursor: pointer;padding: 0.3rem 1rem;width: 100%;z-index: 8010;position: absolute;}
-.shape-current-time-line {background-color: red;height: 2px;width: 100%;position: absolute;z-index: 0;}
+.shape-current-time-line {background-color: red;height: 2px;width: 14.298%;position: absolute;z-index: 0;}
 .shape-loader {position: absolute !important;right: -3.6rem;top: -33%;%/* transform: translate3d(-100%, -50%, 0) !important; */}
 .shape-progress-bar-elapsed {background-color: #c6ffc6;height: 100%;position: absolute;}
 .shape-progress-bar-completed {background-color: #a4fba4;height: 100%;position: absolute;transition: all .3s;}

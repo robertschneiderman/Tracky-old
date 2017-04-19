@@ -79,6 +79,11 @@ export const artificialWeek = numToAdd => {
     return moment().add(numToAdd, 'weeks');
 };
 
+export const adjustedDay= day => {
+    if (day === 0) return 6;
+    return day - 1;
+};
+
 export const adjustedWeek = (day, week) => {
   if (day === 0) return week - 1;
   return week;
