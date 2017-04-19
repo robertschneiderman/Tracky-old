@@ -10,7 +10,8 @@ img.icn-task:hover {
 .icn-dashboard {
     width: 1.7rem;
 }
-.icn-record {margin-right: 0.4rem;width: 1.2rem;}
-.icn-streak {width: 1.5rem;}
+.icn-record, .icn-streak {margin-right: 0.4rem;}
+.icn-streak {width: 1.9rem;}
+.icn-record {width: 1.5rem;}
 .icn-calendar {width: 1.45rem;}
 .icn-signout {width: 1.45rem;top: 1.5px;}

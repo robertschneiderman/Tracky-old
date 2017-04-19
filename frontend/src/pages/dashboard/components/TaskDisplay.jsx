@@ -88,16 +88,18 @@ class TaskDisplay extends Component {
                         {this.renderGoals()}
                     </div>
 
+                    {(task && task.goals) ?
                     <div className="w-task-display-streaks-records">
                         <div className="w-record">
                             <img src="./static/images/medal.svg" alt="" className="icn-record"/>
                             <span className="text-streak">0</span>
                         </div>
                         <div className="w-record">
-                            <img src="./static/images/fire.svg" alt="" className="icn-record"/>
+                            <img src="./static/images/fire.svg" alt="" className="icn-streak"/>
                             <span className="text-streak">{firstGoal.streak}</span>
                         </div>                        
                     </div>
+                    : '' }
                 </div>
             </div>
         );
