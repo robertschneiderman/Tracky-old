@@ -13,27 +13,16 @@ const db = require('./models');
 const path = require('path');
 
 app.use(express.static(path.join(__dirname, '../frontend/')));
-
-// console.log('__dirname: ', path.join(__dirname, '../'));
-
 const indexPath = path.join(__dirname, '../index.html');
 
 app.get('/', function(req, res) {
     res.sendFile(indexPath);
 });
 
-
-app.get('/test', function(req, res) {
-    res.send("TEST!!!!!!!!!!!!!!!!");
-});
-
-
 // App Setup
 app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json({type: '*/*'}));
-// app.use(express.static('../'));
-
 app.use('/', express.static(path.join(__dirname, '../')));
 
 router(app);

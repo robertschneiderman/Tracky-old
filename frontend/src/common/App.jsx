@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   handleClick() {
-    axioss.post(`cron`);
+    axioss.post(`crons`);
   }
 
   render() {
