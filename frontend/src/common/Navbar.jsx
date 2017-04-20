@@ -27,6 +27,11 @@ class Navbar extends Component {
           <Link className="link-navbar" to="/signout">
             <img src="./static/images/sign_out.svg" alt="" className="icn-signout"/>          
           </Link>
+        </li>,
+        <li className="item-navbar" key={'nvb-sdnk'}>
+          <Link className="link-navbar" to="/reporting">
+            Reporting
+          </Link>
         </li>
       ];
     } else {

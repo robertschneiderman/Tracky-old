@@ -4,7 +4,7 @@
   "description": "",
   "main": "./server/index.js",
   "scripts": {
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d",
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d --content-base frontnend/static",
     "start": "node ./server/index.js",
     "add:action": "node ./frontend/tools/cli/add_action.js",
     "add:auth": "node ./frontend/tools/cli/add_auth.js",
