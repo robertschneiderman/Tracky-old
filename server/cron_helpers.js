@@ -18,8 +18,10 @@ const assess = (tasks, emailText, goal) => {
     let target = dh.minutesToTime(goal.target);
 
     if (goal.count >= goal.target) {
+        goal.streak += 1;
         emailText.content += `<span style="color: green;">${task.name} complete! (${count} / ${target})</span>`;
     } else {
+        goal.streak = 0;
         emailText.content += `<span style="color: red;">${task.name} failed! (${count} / ${target})</span>`;
     }
     goal.count = 0;
