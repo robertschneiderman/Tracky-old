@@ -21,12 +21,20 @@ class Week extends Component {
         return arrangedHistorys;
     }
 
+    getStartOfWeek() {
+        let { activeWeek } = this.props;
+        let now = moment();
+        let adjustment = now.get('day') === 0 ? 1 : 0;
+        return now.subtract(activeWeek + adjustment, 'weeks').startOf('week');
+    }
+
     renderWeek() {
         let { week, historyDict, activeWeek, taskDict, tsDict, dispatches } = this.props;
         let historys = this.arrangeHistorys();
 
         return historys.map((history, i) => {
-            let date = moment().subtract(activeWeek, 'weeks').startOf('week').add(1, 'days').add(i, 'days');
+            // debugger;
+            let date = this.getStartOfWeek().add(1, 'days').add(i, 'days');
             return <Day 
                     date={date}
                     history={history}

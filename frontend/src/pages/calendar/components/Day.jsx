@@ -49,7 +49,6 @@ class Day extends Component {
         let {history, dispatches, taskDict} = this.props;
         let timestamp = this.timestampFromClick(e.nativeEvent.offsetY);
         let taskId = objToArr(taskDict)[0].id;
-        
         dispatches.populateTimestampEditorAndRedirect('create', {id: taskId}, timestamp);
     }
     
