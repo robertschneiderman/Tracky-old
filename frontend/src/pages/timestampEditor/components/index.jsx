@@ -73,12 +73,22 @@ export class TimestampEditor extends Component {
     hashHistory.push('calendar');
   }
 
+  renderBtn() {
+    let { mode } = this.props;
+    mode = upperFirst(`${mode}`);
+    let fnc = `handle${mode}`;
+    // debugger;
+    return <button disabled={!this.isValidRange()} onClick={this[fnc].bind(this)} className="btn-edit-timestamp">{mode} Timestamp</button>;
+  }
+
   render() {
     let { mode, activeTaskIdx, timestamp, task, tasks, dispatches } = this.props;
     let { start, end } = timestamp;
 
+
     end = end || start;
             // <p className="text-timestamp-editor">{start}</p>
+    if (!task) return null;
     return (
       <div className="p-timestamp-editor">
         <img onClick={this.handleClick.bind(this)} src="./static/images/x.svg" alt="" className="btn-timestamp-editor-close"/>
@@ -88,7 +98,7 @@ export class TimestampEditor extends Component {
           <TaskIncrementer activeTaskIdx={activeTaskIdx} tasks={tasks} dispatches={dispatches} key="osm-2" />,
           <TimeInput field={'start'} time={start} dispatches={dispatches} key="osm-3" />] : ''}
           {(task && task.type === 'time') ? <TimeInput field={'end'} time={end}  dispatches={dispatches} key="osm-4" /> : ''}
-          <button disabled={!this.isValidRange()} onClick={this.handleEdit.bind(this)} className="btn-edit-timestamp">{upperFirst(`${mode}`)} Timestamp</button>
+          {this.renderBtn()}
           <a onClick={(e) => this.handleRemove(e)} className="link-remove-timestamp">Remove Timestamp</a>
         </div>
 
