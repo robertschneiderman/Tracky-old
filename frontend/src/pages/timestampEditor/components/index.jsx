@@ -25,7 +25,7 @@ export class TimestampEditor extends Component {
 
   isValidRange() {
     let { timestamp } = this.props;
-    return this.getElapsedTime(timestamp) > 0;
+    return this.getElapsedTime(timestamp) >= 0;
   }
 
   handleCreate() {
