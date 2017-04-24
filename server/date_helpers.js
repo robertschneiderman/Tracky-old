@@ -1,5 +1,5 @@
 var moment = require('moment');
-
+var tz = require('moment-timezone');
 
 const months = {
     0: 'January',
@@ -36,7 +36,7 @@ exports.adjustedDay= day => {
 };
 
 exports.adjustedWeek= () => {
-    let date = moment().startOf('day');
+    let date = moment().tz("America/Los_Angeles").startOf('day');
     let day = date.get('day');
     let week = date.get('week');
 
