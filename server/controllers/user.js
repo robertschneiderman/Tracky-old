@@ -11,6 +11,9 @@ const moment = require('moment');
 const week = dh.adjustedWeek();
 
 exports.find = function(req, res, next) {
+  console.log('week: ', week);
+  console.log('req.params.id: ', req.params.id);
+  
   User.find({ where: {id: parseInt(req.params.id)}, 
     include: [
       {model: History, as: 'historys', where: {week}, include: [
