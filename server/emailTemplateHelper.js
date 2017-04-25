@@ -14,7 +14,7 @@ var images = {
   yoga: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493103561/tracky/yoga.png",
   book: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/book.png",
   briefcase: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/briefcase.png",
-}
+};
 
 exports.headerOpening = function() {
   return `
@@ -346,13 +346,13 @@ exports.headerOpening = function() {
           <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: table; box-sizing: border-box; padding: 0;"><tbody style="position: relative; box-sizing: border-box;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left">
       <th class="small-12 large-12 columns first last" style="vertical-align: middle; width: 564px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0 auto; padding: 9px 16px;" align="left" valign="middle"><table style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; box-sizing: border-box; padding: 0;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left">
       <th style="color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left">
-                <img src="../images/logo.svg" class="img-logo" alt="" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: 9rem; max-width: 100%; clear: both; display: block; position: relative; box-sizing: border-box; margin-bottom: 1.1em; border: 0;">
+                <img src="http://res.cloudinary.com/stellar-pixels/image/upload/v1493109732/tracky/logo.png" class="img-logo" alt="" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: 9rem; max-width: 100%; clear: both; display: block; position: relative; box-sizing: border-box; margin-bottom: 1.1em; border: 0;">
       </th>
       <th class="expander" style="visibility: hidden; width: 0; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left"></th>
       </tr></table></th>
             </tr></tbody></table>
       `;
-}
+};
 
 exports.intervalOpening = function() {
   return `
@@ -365,22 +365,20 @@ exports.intervalOpening = function() {
     <th class="expander" style="visibility: hidden; width: 0; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left"></th>
     </tr></table></th>
             </tr></tbody></table>  
-  `
-}
+  `;
+};
 
 exports.task = function(task, count, target) {
   let completed = count >= target;
   let completedIcon = completed ? 'checkmark' : 'xmark';
   let icon = task['icon'];
-  let pathh = images[icon];
-
-  var fake = 'yey';
+  let path = images[icon];
 
   return `
     <table class="wrapper w-tasks" align="center" style="width: 100%; border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; position: relative; box-sizing: border-box; border-bottom-width: 1px; border-bottom-color: #eee; border-bottom-style: solid; padding: 0;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left"><td class="wrapper-inner" style="word-wrap: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0 0.4rem;" align="left" valign="top">
               <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: table; box-sizing: border-box; padding: 0;"><tbody style="position: relative; box-sizing: border-box;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left">
     <th class="small-6 large-6 columns first" style="vertical-align: middle; width: 274px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0 auto; padding: 9px 8px 9px 16px;" align="left" valign="middle"><table style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; box-sizing: border-box; padding: 0;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left"><th style="color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left">
-                  <div class="img-icon" alt="a laptop" title="a laptop" style="background-image: url('http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/laptop.png'); outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: 2.2rem; max-width: 100%; clear: both; display: inline-block; position: relative; box-sizing: border-box; height: 2.2rem; margin-right: 1rem; vertical-align: middle; border: 0;"></div><h3 class="title-task" style="color: inherit; font-family: 'Lato'; font-weight: 400; text-align: left; line-height: 1.3; word-wrap: normal; font-size: 1.2rem; position: relative; box-sizing: border-box; display: inline-block; vertical-align: middle; margin: 0; padding: 0;" align="left">${task.name}</h3>
+                  <img class="img-icon" src="${path}" alt="a laptop" title="a laptop" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: 2.2rem; max-width: 100%; clear: both; display: inline-block; position: relative; box-sizing: border-box; height: 2.2rem; margin-right: 1rem; vertical-align: middle; border: 0;"><h3 class="title-task" style="color: inherit; font-family: 'Lato'; font-weight: 400; text-align: left; line-height: 1.3; word-wrap: normal; font-size: 1.2rem; position: relative; box-sizing: border-box; display: inline-block; vertical-align: middle; margin: 0; padding: 0;" align="left">${task.name}</h3>
                 </th></tr></table></th>
                 <th class="small-6 large-6 columns last" style="vertical-align: middle; width: 274px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0 auto; padding: 9px 16px 9px 8px;" align="left" valign="middle"><table style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; box-sizing: border-box; padding: 0;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left"><th style="color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left">
                   <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: table; box-sizing: border-box; padding: 0;"><tbody style="position: relative; box-sizing: border-box;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left">
@@ -394,14 +392,14 @@ exports.task = function(task, count, target) {
     </th></tr></table></th>      
               </tr></tbody></table>  
   `;
-}
+};
 
 exports.intervalClosing = function() {
   return `  
     </td></tr></table>
     </td></tr></table>
-  `
-}
+  `;
+};
 
 exports.headerClosing = function() {
   return `
@@ -410,4 +408,4 @@ exports.headerClosing = function() {
     </body>
     </html>
   `;
-}
+};

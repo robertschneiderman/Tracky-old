@@ -20,10 +20,11 @@ const assess = (emailText, interval, goals, tasks) => {
     emailText.content += eth.intervalOpening(interval);
     goals.forEach(goal => {
         let task = tasks.find(task => task.id === goal.taskId);
-        let count = dh.minutesToTime(goal.count);
-        let target = dh.minutesToTime(goal.target);
+        let count = task.type === 'time' ? dh.minutesToTime(goal.count) : parseInt(goal.count);
+        let target = task.type === 'time' ? dh.minutesToTime(goal.target) : parseInt(goal.target);
+
         emailText.content += eth.task(task, count, target);
-    })
+    });
     emailText.content += eth.intervalClosing();
 
 
@@ -42,7 +43,7 @@ const assess = (emailText, interval, goals, tasks) => {
 const sendEmail = (user, emailText) => {
     var helper = require('sendgrid').mail;
     
-    let fromEmail = new helper.Email("robert.a.schneiderman@gmail.com");
+    let fromEmail = new helper.Email("worldindustry91@gmail.com.com");
     let toEmail = new helper.Email(`robert.a.schneiderman@gmail.com`);
     // let toEmail = new helper.Email(`${user.email}`);
     let subject = "Tracky Update";
@@ -118,12 +119,15 @@ exports.cronTask = user => {
         // goalsGrouped['weekly'].forEach(goal => assess(tasks, emailText, goal));
     }
     // emailText.content += `<br/><b>Daily:</b><br/><br/>`;
-    emailText.content += `<img src='http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/laptop.png' />`;
-    // assess(emailText, 'daily', goalsGrouped['daily'], tasks)
+    // emailText.content += `<img src='http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/laptop.png' />`;
+    assess(emailText, 'daily', goalsGrouped['daily'], tasks);
     // goalsGrouped['daily'].forEach(goal => assess(tasks, emailText, goal));
 
     tasks.forEach(task => stripId(task));
 
+    // let imgPath = "https://ci4.googleusercontent.com/proxy/pq6GXho47O_7pewbtVxKYodTz48h3MWGday1EAR45fw964baggY9D-OQc-fnRpyP8Q8vQpNVYcXvfNcZZKlVfYriUydr0vE=s0-d-e1-ft#https://uploads.remote.com/emails/Highreslogo.png";    
+    // emailText.content += "<img id='hehe' src=''http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/laptop.png'' />";
+    // emailText.content += "YOOOOOOOOOOOOO!!!!!!!!!!!!!!";
     emailText.content += eth.headerClosing();    
 
     sendEmail(user, emailText);
