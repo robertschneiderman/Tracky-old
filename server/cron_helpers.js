@@ -7,25 +7,35 @@ const dh = require('./date_helpers');
 const config = require('./environment');
 const _ = require('lodash');
 var moment = require('moment');
+const eth = require('./emailTemplateHelper');
 
 const stripId = obj => {
     delete obj.id;
 };
 
-const assess = (tasks, emailText, goal) => {
-    let task = tasks.find(task => task.id === goal.taskId);
-    let count = dh.minutesToTime(goal.count);
-    let target = dh.minutesToTime(goal.target);
+// [{icon, name, count, target, completed}]
 
-    if (goal.count >= goal.target) {
-        goal.streak += 1;
-        emailText.content += `<span style="color: green;">${task.name} complete! (${count} / ${target})</span>`;
-    } else {
-        goal.streak = 0;
-        emailText.content += `<span style="color: red;">${task.name} failed! (${count} / ${target})</span>`;
-    }
-    goal.count = 0;
-    emailText.content += `<br/>`;
+const assess = (emailText, interval, goals, tasks) => {
+
+    emailText.content += eth.intervalOpening(interval);
+    goals.forEach(goal => {
+        let task = tasks.find(task => task.id === goal.taskId);
+        let count = dh.minutesToTime(goal.count);
+        let target = dh.minutesToTime(goal.target);
+        emailText.content += eth.task(task, count, target);
+    })
+    emailText.content += eth.intervalClosing();
+
+
+    // if (goal.count >= goal.target) {
+    //     goal.streak += 1;
+    //     emailText.content += `<span style="color: green;">${task.name} complete! (${count} / ${target})</span>`;
+    // } else {
+    //     goal.streak = 0;
+    //     emailText.content += `<span style="color: red;">${task.name} failed! (${count} / ${target})</span>`;
+    // }
+    // goal.count = 0;
+    // emailText.content += `<br/>`;
     return emailText;
 };
 
@@ -83,6 +93,8 @@ const isFirstDayOfMonth = () => {
     return moment().get('date') === 1;
 };
 
+// [{icon, name, count, target, completed}]
+
 exports.cronTask = user => {
     let emailText = {content: ''};
 
@@ -93,18 +105,26 @@ exports.cronTask = user => {
     let goalsGrouped = groupGoals(tasks);
     let {day, week, month, year, date} = getNewHistoryInfo(lastHistory.date);
 
+    emailText.content += eth.headerOpening();
+
     if (isFirstDayOfMonth()) {
-        emailText.content += `<br/><b>Monthly:</b><br/><br/>`;
-        goalsGrouped['monthly'].forEach(goal => assess(tasks, emailText, goal));
+        // emailText.content += `<br/><b>Monthly:</b><br/><br/>`;
+        // assess(emailText, 'monthly', goalsGrouped['monthly'], tasks)
+        // goalsGrouped['monthly'].forEach(goal => assess(tasks, emailText, goal));
     }
     if (day === 0) {
-        emailText.content += `<br/><b>Weekly:</b><br/><br/>`;        
-        goalsGrouped['weekly'].forEach(goal => assess(tasks, emailText, goal));
+        // emailText.content += `<br/><b>Weekly:</b><br/><br/>`;       
+        // assess(emailText, 'weekly', goalsGrouped['weekly'], tasks)         
+        // goalsGrouped['weekly'].forEach(goal => assess(tasks, emailText, goal));
     }
-    emailText.content += `<br/><b>Daily:</b><br/><br/>`;            
-    goalsGrouped['daily'].forEach(goal => assess(tasks, emailText, goal));
+    // emailText.content += `<br/><b>Daily:</b><br/><br/>`;
+    emailText.content += `<img src='http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/laptop.png' />`;
+    // assess(emailText, 'daily', goalsGrouped['daily'], tasks)
+    // goalsGrouped['daily'].forEach(goal => assess(tasks, emailText, goal));
 
     tasks.forEach(task => stripId(task));
+
+    emailText.content += eth.headerClosing();    
 
     sendEmail(user, emailText);
 

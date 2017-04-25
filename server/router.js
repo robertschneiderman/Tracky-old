@@ -40,5 +40,5 @@ module.exports = function(app) {
   app.delete('/timestamps/:id', requireAuth, Timestamp.delete);
 
   app.post('/cron', requireAuth, Cron.create);
-  app.post('/crons', Cron.createForAll);
+  app.post('/crons', Cron.create);
 };
