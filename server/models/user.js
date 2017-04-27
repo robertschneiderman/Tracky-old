@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         User.hasMany(models.History, {
           foreignKey: 'userId',
-          as: 'historys'
+          as: 'tasks'
         });                  
       },
       findByToken: function(token) {

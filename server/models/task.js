@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Task = sequelize.define('Task', {
-    historyId: { type: DataTypes.INTEGER, allowNull: false },
+    userId: { type: DataTypes.INTEGER, allowNull: false },
     name: { type: DataTypes.STRING, allowNull: false },
     type: { type: DataTypes.STRING, allowNull: false },
     icon: { type: DataTypes.STRING, allowNull: false },
@@ -18,9 +18,9 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey: 'taskId',
           as: 'timestamps'
         });                
-        Task.belongsTo(models.History, {
-          foreignKey: 'historyId',
-          as: 'history'
+        Task.belongsTo(models.User, {
+          foreignKey: 'userId',
+          as: 'user'
         });
       }
     }
