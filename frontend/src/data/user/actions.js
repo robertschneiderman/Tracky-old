@@ -7,6 +7,7 @@ export const RECEIVE_USERS = 'RECEIVE_USERS';
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const REMOVE_USER = 'REMOVE_USERS';
 export const USER_ERROR = 'USER_ERROR';
+export const UPDATE_TASK_ARR = 'UPDATE_TASK_ARR';
 
 export const requestUsers = () => ({
     type: REQUEST_USERS,
@@ -50,4 +51,10 @@ export const destroyUser = user => ({
 export const userError = error => ({
     type: USER_ERROR,
     error
+});
+
+export const updateTaskArr = (userId, taskId) => ({
+    type: UPDATE_TASK_ARR,
+    userId,
+    taskId
 });

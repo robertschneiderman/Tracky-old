@@ -29,7 +29,7 @@ const taskReducer = (state = initialState, action) => {
       delete newState[action.task.id];
       return newState;
     case UPDATE_GOAL_ARR:
-      newState[action.taskId].goals.push(action.goalId);
+      newState[action.taskId].goals.concat(action.goalIds);
       return newState;            
     case UPDATE_TIMESTAMP_ARR:
       newState[action.taskId].timestamps.push(action.timestampId);

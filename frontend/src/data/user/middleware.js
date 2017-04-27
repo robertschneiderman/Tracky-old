@@ -1,8 +1,7 @@
 import { normalize, Schema } from 'normalizr';
-import {userSchema, historySchema, taskSchema, goalSchema, timestampSchema} from './schemas';
+import {userSchema, taskSchema, goalSchema, timestampSchema} from './schemas';
 import {objToArr} from '../../common/helpers/selectors';
 import { receiveWeeks } from '../../pages/calendar/redux/actions';
-import { receiveHistorys } from '../history/actions';
 import { receiveTasks } from '../task/actions';
 import { receiveGoals } from '../goal/actions';
 import { receiveTimestamps } from '../timestamp/actions';
@@ -32,13 +31,13 @@ export default ({getState, dispatch}) => next => action => {
   const usersSuccess = res => dispatch(receiveUsers(res.data));
   const userSuccess = res => {
     const normalized = normalize(res.data, userSchema);
-    let {users, historys, tasks, goals, timestamps} = normalized.entities;
+    let {users, tasks, goals, timestamps} = normalized.entities;
     let user = objToArr(users)[0];
     dispatch(receiveTimestamps(timestamps));
     dispatch(receiveGoals(goals));
     dispatch(receiveTasks(tasks));
-    dispatch(receiveHistorys(historys));
-    dispatch(receiveWeeks(user.historys));
+    // dispatch(receiveHistorys(historys));
+    // dispatch(receiveWeeks(user.historys));
     dispatch(receiveUser(user));
   };
   const userRemoved = res => dispatch(removeUser(res.data));

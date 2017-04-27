@@ -37,10 +37,27 @@ const calculateMultipliers = goals => {
   return goals;
 };
 
+const addGoalTimeValues = (goals) => {
+  let now = moment();
+  let year = now.get('year')
+  let week = now.get('week')
+  let day = now.get('day')
+  goals.forEach(goal => {
+    goal.year = year;
+    goal.week = week;
+    goal.day = day;
+  });
+}  
+
 exports.create = function(req, res, next) {
   let {task, goals} = req.body;
+
+  addGoalTimeValues(goals)
+
   task.goals = goals;
   task.timestamps = [];
+
+
 
   Task.create(task, {include: [ {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'} ]})
   .then(task => {
@@ -48,41 +65,6 @@ exports.create = function(req, res, next) {
   }).catch((e) => {
     res.status(401).send(e);
   });
-
-
-  // var token = req.header('x-auth');
-  // User.findByToken(token).then((user) => {
-  //   if (!user) {
-  //     return Promise.reject();
-  //   }
-    
-  //   fillAssessments(req.body.goals);
-  //   calculateMultipliers(req.body.goals);
-
-  //   let task = {
-  //     name: req.body.name,
-  //     color: req.body.color,
-  //     type: req.body.type,
-  //     goals: req.body.goals
-  //   };
-  //   let date = new Date();
-
-  //   if (!user.histories[0]) user.histories[0] = { date: date, tasks: [] };
-  //   user.histories[0].tasks.push(task);
-
-  //   user.save(function(err) {
-  //     if (err) { return next(err); }
-  //     // let history = user.histories[0].toObject();
-  //     // history.date = dh.formattedDate(date);
-  //     let tasks = user.histories[0].tasks;
-  //     res.json(tasks[tasks.length-1]);
-  //   }).catch((e) => {
-  //     res.status(401).send();
-  //   });
-
-  // }).catch((e) => {
-  //   res.status(401).send();
-  // });
 };
 
 exports.getTasks = function(req, res, next) {

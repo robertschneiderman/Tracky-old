@@ -22,7 +22,7 @@ class Navbar extends Component {
             <img src="./static/images/plus.svg" alt="" className="icn-calendar"/>          
           </Link>
         </li>,
-        <div className="shape-navbar-divider"></div>,
+        <div className="shape-navbar-divider" key={'nvb-2iuf'}></div>,
         <li className="item-navbar" key={'nvb-n919'}>        
           <Link className="link-navbar" to="/signout">
             <img src="./static/images/sign_out.svg" alt="" className="icn-signout"/>          

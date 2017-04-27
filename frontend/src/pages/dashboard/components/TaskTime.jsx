@@ -35,7 +35,7 @@ class TaskTime extends Component {
     }
 
     timerStart() {
-        let { dispatches, task, history } = this.props;
+        let { dispatches, task } = this.props;
         this.setState({running: true});
         this.interval = setInterval(() => {
             this.setState({timer: this.state.timer + 10});
@@ -43,18 +43,16 @@ class TaskTime extends Component {
             dispatches.updateTimer({id: task.id, time: this.state.timer + 10});
         }, 10);
 
-        let currentDevDate = moment(history.date).get('date');
-        let start = moment().set('date', currentDevDate);
+        let start = moment();
 
         dispatches.createTimestamp({start, taskId: task.id});        
     }
 
     timerEnd() {
-        let { dispatches, task, history } = this.props;
+        let { dispatches, task } = this.props;
         let lastTimestamp = this.getLastTimestamp();
 
-        let currentDevDate = moment(history.date).get('date');
-        let end = moment().set('date', currentDevDate);   
+        let end = moment();   
 
         dispatches.stopTimer({id: task.id});
         dispatches.finishTimestamp({id: lastTimestamp.id, end});

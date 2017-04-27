@@ -4,13 +4,16 @@ import initialState from './initialState';
 import { RECEIVE_USERS,
          RECEIVE_USER,
          REMOVE_USER,
+         UPDATE_TASK_ARR,         
          USER_ERROR
        } from './actions';
 
 const userReducer = (state = initialState, action) => {
+  let newState = merge({}, state);
+
   switch(action.type){
     case RECEIVE_USERS:
-      let newState = {};
+      newState = {};
       action.users.forEach(user => {
         newState[user.id] = user;
       });
@@ -18,8 +21,13 @@ const userReducer = (state = initialState, action) => {
     case RECEIVE_USER:
       // const newTemplate = {[action.user.id]: action.user};
       return merge({}, state, action.user);
+    case UPDATE_TASK_ARR:
+      debugger;
+      newState.tasks = newState.tasks.concat([action.taskId]);
+      debugger;
+      // newState[action.userId].tasks.push(action.taskId);
+      return newState;      
     case REMOVE_USER:
-      newState = merge({}, state);
       delete newState[action.user.id];
       return newState;
     case USER_ERROR:
@@ -29,4 +37,4 @@ const userReducer = (state = initialState, action) => {
   }
 };
 
-export default userReducer;
+export default userReducer;  let newState;

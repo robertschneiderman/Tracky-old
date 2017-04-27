@@ -17,7 +17,7 @@ export class Dashboard extends Component {
   }
 
   render() {
-    let { tasks, taskDictionary, goalDictionary, history, timers, activeTask } = this.props;
+    let { tasks, taskDictionary, goalDictionary, timers, activeTask } = this.props;
     return (
       <div className="c-dashboard">
         <div className="text-message">{this.message || ''}</div>
@@ -36,19 +36,19 @@ export class Dashboard extends Component {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  let { user, history, task, goal, timestamp, dashboard } = state
-  let historyLength = Object.keys(history).length;
-  let currentHistory = objToArr(history)[historyLength-1];
+  let { user, task, goal, timestamp, dashboard } = state;
   // debugger;
-  let tasks = []
-  if (currentHistory) {
-    tasks = currentHistory.tasks.map(taskId => task[taskId]);
-  }
+  let tasks = user.tasks || [];
+  
+  tasks = tasks.map(taskId => task[taskId]);
+  // if (currentHistory) {
+    // tasks = currentHistory.tasks.map(taskId => task[taskId]);
+  // }
 
 
   return {
     user,
-    history: currentHistory,
+    // history: currentHistory,
     tasks,
     taskDictionary: task,
     timestamp,

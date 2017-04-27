@@ -26,17 +26,17 @@ export class NewTask extends Component {
   }
 
   handleCreate() {
-    let { name, color, type, icon, time, frequency, interval, history } = this.props;
+    let { name, color, type, icon, time, frequency, interval, user } = this.props;
     let goals = type === 'time' ? time : frequency;
-    let lastKey = Object.keys(history)[0];
-    let lastHistory = history[lastKey]
+    // let lastKey = Object.keys(history)[0];
+    // let lastHistory = history[lastKey]
 
     if (interval === 'weekly' || interval === 'monthly') delete goals.daily;
     if (interval === 'monthly') delete goals.weekly;
 
     let taskOrder = this.getTaskOrder();
 
-    this.props.createTaskAndGoals({name, color, icon, type, historyId: lastHistory.id, taskOrder}, goals);
+    this.props.createTaskAndGoals({name, color, icon, type, taskOrder, userId: user.id}, goals);
     hashHistory.push('dashboard');
   }
 
@@ -59,19 +59,13 @@ NewTask.propTypes = {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  let tasks = []
-  
-  let historyLength = Object.keys(state.history).length;
-  let currentHistory = objToArr(state.history)[historyLength-1];  
-  if (currentHistory) {
-    tasks = currentHistory.tasks.map(taskId => state.task[taskId]);
-  }
-
-  // tasks;
-  // currentHistory;
+  let { user, task } = state;
   // debugger;
+  let tasks = user.tasks || [];
+  
+  tasks = tasks.map(taskId => task[taskId]);
 
-  return {...state.newTask, history: state.history, tasks};
+  return {...state.newTask, tasks, user};
 }
 
 /* istanbul ignore next */

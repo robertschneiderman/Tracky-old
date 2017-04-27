@@ -1,9 +1,10 @@
 import { normalize, Schema } from 'normalizr';
-import {userSchema, historySchema, taskSchema, goalSchema, timestampSchema} from '../user/schemas';
-import { updateTaskArr } from '../history/actions';
+import {userSchema, taskSchema, goalSchema, timestampSchema} from '../user/schemas';
 import { mergeGoals } from '../goal/actions';
 import { objToArr } from '../../common/helpers/selectors';
 import {hashHistory} from 'react-router';
+
+import { updateTaskArr } from '../user/actions';
 
 // Task API Util
 import { fetchTasks,
@@ -18,6 +19,7 @@ import { requestTasks,
          receiveTask,
          receiveTasks,
          removeTask,
+         updateGoalArr,
          taskError,
 // Task Constants
          REQUEST_TASKS,
@@ -34,10 +36,12 @@ export default ({getState, dispatch}) => next => action => {
     let { tasks, goals } = normalized.entities;
     let task = Object.values(tasks)[0];
     goals = objToArr(goals);
-    // debugger;
+    let goalIds = goals.map(goal => goal.id);
+
     dispatch(mergeGoals(goals));
     dispatch(receiveTask(task));
-    dispatch(updateTaskArr(task.historyId, task.id));
+    dispatch(updateGoalArr(goals[0].taskId, goalIds)); 
+    dispatch(updateTaskArr(parseInt(localStorage.getItem('currentUser')), task.id)); 
     // hashHistory.push('dashboard');
   };
   const taskRemoved = res => dispatch(removeTask(res.data));

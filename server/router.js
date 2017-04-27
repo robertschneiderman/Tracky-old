@@ -1,7 +1,6 @@
 const Auth = require('./controllers').auth;
 const Cron = require('./controllers').cron;
 const User = require('./controllers').user;
-const Historyy = require('./controllers').history;
 const Task = require('./controllers').task;
 const Goal = require('./controllers').goal;
 const Timestamp = require('./controllers').timestamp;
@@ -22,9 +21,6 @@ module.exports = function(app) {
   app.post('/signup', Auth.signup);
 
   app.get('/users/:id', User.find);
-
-  app.get('/historys/:week', requireAuth, Historyy.get);
-  app.post('/historys', requireAuth, Historyy.create);
 
   app.post('/tasks', requireAuth, Task.create);
   app.get('/tasks', Task.getTasks);

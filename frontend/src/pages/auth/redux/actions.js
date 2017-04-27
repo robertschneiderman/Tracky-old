@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { hashHistory } from 'react-router';
-import { createHistory } from '../../../data/history/api_util';
 
 const ROOT_URL = (process.env.NODE_ENV !== "production") ? 'http://localhost:3090' : 'https://traky.herokuapp.com';
 // const ROOT_URL = 'https://trackyy.herokuapp.com';
@@ -30,14 +29,8 @@ export function signupUser({ email, name, password }) {
       .then(response => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('currentUser', response.data.id);        
-        // dispatch({ type: 'CREATE_HISTORY', id: response.data.id});
-            // dispatch({ type: 'RECEIVE_HISTORY', history: res.data});
-        createHistory(response.data.id, 
-          res => {
-            dispatch({ type: 'AUTH_USER' });
-            hashHistory.push('dashboard');
-          }, err => console.log(err)
-        );
+        dispatch({ type: 'AUTH_USER' });
+        hashHistory.push('dashboard');
       })
       .catch(() => {
         dispatch(authError("Bad Signup Info"));

@@ -4,7 +4,6 @@ import createLogger from 'redux-logger';
 import reducers from './rootReducer.js';
 import newTaskMiddleware from '../pages/newTask/redux/middleware';
 import taskMiddleware from '../data/task/middleware';
-import historyMiddleware from '../data/history/middleware';
 import dashboardMiddleware from '../pages/dashboard/redux/middleware';
 import userMiddleware from '../data/user/middleware';
 import goalMiddleware from '../data/goal/middleware';
@@ -19,7 +18,6 @@ const createStoreWithMiddleware = applyMiddleware(
     ,logger 
   ,newTaskMiddleware
   ,taskMiddleware
-  ,historyMiddleware
   ,dashboardMiddleware
   ,userMiddleware
   ,goalMiddleware

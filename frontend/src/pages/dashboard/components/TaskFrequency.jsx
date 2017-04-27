@@ -36,7 +36,6 @@ class TaskFrequency extends Component {
     render() {
         let { task, goal } = this.props;
         let { name, icon } = task;
-        // debugger;        
         return(
             <div className="c-task" onClick={this.handleClick.bind(this)} onMouseEnter={this.handleMouseEnter.bind(this)}>
                 <img src={`./static/images/task_icons/${icon}.svg`} className="img-task-icon" />

@@ -1,10 +1,9 @@
 import { editStoredTimestamp, populateState} from '../../timestampEditor/redux/actions';
 import {hashHistory} from 'react-router';
 import { normalize, Schema } from 'normalizr';
-import {userSchema, historySchema, taskSchema, goalSchema, timestampSchema} from '../../../data/user/schemas';
+import {userSchema, taskSchema, goalSchema, timestampSchema} from '../../../data/user/schemas';
 import { objToArr } from '../../../common/helpers/selectors';
 // import { adjustedWeek } from '../../../common/helpers/timeHelpers';
-import { mergeHistorys } from '../../../data/history/actions';
 import { mergeTasks } from '../../../data/task/actions';
 import { mergeGoals } from '../../../data/goal/actions';
 import { mergeTimestamps } from '../../../data/timestamp/actions';
@@ -23,14 +22,12 @@ export const requestAndToggleWeek = (inc, week) => {
   return dispatch => {
     axioss.get(`historys/${week}`).then(res => {
       const normalized = normalize(res.data, [historySchema]);
-      let {historys, tasks, goals, timestamps} = normalized.entities; 
+      let {tasks, goals, timestamps} = normalized.entities; 
 
       if (timestamps) dispatch(mergeTimestamps(objToArr(timestamps)));
       if (tasks) dispatch(mergeTasks(objToArr(tasks)));
-      if (historys) dispatch(mergeHistorys(objToArr(historys)));
 
-      historys = historys || [];
-      dispatch(receiveWeeks(Object.keys(historys)));
+      // dispatch(receiveWeeks(Object.keys(historys)));
       dispatch({type: TOGGLE_WEEK, payload: inc });
     });
   };

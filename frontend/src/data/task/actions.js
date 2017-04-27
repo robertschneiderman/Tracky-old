@@ -57,10 +57,10 @@ export const destroyTask = task => ({
     task
 });
 
-export const updateGoalArr = (taskId, goalId) => ({
+export const updateGoalArr = (taskId, goalIds) => ({
     type: UPDATE_GOAL_ARR,
     taskId,
-    goalId
+    goalIds
 });
 
 export const updateTimestampArr = (taskId, timestampId) => ({
