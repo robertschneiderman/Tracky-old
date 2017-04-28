@@ -18,21 +18,18 @@ class Day extends Component {
     }
 
     renderTimeBlocksContainers() {
-        let { history, taskDict, tsDict, dispatches } = this.props;
+        let { timestamps, taskDict, dispatches } = this.props;
         let timeBlocks = [];
-        let tasks = history.tasks.map(taskId => taskDict[taskId]);
-        tasks.forEach(task => {
-            let timestamps = task.timestamps.map(tsId => tsDict[tsId]);
-            timestamps = this.getTimestampStrikes(timestamps);
-            timestamps.forEach((timestamp, i) => {
-                timeBlocks.push(
-                    <TimeBlock 
-                        task={task} 
-                        timestamp={timestamp} 
-                        dispatches={dispatches}
-                        key={`${timestamp.id}-i`} />
-                    );
-            });
+        timestamps = this.getTimestampStrikes(timestamps);
+        timestamps.forEach((timestamp, i) => {
+            let task = taskDict[timestamp.taskId];
+            timeBlocks.push(
+                <TimeBlock 
+                    task={task} 
+                    timestamp={timestamp} 
+                    dispatches={dispatches}
+                    key={`${timestamp.id}-i`} />
+            );
         });
         return timeBlocks;
     }

@@ -7,6 +7,7 @@ import * as actions from '../redux/actions';
 import WeekToggler from './WeekToggler';
 import DayTitles from './DayTitles';
 import Week from './Week';
+import { objToArr } from '../../../common/helpers/selectors';
 // import TimeGraph from './TimeGraph';
 import { minutesElapsedInDay, artificialWeek } from '../../../common/helpers/timeHelpers';
 
@@ -93,16 +94,16 @@ export class Calendar extends Component {
   }    
   
   render() {
-    let { week, historyDict, dispatches } = this.props;
+    let { taskDict, dispatches } = this.props;
     let dates = this.getDates();
     // debugger;
 
-      return (week) ?
+      return (Object.keys(taskDict).length > 0) ?
           <div className="c-calendar">
 
             <WeekToggler dates={dates} {...this.props} dispatches={dispatches} />
             <DayTitles dates={dates} {...this.props} />
-            <Week {...this.props}/>
+            <Week {...this.props} dates={dates}/>
 
             {this.props.children}
           </div> 
@@ -113,23 +114,25 @@ export class Calendar extends Component {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  let historyDict = state.history;
-  let historys;
+  let { calendar, task, goal, timestamp } = state;
+
+  // let tasks = task ? objToArr(task) : [];
+  let timestamps = timestamp ? objToArr(timestamp) : [];
+  // let historyDict = state.history;
+  // let historys;
   // if (historyDict) {
   //   historys = historyDict.slice(0, 7).map(historyId => state.history[historyId]);
   // }
   // historys = historys || [];
 
-  let week = state.calendar.weeks[state.calendar.activeWeek] || [];
-  week = week.map(histId => historyDict[histId]);
+  // let week = state.calendar.weeks[state.calendar.activeWeek] || [];
+  // week = week.map(histId => historyDict[histId]);
 
   return {
-    week: week || [],
-    activeWeek: state.calendar.activeWeek,
-    historys,
-    historyDict: state.history,
-    taskDict: state.task,
-    tsDict: state.timestamp
+    activeWeek: calendar.activeWeek,
+    goalsDict: goal,
+    taskDict: task,
+    timestamps
   };
 }
 
