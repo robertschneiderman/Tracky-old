@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import { minutesElapsedInDay, adjustedDay } from '../../../common/helpers/timeHelpers';
 // import * as actions from '../actions';
 
 class TimeGraph extends Component {
@@ -32,18 +31,10 @@ class TimeGraph extends Component {
         return lines;
     }
 
-    renderCurrentTimeLine() {
-        let currentDay = moment().get('day');
-        let lineLeft = `${adjustedDay(currentDay) * 14.28}%`;    
-        let style = {top: `${minutesElapsedInDay()*2}px`, left: lineLeft };
-        return <div className="shape-current-time-line" style={style}></div>;
-    }
-
     render() {
         return(
             <div className="c-time-graph">
                 {this.renderLines()}
-                {this.renderCurrentTimeLine()}
             </div>
         );
     }

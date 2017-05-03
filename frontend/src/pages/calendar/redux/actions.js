@@ -20,8 +20,8 @@ export const receiveWeeks = (payload) => {
 
 export const requestAndToggleWeek = (inc, week) => {
   return dispatch => {
-    axioss.get(`historys/${week}`).then(res => {
-      const normalized = normalize(res.data, [historySchema]);
+    axioss.get(`timestamps/${week}`).then(res => {
+      const normalized = normalize(res.data, [taskSchema]);
       let {tasks, goals, timestamps} = normalized.entities; 
 
       if (timestamps) dispatch(mergeTimestamps(objToArr(timestamps)));

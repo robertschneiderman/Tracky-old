@@ -23,7 +23,7 @@ class TimeBlock extends Component {
         let {start, end} = timestamp;
                 
         start = this.getTotalMinutes(start) * multiplier;
-        end = task.type === 'time' ? this.getTotalMinutes(end) * multiplier : start + (35 * 2);
+        end = task.type === 'time' ? this.getTotalMinutes(end) * multiplier : start + (5 * 2);
         return [start, end];
     }
 

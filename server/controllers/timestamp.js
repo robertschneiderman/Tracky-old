@@ -1,5 +1,19 @@
 const Timestamp = require('../models').Timestamp;
 
+exports.get = function(req, res, next) {
+  let timestamp = req.body;
+  let start = timestamp.start || new Date();
+  let end = timestamp.end || null;
+
+  let week = req.params.week;
+
+  Timestamp.findAll({taskId: timestamp.taskId, start, end}).then(task => {
+    res.status(201).json(task);
+  }).catch((e) => {
+    res.status(401).send(e);
+  });
+};
+
 exports.create = function(req, res, next) {
   let timestamp = req.body;
   let start = timestamp.start || new Date();
