@@ -22,9 +22,7 @@ const userReducer = (state = initialState, action) => {
       // const newTemplate = {[action.user.id]: action.user};
       return merge({}, state, action.user);
     case UPDATE_TASK_ARR:
-      debugger;
       newState.tasks = newState.tasks.concat([action.taskId]);
-      debugger;
       // newState[action.userId].tasks.push(action.taskId);
       return newState;      
     case REMOVE_USER:

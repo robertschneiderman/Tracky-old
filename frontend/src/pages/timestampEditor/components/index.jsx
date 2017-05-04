@@ -13,7 +13,7 @@ import TimeInput from './TimeInput';
 
 export class TimestampEditor extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     let { mode } = this.props;
     if (mode === undefined) hashHistory.push('calendar');
   }

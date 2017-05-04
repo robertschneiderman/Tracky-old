@@ -60,5 +60,8 @@ exports.finish = function(req, res, next) {
 exports.delete = function(req, res, next) {
   Timestamp.findById(req.params.id).then(timestamp => {
     timestamp.destroy();
+    res.status(201).json(req.params.id);    
+  }).catch((e) => {
+    res.status(401).send(e);
   });
 };

@@ -7,7 +7,7 @@ export const DESTROY_TIMESTAMP = 'DESTROY_TIMESTAMP';
 export const RECEIVE_TIMESTAMPS = 'RECEIVE_TIMESTAMPS';
 export const MERGE_TIMESTAMPS = 'MERGE_TIMESTAMPS';
 export const RECEIVE_TIMESTAMP = 'RECEIVE_TIMESTAMP';
-export const REMOVE_TIMESTAMP = 'REMOVE_TIMESTAMPS';
+export const REMOVE_TIMESTAMP = 'REMOVE_TIMESTAMP';
 export const TIMESTAMP_ERROR = 'TIMESTAMP_ERROR';
 
 export const requestTimestamps = () => ({
@@ -34,9 +34,9 @@ export const receiveTimestamp = timestamp => ({
     timestamp
 });
 
-export const removeTimestamp = timestamp => ({
+export const removeTimestamp = timestampId => ({
     type: REMOVE_TIMESTAMP,
-    timestamp
+    timestampId
 });
 
 export const createTimestamp = timestamp => ({
