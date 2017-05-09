@@ -31,6 +31,7 @@ exports.formattedDate= date => {
 };
 
 exports.adjustedDay= day => {
+    day = day || moment().get('day');
     if (day === 0) return 6;
     return day - 1;
 };
@@ -56,6 +57,15 @@ const msToTime = (totalMilliSeconds) => {
 exports.minutesToTime = (totalMinutes) => {
     return msToTime(totalMinutes * 60 * 1000);
 };
+
+exports.isSameWeek = (date1, date2) => {
+    return moment(date1).get('week') === moment(date2).get('week');
+};
+
+exports.isSameDay = (date1, date2) => {
+    return date1.format('MM-DD-YYYY') === date2.format('MM-DD-YYYY');
+};
+
 
 
 exports.artificialWeek = 10;

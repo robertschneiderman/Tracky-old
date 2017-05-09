@@ -56,7 +56,7 @@ class TaskTime extends Component {
 
         dispatches.stopTimer({id: task.id});
         dispatches.finishTimestamp({id: lastTimestamp.id, end});
-        dispatches.incrementGoals(task.id, Math.floor(this.state.timer/ 1000));
+        // dispatches.incrementGoals(task.id, Math.floor(this.state.timer/ 1000));
         clearInterval(this.interval);
         let totalTime = this.state.totalTime + this.state.timer;
         this.setState({running: false, interval: null, timer: 0, totalTime});

@@ -34,7 +34,7 @@ export class TimestampEditor extends Component {
     timestamp.taskId = task.id;
     if (elapsedSeconds >= 0) {    
       dispatches.createTimestamp(timestamp);
-      (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
+      // (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
     }
 }
 
@@ -47,10 +47,10 @@ export class TimestampEditor extends Component {
       if (oldTaskId !== task.id) {
         // debugger;
         dispatches.removeFromTimestampArr(oldTaskId, timestamp.id);
-        (task.type === 'time') ? dispatches.incrementGoals(oldTaskId, -originalElapsedSeconds) : dispatches.incrementGoals(oldTaskId, -1);
-        (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
+        // (task.type === 'time') ? dispatches.incrementGoals(oldTaskId, -originalElapsedSeconds) : dispatches.incrementGoals(oldTaskId, -1);
+        // (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
       } else {
-        (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds - originalElapsedSeconds) : dispatches.incrementGoals(task.id, 1);
+        // (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds - originalElapsedSeconds) : dispatches.incrementGoals(task.id, 1);
       }
 
       dispatches.updateTimestamp(task.id, timestamp);
@@ -65,7 +65,7 @@ export class TimestampEditor extends Component {
     
     dispatches.removeFromTimestampArr(oldTaskId, timestamp.id);
     dispatches.destroyTimestamp({id: timestamp.id});
-    (task.type === 'time') ? dispatches.incrementGoals(oldTaskId, -originalElapsedSeconds) : dispatches.incrementGoals(oldTaskId, -1);
+    // (task.type === 'time') ? dispatches.incrementGoals(oldTaskId, -originalElapsedSeconds) : dispatches.incrementGoals(oldTaskId, -1);
     hashHistory.push('calendar');
   }
 

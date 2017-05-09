@@ -10,6 +10,8 @@ export const INCREMENT_GOALS = 'INCREMENT_GOALS';
 export const REMOVE_GOAL = 'REMOVE_GOALS';
 export const GOAL_ERROR = 'GOAL_ERROR';
 
+import moment from 'moment';
+
 export const requestGoals = () => ({
     type: REQUEST_GOALS,
 });
@@ -50,10 +52,11 @@ export const updateGoal = (id, goal) => ({
     goal
 });
 
-export const incrementGoals = (taskId, amount) => ({
+export const incrementGoals = (taskId, amount, time = moment().get('day')) => ({
     type: INCREMENT_GOALS,
     taskId,
-    amount
+    amount,
+    time
 });
 
 export const destroyGoal = goal => ({

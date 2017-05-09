@@ -41,8 +41,8 @@ const calculateMultipliers = goals => {
 const addGoalTimeValues = (goals) => {
   let now = moment();
   let year = now.get('year');
-  let week = now.get('week');
-  let day = now.get('day');
+  let week = dh.adjustedWeek();
+  let day = dh.adjustedDay();
   goals.forEach(goal => {
     goal.year = year;
     goal.week = week;

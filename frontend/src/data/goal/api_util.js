@@ -30,8 +30,9 @@ export const updateGoal = (id, goal, success) => {
   });
 };
 
-export const incrementGoals = (id, amount, success) => {
-  axioss.patch(`/task/${id}/goals`, {amount})
+export const incrementGoals = (id, timestamp, success) => {
+  debugger;
+  axioss.patch(`/task/${id}/goals`, {timestamp})
   .then(success)
   .catch(function (error) {
     console.log(error);

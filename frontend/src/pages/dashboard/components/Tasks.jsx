@@ -20,6 +20,7 @@ class Tasks extends Component {
             let timestamps = task.timestamps.map(id => timestamp[id]);
             let goals = task.goals.map(goalId => goalDictionary[goalId]).sort(this.goalSort);  
             let shortestDurationGoal = goals[0];
+            // debugger;
                   
             if (task.type === 'time') {
                 return <TaskTime task={task} goal={shortestDurationGoal} dispatches={dispatches} timestamps={timestamps} {...this.props} key={`sd2-${i}`} />; 

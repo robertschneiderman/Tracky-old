@@ -69,6 +69,20 @@ exports.update = function(req, res, next) {
   });
 };
 
+const getAmount = timestamp => {
+  let timeElapsed = moment(timestamp.end).unix() - moment(timestamp.start).unix();
+  return timestamp.end ? timeElapsed : 1;
+};
+
+const selectGoalsToIncrement = (goals, timestamp) => {
+  let now = moment();
+  // return goals
+  if (!dh.isSameWeek(timestamp.start, now)) goals = goals.filter(goal => goal.interval === 'montly');
+  if (!dh.isSameDay(timestamp.start, now)) goals = goals.filter(goal => goal.interval !== 'daily');
+
+  return goals;
+};
+
 exports.increment = function(req, res, next) {
   let timestamp = req.body;
   let key = Object.keys(req.body)[0];
@@ -76,6 +90,8 @@ exports.increment = function(req, res, next) {
 
   Task.findById(req.params.id).then(task => {
     task.getGoals().then(goals => {
+      goals = selectGoalsToIncrement(goals, timestamp);
+      
       goals.forEach((goal, i) => {
         if (i === goals.length-1) {
           goal.increment('count', {by: req.body.amount}).then(() => {

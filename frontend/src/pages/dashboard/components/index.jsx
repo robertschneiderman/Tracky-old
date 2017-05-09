@@ -27,7 +27,6 @@ export class Dashboard extends Component {
               <div className="shape-dashboard-divider"></div>,
               <TaskDisplay timer={timers[activeTask]} task={taskDictionary[activeTask]} goalDictionary={goalDictionary} key="lks-2" />
               ] : ''}
-            
           </div>
       </div>
     );
