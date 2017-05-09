@@ -45,31 +45,21 @@ exports.create = function(req, res, next) {
 
     return Timestamp.create({taskId: timestamp.taskId, start, end}, {transaction: t})
       .then(timestamp => {
-        return Task.findById(timestamp.taskId, {transaction: t})
-          .then(task => {
-            let amount = getAmount(timestamp);
-            return Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId }, transaction: t, returning: true}).then((goals) => {
-              // return 'hey';
-              let taskId = goals[1][0].taskId;
-              return Task.findById(taskId, {transaction: t});
-            });
-            // return task.getGoals().then(goals => {
-            //   goals = selectGoalsToIncrement(goals, timestamp);
-              
-            //   goals.forEach((goal, i) => {
-            //     if (i === goals.length-1) {
-            //     return goal.increment('count', {by: amount, transaction: t}).then(goal => {
-            //       return 'hey';
-            //     });                
-            //     return goal.increment('count', {by: amount, transaction: t})
-            //   });
-            // });
-          });      
-      // res.status(201).json(timestamp);
+        let amount = getAmount(timestamp);
+        return Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId }, transaction: t, returning: true })
+        .then((goals) => {
+          let taskId = goals[1][0].taskId;
+          return Task.findById(taskId, {include: [
+            {model: Goal, as: 'goals', where: {taskId}, required: false},
+            {model: Timestamp, as: 'timestamps', limit: 1, where: {taskId}, order: [ [ 'updatedAt', 'DESC' ]]}
+          ]});
+        });
       }).catch((e) => {
         res.status(401).send(e);
       });
   }).then(function (result) {
+    // let taskId = goals[0].taskId;
+    // result;
     res.status(201).json(result);    
     // Transaction has been committed
     // result is whatever the result of the promise chain returned to the transaction callback

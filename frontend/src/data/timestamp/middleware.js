@@ -1,4 +1,8 @@
-import { updateTimestampArr } from '../task/actions';
+import { normalize, Schema } from 'normalizr';
+import {taskSchema} from '../user/schemas';
+import { updateTimestampArr, receiveTask, updateGoalArr } from '../task/actions';
+import { objToArr } from '../../common/helpers/selectors';
+import { receiveGoals } from '../goal/actions';
 
 // Timestamp API Util
 import { fetchTimestamps,
@@ -29,8 +33,19 @@ import { incrementGoals } from '../goal/actions';
 export default ({getState, dispatch}) => next => action => {
   const timestampsSuccess = res => dispatch(receiveTimestamps(res.data));
   const timestampSuccess = res => {
-    dispatch(receiveTimestamp(res.data));
-    dispatch(updateTimestampArr(res.data.taskId, res.data.id));
+    const normalized = normalize(res.data, taskSchema);
+    let { tasks, goals, timestamps } = normalized.entities;
+    // let task = Object.values(tasks)[0];
+    // goals = objToArr(goals);
+    let timestamp = objToArr(timestamps)[0];
+    // let goalIds = goals.map(goal => goal.id);
+
+    // debugger;
+    dispatch(receiveGoals(goals));
+    // dispatch(updateGoalArr(goals[0].taskId, goalIds)); 
+
+    dispatch(receiveTimestamp(timestamp));
+    dispatch(updateTimestampArr(timestamp.taskId, timestamp.id));
     // dispatch(incrementGoals(res.data.taskId, res.data));
   };
   const timestampUpdateSuccess = res => dispatch(receiveTimestamp(res.data));  

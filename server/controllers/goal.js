@@ -62,6 +62,14 @@ exports.update = function(req, res, next) {
   let key = Object.keys(req.body)[0];
   let value = req.body[key];
 
+      Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId }, returning: true})
+        // return 'hey';
+        // let taskId = goals[1][0].taskId;
+        // return Task.findById(taskId, {transaction: t});
+      .then((goals) => {
+
+      });  
+
   Goal.update({[key]: value}, {where: {id: req.params.id}, plain: true, returning: true }).then(goal => {
     res.status(201).json(goal[1]);
   }).catch((e) => {
