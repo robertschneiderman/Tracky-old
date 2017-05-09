@@ -63,7 +63,7 @@ exports.isSameWeek = (date1, date2) => {
 };
 
 exports.isSameDay = (date1, date2) => {
-    return date1.format('MM-DD-YYYY') === date2.format('MM-DD-YYYY');
+    return moment(date1).format('MM-DD-YYYY') === moment(date2).format('MM-DD-YYYY');
 };
 
 

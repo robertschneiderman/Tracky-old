@@ -1,4 +1,13 @@
+const Sequelize = require('sequelize');
+const db = require('../models');
+// const config = require('../config/config.json');
+// var sequelize = new Sequelize(config.database, config.username, config.password, config);
+const Task = require('../models').Task;
+const Goal = require('../models').Goal;
 const Timestamp = require('../models').Timestamp;
+const dh = require('../date_helpers');
+var moment = require('moment');
+
 
 exports.get = function(req, res, next) {
   let timestamp = req.body;
@@ -14,15 +23,60 @@ exports.get = function(req, res, next) {
   });
 };
 
-exports.create = function(req, res, next) {
-  let timestamp = req.body;
-  let start = timestamp.start || new Date();
-  let end = timestamp.end || null;
+const selectGoalsToIncrement = (goals, timestamp) => {
+  let now = moment();
+  // return goals
+  if (!dh.isSameWeek(timestamp.start, now)) goals = goals.filter(goal => goal.interval === 'montly');
+  if (!dh.isSameDay(timestamp.start, now)) goals = goals.filter(goal => goal.interval !== 'daily');
 
-  Timestamp.create({taskId: timestamp.taskId, start, end}).then(task => {
-    res.status(201).json(task);
-  }).catch((e) => {
+  return goals;
+};
+
+const getAmount = timestamp => {
+  let timeElapsed = moment(timestamp.end).unix() - moment(timestamp.start).unix();
+  return timestamp.end ? timeElapsed : 1;
+};
+
+exports.create = function(req, res, next) {
+  return db.sequelize.transaction((t) => {
+    let timestamp = req.body;
+    let start = timestamp.start || new Date();
+    let end = timestamp.end || null;
+
+    return Timestamp.create({taskId: timestamp.taskId, start, end}, {transaction: t})
+      .then(timestamp => {
+        return Task.findById(timestamp.taskId, {transaction: t})
+          .then(task => {
+            let amount = getAmount(timestamp);
+            return Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId }, transaction: t, returning: true}).then((goals) => {
+              // return 'hey';
+              let taskId = goals[1][0].taskId;
+              return Task.findById(taskId, {transaction: t});
+            });
+            // return task.getGoals().then(goals => {
+            //   goals = selectGoalsToIncrement(goals, timestamp);
+              
+            //   goals.forEach((goal, i) => {
+            //     if (i === goals.length-1) {
+            //     return goal.increment('count', {by: amount, transaction: t}).then(goal => {
+            //       return 'hey';
+            //     });                
+            //     return goal.increment('count', {by: amount, transaction: t})
+            //   });
+            // });
+          });      
+      // res.status(201).json(timestamp);
+      }).catch((e) => {
+        res.status(401).send(e);
+      });
+  }).then(function (result) {
+    res.status(201).json(result);    
+    // Transaction has been committed
+    // result is whatever the result of the promise chain returned to the transaction callback
+  }).catch(function (e) {
     res.status(401).send(e);
+    // Transaction has been rolled back
+    // err is whatever rejected the promise chain returned to the transaction callback
   });
 };
 

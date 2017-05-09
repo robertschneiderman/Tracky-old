@@ -31,7 +31,7 @@ export default ({getState, dispatch}) => next => action => {
   const timestampSuccess = res => {
     dispatch(receiveTimestamp(res.data));
     dispatch(updateTimestampArr(res.data.taskId, res.data.id));
-    dispatch(incrementGoals(res.data.taskId, res.data));
+    // dispatch(incrementGoals(res.data.taskId, res.data));
   };
   const timestampUpdateSuccess = res => dispatch(receiveTimestamp(res.data));  
   const timestampRemoved = res => dispatch(removeTimestamp(res.data));
