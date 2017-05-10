@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import Day from './Day';
 import TimeGraph from './TimeGraph';
-import { minutesElapsedInDay, adjustedDay } from '../../../common/helpers/timeHelpers';
+import { minutesElapsedInDay, adjustedDay, today } from '../../../common/helpers/timeHelpers';
 
 class Week extends Component {
     constructor(props) {
@@ -54,7 +54,8 @@ class Week extends Component {
     }
 
     renderCurrentTimeLine() {
-        let currentDay = moment().get('day');
+        let { propeties, user } = this.props;
+        let currentDay = today(user.devDate).get('day');
         let lineLeft = `${adjustedDay(currentDay) * 14.28}%`;    
         let style = {top: `${minutesElapsedInDay()*2}px`, left: lineLeft };
         return <div className="shape-current-time-line" style={style}></div>;

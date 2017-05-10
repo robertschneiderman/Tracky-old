@@ -66,38 +66,23 @@ const groupGoals = tasks => {
     return goalsGrouped;   
 };
 
-const getNewHistoryInfo = date => {
-    let now = moment(date);
-    now.add(1, 'days');
-
-    let day = dh.adjustedDay(now.get('day'));
-    let week = now.get('week');
-    week = day === 6 ? (week - 1) : week;
-    let month = now.get('month');
-    let year = now.get('year');
-    date = now.format("YYYY-MM-DDTHH:mm:ss.SSSSZ");    
-
-    return {day, week, month, year, date};
-};
-
 const isFirstDayOfMonth = () => {
-    return moment().get('date') === 1;
+    return dh.today().get('date') === 1;
 };
 
 exports.cronTask = user => {
     let emailText = {content: ''};
 
-    let lastHistory = user.historys[user.historys.length-1];
-    let tasks = lastHistory.tasks;
-    tasks = tasks.map(task => task.toJSON());
+    let tasks = user.tasks;
+    // tasks = tasks.map(task => task.toJSON());
 
     let goalsGrouped = groupGoals(tasks);
-    let {day, week, month, year, date} = getNewHistoryInfo(lastHistory.date);
+    // let {day, week, month, year, date} = getNewHistoryInfo(lastHistory.date);
 
     emailText.content += eth.headerOpening();
 
-    if (isFirstDayOfMonth()) assess(emailText, 'monthly', goalsGrouped['monthly'], tasks)
-    if (day === 0) assess(emailText, 'weekly', goalsGrouped['weekly'], tasks)         
+    if (isFirstDayOfMonth()) assess(emailText, 'monthly', goalsGrouped['monthly'], tasks);
+    if (dh.today() === 0) assess(emailText, 'weekly', goalsGrouped['weekly'], tasks);         
     assess(emailText, 'daily', goalsGrouped['daily'], tasks);
 
     tasks.forEach(task => stripId(task));
@@ -106,18 +91,18 @@ exports.cronTask = user => {
 
     sendEmail(user, emailText);
 
-    History.create(
-        {date, userId: user.id, day, week, month, year, tasks},
-        {include: [
-            {model: Task, as: 'tasks', include: [
-                {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'}
-            ]}
-        ]}
-    ).then(history => {
-        history;
-    }).catch(e => {
-        e;
-    });    
+    // History.create(
+    //     {date, userId: user.id, day, week, month, year, tasks},
+    //     {include: [
+    //         {model: Task, as: 'tasks', include: [
+    //             {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'}
+    //         ]}
+    //     ]}
+    // ).then(history => {
+    //     history;
+    // }).catch(e => {
+    //     e;
+    // });    
 };
 
         // message = `<span style="color: red;">Incomplete: ${task.name} (${goal.count} of ${goal.goal})</span><br/>`;                

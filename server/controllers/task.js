@@ -7,23 +7,23 @@ var moment = require('moment');
 
 
 const firstDayOfWeek = () => {
-  let result = moment().day(1).startOf('day');
-  if (moment().day() === 0) result.subtract('days', 7);
+  let result = dh.today().day(1).startOf('day');
+  if (dh.today().day() === 0) result.subtract('days', 7);
   return result;
 };
 
 const hoursPassedSince = date => {
-  return Math.floor(moment.duration(moment().unix() - date.unix(), 'seconds').asHours());
+  return Math.floor(moment.duration(dh.today().unix() - date.unix(), 'seconds').asHours());
 };
 
 const lastDayOfMonth = () => {
-  return moment().endOf('month').date();
+  return dh.today().endOf('month').date();
 };
 
 const calculateMultipliers = goals => {
   goals.forEach(goal => {
     let fDoW = firstDayOfWeek();
-    let fDoM = moment().date(1).startOf('day');
+    let fDoM = dh.today().date(1).startOf('day');
     // return Math.floor(moment.duration(moment().unix() - timestamp, 'seconds').asHours());
     if (goal.interval === 'weekly') {
       let hoursPassedInWeek = hoursPassedSince(fDoW);
@@ -38,7 +38,7 @@ const calculateMultipliers = goals => {
 };
 
 const addGoalTimeValues = (goals) => {
-  let now = moment();
+  let now = dh.today();
   let year = now.get('year');
   let week = now.get('week');
   let day = now.get('day');

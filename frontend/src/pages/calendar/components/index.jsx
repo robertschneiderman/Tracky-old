@@ -9,7 +9,7 @@ import DayTitles from './DayTitles';
 import Week from './Week';
 import { objToArr } from '../../../common/helpers/selectors';
 // import TimeGraph from './TimeGraph';
-import { minutesElapsedInDay, artificialWeek } from '../../../common/helpers/timeHelpers';
+import { minutesElapsedInDay, artificialWeek, today } from '../../../common/helpers/timeHelpers';
 
 export class Calendar extends Component {
 
@@ -32,12 +32,12 @@ export class Calendar extends Component {
   }
 
   getStartOfWeek() {
-    let { activeWeek } = this.props;
+    let { activeWeek, user } = this.props;
     let mode;
     // return moment().startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
 
     return (mode === 'production') ?
-            moment().startOf('week').add(1, 'days').subtract(activeWeek, 'weeks'):
+            today(user.devDate).startOf('week').add(1, 'days').subtract(activeWeek, 'weeks'):
             artificialWeek(0).startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
   }
 
@@ -74,8 +74,8 @@ export class Calendar extends Component {
   }
 
   getStartOfWeek() {
-    let { activeWeek } = this.props;
-    let now = moment();
+    let { activeWeek, user } = this.props;
+    let now = moment(user.devDate);
     let weeksToSubtract = (now.get('day') === 0) ? activeWeek + 1 : activeWeek;
     return now.startOf('week').subtract(weeksToSubtract, 'weeks').add(1, 'days');  
   }
@@ -114,7 +114,7 @@ export class Calendar extends Component {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  let { calendar, task, goal, timestamp } = state;
+  let { calendar, task, goal, timestamp, user } = state;
 
   // let tasks = task ? objToArr(task) : [];
   let timestamps = timestamp ? objToArr(timestamp) : [];
@@ -132,7 +132,8 @@ function mapStateToProps(state) {
     activeWeek: calendar.activeWeek,
     goalsDict: goal,
     taskDict: task,
-    timestamps
+    timestamps,
+    user
   };
 }
 

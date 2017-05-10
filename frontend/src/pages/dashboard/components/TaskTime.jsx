@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import { dateToTime, padNumber, msToTime, msToLongerTime } from '../../../common/helpers/timeHelpers';
+import { dateToTime, padNumber, msToTime, msToLongerTime, today } from '../../../common/helpers/timeHelpers';
 
 class TaskTime extends Component {
     constructor(props) {
@@ -35,7 +35,7 @@ class TaskTime extends Component {
     }
 
     timerStart() {
-        let { dispatches, task } = this.props;
+        let { dispatches, task, user } = this.props;
         this.setState({running: true});
         this.interval = setInterval(() => {
             this.setState({timer: this.state.timer + 10});
@@ -43,16 +43,16 @@ class TaskTime extends Component {
             dispatches.updateTimer({id: task.id, time: this.state.timer + 10});
         }, 10);
 
-        let start = moment();
+        let start = today(user.devDate);
 
         dispatches.createTimestamp({start, taskId: task.id});        
     }
 
     timerEnd() {
-        let { dispatches, task } = this.props;
+        let { dispatches, task, user } = this.props;
         let lastTimestamp = this.getLastTimestamp();
 
-        let end = moment();   
+        let end = today(user.devDate);   
 
         dispatches.stopTimer({id: task.id});
         dispatches.finishTimestamp({id: lastTimestamp.id, end});

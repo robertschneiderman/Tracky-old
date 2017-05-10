@@ -22,6 +22,12 @@ const numberEndings = {
     3: 'rd',
 };
 
+exports.today = () => {
+    const ROOT_URL = (process.env.NODE_ENV !== "production") ? 'http://localhost:3090' : 'https://traky.herokuapp.com';
+    
+    return (ROOT_URL) === 'production' ? moment() : moment().add(1, 'days');
+};
+
 exports.formattedDate= date => {
     let month = months[date.getMonth()];
     let day = date.getDate();
@@ -31,13 +37,13 @@ exports.formattedDate= date => {
 };
 
 exports.adjustedDay= day => {
-    day = day || moment().get('day');
+    day = day || exports.today().get('day');
     if (day === 0) return 6;
     return day - 1;
 };
 
 exports.adjustedWeek= () => {
-    let date = moment().tz("America/Los_Angeles").startOf('day');
+    let date = exports.today().tz("America/Los_Angeles").startOf('day');
     let day = date.get('day');
     let week = date.get('week');
 
@@ -65,7 +71,3 @@ exports.isSameWeek = (date1, date2) => {
 exports.isSameDay = (date1, date2) => {
     return moment(date1).format('MM-DD-YYYY') === moment(date2).format('MM-DD-YYYY');
 };
-
-
-
-exports.artificialWeek = 10;

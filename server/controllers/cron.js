@@ -5,21 +5,24 @@ const Goal = require('../models').Goal;
 const Timestamp = require('../models').Timestamp;
 const ch = require('../cron_helpers');
 
+const moment = require('moment');
+
 const cronJob = user => {
+    let interval = moment();
+    
     User.find({
         where: {id: user.id},
         include: [
-            {model: History, as: 'historys', include: [
-                {model: Task, as: 'tasks', include: [
-                    {model: Goal, as: 'goals'},
-                    {model: Timestamp, as: 'timestamps'},
-                ]}
+            {model: Task, as: 'tasks', include: [
+                {model: Goal, as: 'goals'},
+                {model: Timestamp, as: 'timestamps', 
+                    where: { start: {$gt: moment().startOf('month').format('YYYY-MM-DDTHH:mm:ss.SSS') } 
+                }},
             ]}
         ],
-        order: [ [ { model: History, as: 'historys' }, 'createdAt', 'ASC' ] ]
     }).then(user => {
         ch.cronTask(user);
-    }).catch(error => res.status(400).send(error));    
+    }); 
 };
 
 module.exports = {

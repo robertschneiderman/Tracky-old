@@ -1,13 +1,9 @@
 import moment from 'moment';
 
-export const today = (devDate) => {
+export const today = () => {
     const ROOT_URL = (process.env.NODE_ENV !== "production") ? 'http://localhost:3090' : 'https://traky.herokuapp.com';
-    let now = moment();
-    let year = now.get('year');
-    let month = now.get('month');
-    let date = now.get('date');
     
-    return (ROOT_URL) === 'production' ? moment() : moment().year(year).month(month).date(date);
+    return (ROOT_URL) === 'production' ? moment() : moment().add(1, 'days');
 };
 
 export const dateToTime = (date) => {

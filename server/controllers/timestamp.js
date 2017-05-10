@@ -24,7 +24,7 @@ exports.get = function(req, res, next) {
 };
 
 const selectGoalsToIncrement = (goals, timestamp) => {
-  let now = moment();
+  let now = dh.today();
   // return goals
   if (!dh.isSameWeek(timestamp.start, now)) goals = goals.filter(goal => goal.interval === 'montly');
   if (!dh.isSameDay(timestamp.start, now)) goals = goals.filter(goal => goal.interval !== 'daily');
@@ -40,7 +40,7 @@ const getAmount = timestamp => {
 exports.create = function(req, res, next) {
   // return db.sequelize.transaction((t) => {
     let timestamp = req.body;
-    let start = timestamp.start || new Date();
+    let start = timestamp.start || dh.today();
     let end = timestamp.end || null;
 
     Timestamp.create({taskId: timestamp.taskId, start, end})

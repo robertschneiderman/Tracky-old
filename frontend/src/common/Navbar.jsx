@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { today } from './helpers/timeHelpers';
 
 class Navbar extends Component {
 
   renderLinks() {
     if (this.props.authenticated) {
       return [
+        <li className="item-navbar" key={'nvb-2fak'}>
+          <Link className="link-navbar" to="/dashboard">
+            <p className="link-navbar">{today().format('MMM Do')}</p>
+          </Link>
+        </li>,
         <li className="item-navbar" key={'nvb-23jnk'}>
           <Link className="link-navbar" to="/dashboard">
             <img src="./static/images/dashboard.svg" alt="" className="icn-dashboard"/>
