@@ -17,7 +17,7 @@ export class Dashboard extends Component {
   }
 
   render() {
-    let { tasks, taskDictionary, goalDictionary, timers, activeTask } = this.props;
+    let { tasks, taskDictionary, goalDictionary, timers, activeTask, user } = this.props;
     return (
       <div className="c-dashboard">
         <div className="text-message">{this.message || ''}</div>
@@ -25,7 +25,7 @@ export class Dashboard extends Component {
             {(tasks.length > 0) ? 
               [<Tasks {...this.props} key="lks-1" />,
               <div className="shape-dashboard-divider"></div>,
-              <TaskDisplay timer={timers[activeTask]} task={taskDictionary[activeTask]} goalDictionary={goalDictionary} key="lks-2" />
+              <TaskDisplay timer={timers[activeTask]} task={taskDictionary[activeTask]} goalDictionary={goalDictionary} user={user} key="lks-2" />
               ] : ''}
           </div>
       </div>

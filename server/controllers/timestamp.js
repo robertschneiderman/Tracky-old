@@ -38,36 +38,18 @@ const getAmount = timestamp => {
 };
 
 exports.create = function(req, res, next) {
-  return db.sequelize.transaction((t) => {
+  // return db.sequelize.transaction((t) => {
     let timestamp = req.body;
     let start = timestamp.start || new Date();
     let end = timestamp.end || null;
 
-    return Timestamp.create({taskId: timestamp.taskId, start, end}, {transaction: t})
+    Timestamp.create({taskId: timestamp.taskId, start, end})
       .then(timestamp => {
-        let amount = getAmount(timestamp);
-        return Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId }, transaction: t, returning: true })
-        .then((goals) => {
-          let taskId = goals[1][0].taskId;
-          return Task.findById(taskId, {include: [
-            {model: Goal, as: 'goals', where: {taskId}, required: false},
-            {model: Timestamp, as: 'timestamps', limit: 1, where: {taskId}, order: [ [ 'updatedAt', 'DESC' ]]}
-          ]});
-        });
+        res.status(201).json(timestamp);    
+
       }).catch((e) => {
         res.status(401).send(e);
       });
-  }).then(function (result) {
-    // let taskId = goals[0].taskId;
-    // result;
-    res.status(201).json(result);    
-    // Transaction has been committed
-    // result is whatever the result of the promise chain returned to the transaction callback
-  }).catch(function (e) {
-    res.status(401).send(e);
-    // Transaction has been rolled back
-    // err is whatever rejected the promise chain returned to the transaction callback
-  });
 };
 
 exports.update = function(req, res, next) {

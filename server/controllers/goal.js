@@ -3,6 +3,7 @@ const Goal = require('../models').Goal;
 const dh = require('../date_helpers');
 var _ = require('lodash');
 var moment = require('moment');
+const db = require('../models');
 
 const increment = (goals, incrementObj) => {
   let num = parseInt(incrementObj.increment);
@@ -62,14 +63,6 @@ exports.update = function(req, res, next) {
   let key = Object.keys(req.body)[0];
   let value = req.body[key];
 
-      Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId }, returning: true})
-        // return 'hey';
-        // let taskId = goals[1][0].taskId;
-        // return Task.findById(taskId, {transaction: t});
-      .then((goals) => {
-
-      });  
-
   Goal.update({[key]: value}, {where: {id: req.params.id}, plain: true, returning: true }).then(goal => {
     res.status(201).json(goal[1]);
   }).catch((e) => {
@@ -92,23 +85,14 @@ const selectGoalsToIncrement = (goals, timestamp) => {
 };
 
 exports.increment = function(req, res, next) {
-  let timestamp = req.body;
-  let key = Object.keys(req.body)[0];
-  let value = req.body[key];
+  let timestamp = req.body.timestamp;
+  // let key = Object.keys(req.body)[0];
+  // let value = req.body[key];
 
-  Task.findById(req.params.id).then(task => {
-    task.getGoals().then(goals => {
-      goals = selectGoalsToIncrement(goals, timestamp);
-      
-      goals.forEach((goal, i) => {
-        if (i === goals.length-1) {
-          goal.increment('count', {by: req.body.amount}).then(() => {
-            res.status(201).json(goals);
-          });
-        } else {
-          goal.increment('count', {by: req.body.amount});
-        }
-      });
-    });
+  let amount = getAmount(timestamp);
+
+  Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId }, returning: true })
+  .then(goals => {
+    res.status(201).json(goals[1]);
   });
 };

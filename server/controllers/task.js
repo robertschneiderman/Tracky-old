@@ -1,4 +1,3 @@
-const User = require('../models').User;
 const Task = require('../models').Task;
 const Goal = require('../models').Goal;
 const Timestamp = require('../models').Timestamp;
@@ -41,8 +40,8 @@ const calculateMultipliers = goals => {
 const addGoalTimeValues = (goals) => {
   let now = moment();
   let year = now.get('year');
-  let week = dh.adjustedWeek();
-  let day = dh.adjustedDay();
+  let week = now.get('week');
+  let day = now.get('day');
   goals.forEach(goal => {
     goal.year = year;
     goal.week = week;

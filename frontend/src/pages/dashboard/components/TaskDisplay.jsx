@@ -47,7 +47,7 @@ class TaskDisplay extends Component {
     }
 
     renderGoals() {
-        let { timer } = this.props;
+        let { timer, user } = this.props;
         timer = timer || {running: false};    
         let goals= this.getGoals();
 
@@ -60,7 +60,7 @@ class TaskDisplay extends Component {
                             {this.getCompletionString(goal)}
                         </p>
                     </div>
-                    <ProgressBar goal={goal} timer={timer} />
+                    <ProgressBar goal={goal} timer={timer} user={user} />
                 </div>
             );
         });

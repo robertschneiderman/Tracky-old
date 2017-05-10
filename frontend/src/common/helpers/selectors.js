@@ -5,3 +5,14 @@ export const objToArr = obj => {
     }
     return resultArr;
 };
+
+export const arrToObj = arr => {
+    let resultObj = {};
+
+    for (let i = 0; i < arr.length; i++) {
+        let item = arr[i];
+        resultObj[item.id] = item;
+    }
+    
+    return resultObj;
+};

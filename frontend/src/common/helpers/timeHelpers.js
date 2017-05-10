@@ -1,5 +1,15 @@
 import moment from 'moment';
 
+export const today = (devDate) => {
+    const ROOT_URL = (process.env.NODE_ENV !== "production") ? 'http://localhost:3090' : 'https://traky.herokuapp.com';
+    let now = moment();
+    let year = now.get('year');
+    let month = now.get('month');
+    let date = now.get('date');
+    
+    return (ROOT_URL) === 'production' ? moment() : moment().year(year).month(month).date(date);
+};
+
 export const dateToTime = (date) => {
     return moment(date).format('h:mm A');
 };
@@ -41,9 +51,10 @@ export const fullTimeToNumber = time => {
     // WORKING ON INCREMENTING TIME TASKS... CHANGING TIME TASKS TO STORE SECONDS AS OPPOSED TO MINUTES
 };
 
-export const firstDayOfWeek = () => {
-  let result = moment().day(1).startOf('day');
-  if (moment().day() === 0) result.subtract('days', 7);
+export const firstDayOfWeek = devDate => {
+    // should technically use dev date    
+  let result = moment(devDate).day(1).startOf('day');
+  if (moment(devDate).day() === 0) result.subtract('days', 7);
   return result;
 };
 
@@ -52,12 +63,14 @@ export const hoursPassedSince = date => {
   return Math.floor(moment.duration(moment().unix() - date.unix(), 'seconds').asHours());
 };
 
-export const firstDayOfMonth = () => {
-    return moment().startOf('month');
+export const firstDayOfMonth = devDate => {
+    // should technically use dev date    
+    return today(devDate).startOf('month');
 };
 
-export const daysInMonth = () => {
-  return moment().endOf('month').date();
+export const daysInMonth = devDate => {
+    // should technically use dev date
+  return today(devDate).endOf('month').date();
 };
 
 export const secondsToTimeString = seconds => {
@@ -73,10 +86,6 @@ export const minutesElapsedInDay = () => {
 
 export const minutesPassedInDay = () => {
   return Math.floor(moment.duration(moment().unix() - moment().startOf('day').unix(), 'seconds').asMinutes());
-};
-
-export const artificialWeek = numToAdd => {
-    return moment().add(numToAdd, 'weeks');
 };
 
 export const adjustedDay= day => {

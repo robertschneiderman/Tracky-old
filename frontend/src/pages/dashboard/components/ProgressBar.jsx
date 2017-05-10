@@ -7,14 +7,15 @@ class ProgressBar extends Component {
     }
 
     getElapsedProgress() {
-        let { goal } = this.props;
+        let { user, goal } = this.props;
         let interval = goal.interval;
+        let devDate = user.devDate;
         if (interval === 'daily') {
             return minutesPassedInDay() / 1440;
         } else if (interval === 'weekly') {
-            return hoursPassedSince(firstDayOfWeek()) / 168;
+            return hoursPassedSince(firstDayOfWeek(devDate)) / 168;
         } else {
-            return hoursPassedSince(firstDayOfMonth()) / (daysInMonth() * 24);
+            return hoursPassedSince(firstDayOfMonth(devDate)) / (daysInMonth(devDate) * 24);
         }
     }
 
