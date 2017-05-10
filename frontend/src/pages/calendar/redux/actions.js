@@ -4,9 +4,9 @@ import { normalize, Schema } from 'normalizr';
 import {userSchema, taskSchema, goalSchema, timestampSchema} from '../../../data/user/schemas';
 import { objToArr } from '../../../common/helpers/selectors';
 // import { adjustedWeek } from '../../../common/helpers/timeHelpers';
-import { mergeTasks } from '../../../data/task/actions';
+import { updateTimestampArr } from '../../../data/task/actions';
 import { mergeGoals } from '../../../data/goal/actions';
-import { mergeTimestamps } from '../../../data/timestamp/actions';
+import { receiveTimestamps } from '../../../data/timestamp/actions';
 import {axioss} from '../../../common/config';
 export const RECEIVE_WEEKS = 'RECEIVE_WEEKS';
 export const TOGGLE_WEEK = 'TOGGLE_WEEK';
@@ -21,11 +21,13 @@ export const receiveWeeks = (payload) => {
 export const requestAndToggleWeek = (inc, week) => {
   return dispatch => {
     axioss.get(`timestamps/${week}`).then(res => {
-      const normalized = normalize(res.data, [taskSchema]);
-      let {tasks, goals, timestamps} = normalized.entities; 
+      let timestamps = res.data;
+      let timestampIds = timestamps.map(ts => ts.id);
 
-      if (timestamps) dispatch(mergeTimestamps(objToArr(timestamps)));
-      if (tasks) dispatch(mergeTasks(objToArr(tasks)));
+      dispatch(receiveTimestamps(timestamps));
+      timestamps.forEach(ts => {
+        dispatch(updateTimestampArr(ts.taskId, ts.id));
+      });
 
       // dispatch(receiveWeeks(Object.keys(historys)));
       dispatch({type: TOGGLE_WEEK, payload: inc });

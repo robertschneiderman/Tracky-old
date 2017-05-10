@@ -16,8 +16,8 @@ exports.get = function(req, res, next) {
 
   let week = req.params.week;
 
-  Timestamp.findAll({taskId: timestamp.taskId, start, end}).then(task => {
-    res.status(201).json(task);
+  Timestamp.findAll({where: { start: {$gt: dh.today().week(week).startOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS')} } }).then(timestamps => {
+    res.status(201).json(timestamps);
   }).catch((e) => {
     res.status(401).send(e);
   });

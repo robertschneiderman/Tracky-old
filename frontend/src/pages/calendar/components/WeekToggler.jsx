@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import { today } from '../../../common/helpers/timeHelpers';
 
 class WeekToggler extends Component {
     constructor(props) {
@@ -7,8 +8,9 @@ class WeekToggler extends Component {
     }
 
     handleClick(e, inc) {
-        let { dispatches, toggleWeek, week } = this.props;
-        let weekNum = week[0].week;
+        let { dispatches, toggleWeek } = this.props;
+        // debugger;
+        let weekNum = today().get('week') - inc;
         // debugger;
         // let date = dates[1].subtract(inc, 'weeks');
         dispatches.requestAndToggleWeek(inc, weekNum);

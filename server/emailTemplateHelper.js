@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 var images = {
   laptop: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/laptop.png",
   theater: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493103561/tracky/theater.png",
@@ -14,12 +16,12 @@ var images = {
   yoga: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493103561/tracky/yoga.png",
   book: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/book.png",
   briefcase: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493103560/tracky/briefcase.png",
-}
+};
 
 var PATHS = {
   checkmark: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493260451/tracky/checkmark.png",
   xmark: "http://res.cloudinary.com/stellar-pixels/image/upload/v1493260451/tracky/xmark.png"
-}
+};
 
 exports.headerOpening = function() {
   return `
@@ -46,21 +48,21 @@ exports.headerOpening = function() {
         <th class="small-4 large-4 columns last" style="vertical-align: middle; width: 177.33333px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0 auto; padding: 9px 16px 9px 8px;" align="left" valign="middle"><table style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; box-sizing: border-box; padding: 0;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left"><th style="color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left"></th></tr></table></th>        
       </tr></tbody></table>
       `;
-}
+};
 
-exports.intervalOpening = function() {
+exports.intervalOpening = function(interval) {
   return `
     <table class="wrapper w-intervals" align="center" style="width: 100%; border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; position: relative; box-sizing: border-box; margin-bottom: 1.5rem; padding: 0;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left"><td class="wrapper-inner" style="word-wrap: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0rem 0.4rem;" align="left" valign="top">
             <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: table; box-sizing: border-box; padding: 0;"><tbody style="position: relative; box-sizing: border-box;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left">
     <th class="small-12 large-12 columns first last" style="vertical-align: middle; width: 564px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0 auto; padding: 9px 16px;" align="left" valign="middle"><table style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; box-sizing: border-box; padding: 0;"><tr style="vertical-align: top; text-align: left; position: relative; box-sizing: border-box; padding: 0;" align="left">
     <th style="color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left">
-                <h2 class="title-email" style="color: inherit; font-family: 'Lato'; font-weight: 700; text-align: left; line-height: 1.3; word-wrap: normal; font-size: 1.4rem; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left">Daily</h2>
+                <h2 class="title-email" style="color: inherit; font-family: 'Lato'; font-weight: 700; text-align: left; line-height: 1.3; word-wrap: normal; font-size: 1.4rem; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left">${_.startCase(_.toLower(interval))}</h2>
               </th>
     <th class="expander" style="visibility: hidden; width: 0; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 1.3; font-size: 16px; position: relative; box-sizing: border-box; margin: 0; padding: 0;" align="left"></th>
     </tr></table></th>
             </tr></tbody></table>  
-  `
-}
+  `;
+};
 
 exports.task = function(task, count, target, completed) {
   // let completed = count >= target;
@@ -87,13 +89,13 @@ exports.task = function(task, count, target, completed) {
               </tr></tbody></table>  
         </td></tr></table>
   `;
-}
+};
 
 exports.intervalClosing = function() {
   return `  
       </td></tr></table>
-  `
-}
+  `;
+};
 
 exports.headerClosing = function() {
   return `
@@ -102,4 +104,4 @@ exports.headerClosing = function() {
     </body>
     </html>
   `;
-}
+};

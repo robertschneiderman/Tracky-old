@@ -24,6 +24,7 @@ const assess = (emailText, interval, goals, tasks) => {
 
         emailText.content += eth.task(task, count, target, completed);
         goal.count = 0;
+        goal.save();
     });
     emailText.content += eth.intervalClosing();
 
@@ -82,7 +83,7 @@ exports.cronTask = user => {
     emailText.content += eth.headerOpening();
 
     if (isFirstDayOfMonth()) assess(emailText, 'monthly', goalsGrouped['monthly'], tasks);
-    if (dh.today() === 0) assess(emailText, 'weekly', goalsGrouped['weekly'], tasks);         
+    if (dh.today().get('day') === 1) assess(emailText, 'weekly', goalsGrouped['weekly'], tasks);         
     assess(emailText, 'daily', goalsGrouped['daily'], tasks);
 
     tasks.forEach(task => stripId(task));
@@ -90,6 +91,10 @@ exports.cronTask = user => {
     emailText.content += eth.headerClosing();    
 
     sendEmail(user, emailText);
+
+    // for (let interval in goalsGrouped) {
+    //     let goals = goalsGrouped[interval];
+    // }
 
     // History.create(
     //     {date, userId: user.id, day, week, month, year, tasks},

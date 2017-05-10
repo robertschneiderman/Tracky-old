@@ -10,14 +10,14 @@ const moment = require('moment');
 const week = dh.adjustedWeek();
 
 exports.find = function(req, res, next) {
-  console.log('week: ', week);
-  console.log('req.params.id: ', req.params.id);
   
   User.find({ where: {id: parseInt(req.params.id)}, 
     include: [
       {model: Task, as: 'tasks', include: [
-        {model: Goal, as: 'goals', where: {week}, required: false},
-        {model: Timestamp, as: 'timestamps'},
+        {model: Goal, as: 'goals', required: false},
+        {model: Timestamp, as: 'timestamps', required: false,
+          where: { start: {$gt: dh.today().startOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS')} }
+        },
       ]}
     ],    
     // order: [ [ { model: Goal, as: 'goals', where: {week} }, 'createdAt', 'ASC' ] ]
