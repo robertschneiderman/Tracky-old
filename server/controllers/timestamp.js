@@ -15,8 +15,10 @@ exports.get = function(req, res, next) {
   let end = timestamp.end || null;
 
   let week = req.params.week;
+  let startOfWeek = dh.today().week(week).startOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS');
+  let endOfWeek = dh.today().week(week).endOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS');
 
-  Timestamp.findAll({where: { start: {$gt: dh.today().week(week).startOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS')} } }).then(timestamps => {
+  Timestamp.findAll({where: { start: {$gt: startOfWeek, $lt: endOfWeek} } }).then(timestamps => {
     res.status(201).json(timestamps);
   }).catch((e) => {
     res.status(401).send(e);
@@ -86,7 +88,7 @@ exports.finish = function(req, res, next) {
 exports.delete = function(req, res, next) {
   Timestamp.findById(req.params.id).then(timestamp => {
     timestamp.destroy();
-    res.status(201).json(req.params.id);    
+    res.status(201).json(timestamp);    
   }).catch((e) => {
     res.status(401).send(e);
   });

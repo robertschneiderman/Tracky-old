@@ -25,7 +25,7 @@ const numberEndings = {
 exports.today = () => {
     const ROOT_URL = (process.env.NODE_ENV !== "production") ? 'http://localhost:3090' : 'https://traky.herokuapp.com';
     
-    return (ROOT_URL) === 'production' ? moment() : moment().add(6, 'days');
+    return (ROOT_URL) === 'production' ? moment() : moment().add(5, 'days');
 };
 
 exports.formattedDate= date => {

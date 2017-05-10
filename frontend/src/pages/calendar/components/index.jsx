@@ -75,7 +75,7 @@ export class Calendar extends Component {
 
   getStartOfWeek() {
     let { activeWeek, user } = this.props;
-    let now = moment(user.devDate);
+    let now = today();
     let weeksToSubtract = (now.get('day') === 0) ? activeWeek + 1 : activeWeek;
     return now.startOf('week').subtract(weeksToSubtract, 'weeks').add(1, 'days');  
   }

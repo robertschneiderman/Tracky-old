@@ -72,7 +72,9 @@ exports.update = function(req, res, next) {
 
 const getAmount = timestamp => {
   let timeElapsed = moment(timestamp.end).unix() - moment(timestamp.start).unix();
-  return timestamp.end ? timeElapsed : 1;
+  if (!timestamp.start) return -1; 
+  if (!timestamp.end) return 1; 
+  return timeElapsed;
 };
 
 const selectGoalsToIncrement = (goals, timestamp) => {
