@@ -62,11 +62,12 @@ class Week extends Component {
     }    
 
     render() {
+        let { activeWeek } = this.props;
         return(
             <div className="c-week">
                 {this.renderWeek()}
                 <TimeGraph />
-                {this.renderCurrentTimeLine()}                
+                {(activeWeek === 0) ? this.renderCurrentTimeLine() : ''}
             </div>
         );
     }
