@@ -36,6 +36,7 @@ export class TimestampEditor extends Component {
     if (this.isValidRange()) {    
       dispatches.createTimestamp(timestamp);
       // (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
+      hashHistory.push('calendar');      
     }
 }
 
