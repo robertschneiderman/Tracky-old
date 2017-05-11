@@ -77,13 +77,14 @@ const getAmount = timestamp => {
   return timeElapsed;
 };
 
-const selectGoalsToIncrement = (goals, timestamp) => {
+const getIntervalsToIncrement = (timestamp) => {
+  let intervals = ['monthly'];
   let now = dh.today();
   // return goals
-  if (!dh.isSameWeek(timestamp.start, now)) goals = goals.filter(goal => goal.interval === 'montly');
-  if (!dh.isSameDay(timestamp.start, now)) goals = goals.filter(goal => goal.interval !== 'daily');
+  if (dh.isSameWeek(timestamp.start, now)) intervals.push('weekly');
+  if (dh.isSameDay(timestamp.start, now)) intervals.push('daily');
 
-  return goals;
+  return intervals;
 };
 
 exports.increment = function(req, res, next) {
@@ -92,8 +93,9 @@ exports.increment = function(req, res, next) {
   // let value = req.body[key];
 
   let amount = getAmount(timestamp);
+  let intervals = getIntervalsToIncrement(timestamp);
 
-  Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId }, returning: true })
+  Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId, interval: {$in: intervals} }, returning: true })
   .then(goals => {
     res.status(201).json(goals[1]);
   });

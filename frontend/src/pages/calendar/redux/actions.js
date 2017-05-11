@@ -36,6 +36,7 @@ export const requestAndToggleWeek = (inc, week) => {
 };
 
 export const populateTimestampEditorAndRedirect = (mode, task, timestamp) => {
+  // debugger;
   return (dispatch) => {
     dispatch(populateState({
         mode,

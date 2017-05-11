@@ -39,7 +39,7 @@ class Day extends Component {
         let minutes = y / 2;
         let clickTime = moment(date).startOf('day').add(minutes, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
         
-        return {start: clickTime, end: clickTime};
+        return {start: clickTime, end: null};
     }
 
     handleClick(e) {

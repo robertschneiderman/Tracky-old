@@ -30,7 +30,7 @@ export default ({getState, dispatch}) => next => action => {
   const goalsSuccess = res => dispatch(receiveGoals(res.data));
   const goalSuccess = res => dispatch(receiveGoal(res.data));
   const goalRemoved = res => dispatch(removeGoal(res.data));
-  const incrementSuccess = res => dispatch(receiveGoals(arrToObj(res.data)));
+  const incrementSuccess = res => dispatch(mergeGoals(res.data));
   const goalErrored = res => dispatch(goalError(res.data.responseJSON));
   switch(action.type){
     case REQUEST_GOALS:

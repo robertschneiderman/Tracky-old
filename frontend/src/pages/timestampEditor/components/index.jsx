@@ -25,14 +25,15 @@ export class TimestampEditor extends Component {
 
   isValidRange() {
     let { timestamp } = this.props;
-    return this.getElapsedTime(timestamp) >= 0;
+    return this.getElapsedTime(timestamp) >= 0 || !timestamp.end;
   }
 
   handleCreate() {
     let { dispatches, task, timestamp } = this.props;
     let elapsedSeconds = this.getElapsedTime(timestamp);
     timestamp.taskId = task.id;
-    if (elapsedSeconds >= 0) {    
+    // debugger;    
+    if (this.isValidRange()) {    
       dispatches.createTimestamp(timestamp);
       // (task.type === 'time') ? dispatches.incrementGoals(task.id, elapsedSeconds) : dispatches.incrementGoals(task.id, 1);
     }
@@ -77,7 +78,6 @@ export class TimestampEditor extends Component {
     let { mode } = this.props;
     mode = upperFirst(`${mode}`);
     let fnc = `handle${mode}`;
-    // debugger;
     return <button disabled={!this.isValidRange()} onClick={this[fnc].bind(this)} className="btn-edit-timestamp">{mode} Timestamp</button>;
   }
 
