@@ -26,8 +26,10 @@ class TaskDisplay extends Component {
 
     getCompletionString(goal) {
         let { task, timer } = this.props;
+        let target = Math.ceil(goal.multiplier * goal.target)
+        debugger;
         if (task.type === 'frequency') {
-            return `${goal.count} / ${goal.target}`;
+            return `${goal.count} / ${target}`;
         } else {
             let timeToAdd = timer && timer.running ? (timer.time / 1000) : 0;
             return `${secondsToTimeString(goal.count + timeToAdd)} / ${secondsToTimeString(goal.target)}`;

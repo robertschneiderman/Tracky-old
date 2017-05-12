@@ -15,6 +15,10 @@ module.exports = {
       interval: {
         type: Sequelize.STRING
       },
+      multiplier: {
+        type: Sequelize.FLOAT,
+        default: 1        
+      },      
       count: {
         type: Sequelize.INTEGER
       },

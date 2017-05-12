@@ -18,12 +18,13 @@ const assess = (emailText, interval, goals, tasks) => {
     emailText.content += eth.intervalOpening(interval);
     goals.forEach(goal => {
         let task = tasks.find(task => task.id === goal.taskId);
-        let completed = goal.count >= goal.target;
+        let completed = goal.count >= Math.ceil(goal.multiplier * goal.target);
         let count = task.type === 'time' ? dh.minutesToTime(goal.count) : parseInt(goal.count);
         let target = task.type === 'time' ? dh.minutesToTime(goal.target) : parseInt(goal.target);
 
         emailText.content += eth.task(task, count, target, completed);
         goal.count = 0;
+        if (goal.multiplier !== 1) goal.multiplier = 1;
         goal.save();
     });
     emailText.content += eth.intervalClosing();

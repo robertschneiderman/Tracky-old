@@ -3,6 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   var Goal = sequelize.define('Goal', {
     taskId: { type: DataTypes.INTEGER, allowNull: false },    
     interval: { type: DataTypes.STRING, allowNull: false },
+    multiplier: { type: DataTypes.FLOAT, defaultValue: 1 },
     count: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
     year: { type: DataTypes.INTEGER, allowNull: false },
     week: { type: DataTypes.INTEGER, allowNull: false },

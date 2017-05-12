@@ -20,7 +20,7 @@ const lastDayOfMonth = () => {
   return dh.today().endOf('month').date();
 };
 
-const calculateMultipliers = goals => {
+const addMultipliers = goals => {
   goals.forEach(goal => {
     let fDoW = firstDayOfWeek();
     let fDoM = dh.today().date(1).startOf('day');
@@ -54,10 +54,8 @@ exports.create = function(req, res, next) {
 
   addGoalTimeValues(goals);
 
-  task.goals = goals;
+  task.goals = addMultipliers(goals);
   task.timestamps = [];
-
-
 
   Task.create(task, {include: [ {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'} ]})
   .then(task => {
