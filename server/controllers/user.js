@@ -7,8 +7,6 @@ const moment = require('moment');
 
 // dev code
 // const week = dh.artificialWeek;
-const week = dh.adjustedWeek();
-
 exports.find = function(req, res, next) {
   
   User.find({ where: {id: parseInt(req.params.id)}, 
