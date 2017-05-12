@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const today = () => {
-    return (process.env.NODE_ENV) === 'production' ? moment() : moment().add(3, 'days');
+    return (process.env.NODE_ENV) === 'production' ? moment() : moment().add(0, 'days');
 };
 
 export const dateToTime = (date) => {

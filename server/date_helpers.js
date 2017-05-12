@@ -24,7 +24,7 @@ const numberEndings = {
 
 exports.today = () => {
     
-    return (process.env.NODE_ENV ) === 'production' ? moment() : moment().add(3, 'days');
+    return (process.env.NODE_ENV ) === 'production' ? moment().tz("America/Los_Angeles") : moment().add(0, 'days');
 };
 
 exports.formattedDate= date => {
@@ -42,7 +42,7 @@ exports.adjustedDay= day => {
 };
 
 exports.adjustedWeek= () => {
-    let date = exports.today().tz("America/Los_Angeles").startOf('day');
+    let date = exports.today().startOf('day');
     let day = date.get('day');
     let week = date.get('week');
 
