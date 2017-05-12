@@ -84,12 +84,13 @@ exports.isSameWeek = (date1, date2) => {
 };
 
 exports.isSameDay = (date1, date2) => {
+    // WORK ON THIS AREA!!!
     // date2 === now
     let nextDay = moment(date1).add(1, 'days');
     let nowFormatted = moment(date2).format('MM-DD-YYYY');
     let dateFormatted = moment(date1).format('MM-DD-YYYY');
-    let nextDayFormatted = moment(nextDay).format('MM-DD-YYYY');
+    let nextDayFormatted = nextDay.format('MM-DD-YYYY');
 
-    return dateFormatted === nowFormatted ||
-    date2.hours() < 4 && nextDayFormatted === nowFormatted;
+    return (date2.hours() >= 4 && dateFormatted === nowFormatted) ||
+    (date2.hours() < 4 && nextDayFormatted === nowFormatted);
 };

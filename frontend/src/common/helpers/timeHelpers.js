@@ -1,4 +1,5 @@
 import moment from 'moment';
+var tz = require('moment-timezone');
 
 export const today = () => {
     return (process.env.NODE_ENV) === 'production' ? moment().tz("America/Los_Angeles") : moment().add(0, 'days');
