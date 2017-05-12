@@ -25,7 +25,7 @@ const numberEndings = {
 exports.today = () => {
     const ROOT_URL = (process.env.NODE_ENV !== "production") ? 'http://localhost:3090' : 'https://traky.herokuapp.com';
     
-    return (ROOT_URL) === 'production' ? moment() : moment().add(7, 'days');
+    return (ROOT_URL) === 'production' ? moment() : moment().add(10, 'days');
 };
 
 exports.formattedDate= date => {
@@ -49,6 +49,22 @@ exports.adjustedWeek= () => {
 
     if (day === 0) return week - 1;
     return week;
+};
+
+exports.getStartOfWeek = week => {
+    let today = exports.today();
+    let weekAdjustedDay = week ? today.week(week) : today;
+    let dayToUse = weekAdjustedDay.get('day') !== 0 ? weekAdjustedDay : weekAdjustedDay.subtract(1, 'days');
+
+    return dayToUse.startOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS');
+};
+
+exports.getEndOfWeek = (week) => {
+    let today = exports.today();
+    let weekAdjustedDay = week ? today.week(week) : today;
+    let dayToUse = weekAdjustedDay.get('day') !== 0 ? weekAdjustedDay : weekAdjustedDay.subtract(1, 'days');
+
+    return dayToUse.endOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS');    
 };
 
 const padNumber = (number) => {

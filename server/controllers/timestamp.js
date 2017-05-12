@@ -15,10 +15,10 @@ exports.get = function(req, res, next) {
   let end = timestamp.end || null;
 
   let week = req.params.week;
-  let startOfWeek = dh.today().week(week).startOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS');
-  let endOfWeek = dh.today().week(week).endOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS');
+  // let startOfWeek = dh.today().week(week).startOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS');
+  // let endOfWeek = dh.today().week(week).endOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS');
 
-  Timestamp.findAll({where: { start: {$gt: startOfWeek, $lt: endOfWeek} } }).then(timestamps => {
+  Timestamp.findAll({where: { start: {$gt: dh.getStartOfWeek(week), $lt: dh.getEndOfWeek(week)} } }).then(timestamps => {
     res.status(201).json(timestamps);
   }).catch((e) => {
     res.status(401).send(e);

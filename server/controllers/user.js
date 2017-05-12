@@ -16,7 +16,7 @@ exports.find = function(req, res, next) {
       {model: Task, as: 'tasks', include: [
         {model: Goal, as: 'goals', required: false},
         {model: Timestamp, as: 'timestamps', required: false,
-          where: { start: {$gt: dh.today().startOf('week').add(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS')} }
+          where: { start: {$gt: dh.getStartOfWeek(), $lt: dh.getEndOfWeek()} }
         },
       ]}
     ],    
