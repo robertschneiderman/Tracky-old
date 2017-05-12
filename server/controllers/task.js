@@ -27,11 +27,13 @@ const addMultipliers = goals => {
     // return Math.floor(moment.duration(moment().unix() - timestamp, 'seconds').asHours());
     if (goal.interval === 'weekly') {
       let hoursPassedInWeek = hoursPassedSince(fDoW);
-      goal.multiplier = hoursPassedInWeek / 168;
+      goal.multiplier = (168 - hoursPassedInWeek) / 168;
     } else if (goal.interval === 'monthly') {
       let hoursPassedInMonth = hoursPassedSince(fDoM);
-      goal.multiplier = hoursPassedInMonth / (lastDayOfMonth() * 24);
-    }
+      let hoursInMonth = (lastDayOfMonth() * 24);
+      
+      goal.multiplier = (hoursInMonth - hoursPassedInMonth) / hoursInMonth;
+    }    
 
   });
   return goals;

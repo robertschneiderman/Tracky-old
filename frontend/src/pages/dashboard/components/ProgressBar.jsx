@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { hoursPassedSince, minutesPassedInDay, firstDayOfWeek, firstDayOfMonth, daysInMonth } from '../../../common/helpers/timeHelpers';
+import { hoursPassedSince, minutesPassedInDay, firstDayOfWeek, firstDayOfMonth, daysInMonth, today } from '../../../common/helpers/timeHelpers';
 
 class ProgressBar extends Component {
     constructor(props) {
@@ -9,13 +9,13 @@ class ProgressBar extends Component {
     getElapsedProgress() {
         let { user, goal } = this.props;
         let interval = goal.interval;
-        let devDate = user.devDate;
+        // let devDate = user.devDate;
         if (interval === 'daily') {
             return minutesPassedInDay() / 1440;
         } else if (interval === 'weekly') {
-            return hoursPassedSince(firstDayOfWeek(devDate)) / 168;
+            return hoursPassedSince(firstDayOfWeek(today())) / 168;
         } else {
-            return hoursPassedSince(firstDayOfMonth(devDate)) / (daysInMonth(devDate) * 24);
+            return hoursPassedSince(firstDayOfMonth(today())) / (daysInMonth(today()) * 24);
         }
     }
 
@@ -23,7 +23,7 @@ class ProgressBar extends Component {
         let { goal, timer } = this.props;
         let timeToAdd = timer && timer.running ? (timer.time / 1000) : 0;
         
-        return Math.min( (goal.count + timeToAdd) / goal.target, 1);
+        return Math.min( (goal.count + timeToAdd) / Math.floor(goal.target * goal.multiplier), 1);
     }
 
     getBarStyles() {

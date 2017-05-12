@@ -25,7 +25,7 @@ class TaskDisplay extends Component {
     }  
 
     getTarget(goal) {
-        return (goal.multiplier !== 1) ? <span><span className="text-strike">{goal.target}</span><span>{Math.floor(goal.target * goal.multiplier)}</span></span> : <del>{goal.target}</del>;
+        return (goal.multiplier !== 1) ? <span><span className="text-strike">{goal.target}</span><span>{Math.floor(goal.target * goal.multiplier)}</span></span> : <span>{goal.target}</span>;
     }
 
     getCompletionString(goal) {

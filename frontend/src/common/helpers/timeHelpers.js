@@ -56,7 +56,7 @@ export const firstDayOfWeek = devDate => {
 
 
 export const hoursPassedSince = date => {
-  return Math.floor(moment.duration(moment().unix() - date.unix(), 'seconds').asHours());
+  return Math.floor(moment.duration(today().unix() - date.unix(), 'seconds').asHours());
 };
 
 export const firstDayOfMonth = devDate => {
