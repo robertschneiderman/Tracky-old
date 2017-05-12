@@ -26,7 +26,7 @@ module.exports = {
         // let week = now.get('week');
         // let devWeek = (day === 0) ? week - 1 : week;
 
-        User.findOrCreate({ where: {email}, defaults: {name, password: hash, devDate: moment()}}).spread((user, created) => {
+        User.findOrCreate({ where: {email}, defaults: {name, password: hash}}).spread((user, created) => {
             // if (err) { return next(err); }
             if (!created) {
                 return res.status(422).send({ error: 'Email is in use'} );

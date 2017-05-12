@@ -5,11 +5,9 @@ module.exports = function(sequelize, DataTypes) {
     interval: { type: DataTypes.STRING, allowNull: false },
     multiplier: { type: DataTypes.FLOAT, defaultValue: 1 },
     count: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-    year: { type: DataTypes.INTEGER, allowNull: false },
-    week: { type: DataTypes.INTEGER, allowNull: false },
-    day: { type: DataTypes.INTEGER, allowNull: false },
     target: { type: DataTypes.INTEGER, allowNull: false },
     streak: { type: DataTypes.INTEGER, defaultValue: 0 },
+    record: { type: DataTypes.INTEGER, defaultValue: 0 }
     // multiplier: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1}
   }, {
     classMethods: {

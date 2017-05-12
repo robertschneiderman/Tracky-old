@@ -23,6 +23,8 @@ const assess = (emailText, interval, goals, tasks) => {
         let target = task.type === 'time' ? dh.minutesToTime(goal.target) : parseInt(goal.target);
 
         emailText.content += eth.task(task, count, target, completed);
+        if (completed) goal.streak += 1;
+        if (goal.streak > goal.record) goal.record = goal.streak;
         goal.count = 0;
         if (goal.multiplier !== 1) goal.multiplier = 1;
         goal.save();

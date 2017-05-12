@@ -24,20 +24,15 @@ module.exports = {
       },
       target: {
         type: Sequelize.INTEGER
-      },
-      year: {
-        type: Sequelize.INTEGER
-      },     
-      week: {
-        type: Sequelize.INTEGER
-      }, 
-      day: {
-        type: Sequelize.INTEGER
-      },       
+      },      
       streak: {
         type: Sequelize.INTEGER,
         default: 0
       },
+      record: {
+        type: Sequelize.INTEGER,
+        default: 0
+      },      
       // multiplier: {
       //   type: Sequelize.FLOAT        
       // },          
