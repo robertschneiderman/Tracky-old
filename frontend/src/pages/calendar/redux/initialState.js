@@ -6,7 +6,6 @@ import moment from 'moment';
 // let activeWeek = (day === 0) ? week - 1 : week;
 
 const initialState = {
-    // activeWeek: moment().get('week'),
     activeWeek: 0,
     weeks: []
 };

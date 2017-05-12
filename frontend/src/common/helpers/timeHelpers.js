@@ -1,12 +1,16 @@
 import moment from 'moment';
 var tz = require('moment-timezone');
 
+export const mowment = date => {
+    return date ? moment(date).tz("America/Los_Angeles") : moment().tz("America/Los_Angeles");
+};
+
 export const today = () => {
     return (process.env.NODE_ENV) === 'production' ? moment().tz("America/Los_Angeles") : moment().add(0, 'days');
 };
 
 export const dateToTime = (date) => {
-    return moment(date).format('h:mm A');
+    return mowment(date).format('h:mm A');
 };
 
 export const padNumber = (number) => {
@@ -48,8 +52,8 @@ export const fullTimeToNumber = time => {
 
 export const firstDayOfWeek = devDate => {
     // should technically use dev date    
-  let result = moment(devDate).day(1).startOf('day');
-  if (moment(devDate).day() === 0) result.subtract('days', 7);
+  let result = mowment().day(1).startOf('day');
+  if (mowment(devDate).day() === 0) result.subtract('days', 7);
   return result;
 };
 
@@ -76,11 +80,11 @@ export const secondsToTimeString = seconds => {
 };
 
 export const minutesElapsedInDay = () => {
-    return moment.duration(moment().unix() - moment().startOf('day').unix(), 'seconds').asMinutes();    
+    return moment.duration(mowment().unix() - mowment().startOf('day').unix(), 'seconds').asMinutes();    
 };
 
 export const minutesPassedInDay = () => {
-  return Math.floor(moment.duration(moment().unix() - moment().startOf('day').unix(), 'seconds').asMinutes());
+  return Math.floor(moment.duration(mowment().unix() - mowment().startOf('day').unix(), 'seconds').asMinutes());
 };
 
 export const adjustedDay= day => {

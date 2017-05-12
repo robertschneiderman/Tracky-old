@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import DateIncrementer from './DateIncrementer';
 import { upperFirst } from 'lodash';
+import { mowment } from '../../../common/helpers/timeHelpers';
+
 
 class TimeInput extends Component {
     constructor(props) {
@@ -23,7 +25,7 @@ class TimeInput extends Component {
 
     tsFromCaseBasis(key, value) {
       let { field, time } = this.props;
-      time = moment(time);
+      time = mowment(time);
 
       if (key === 'hours') {
         value = (time.hours() > 12) ? parseInt(value) + 12 : value;
@@ -51,7 +53,6 @@ class TimeInput extends Component {
       if (this.isValidChange(key, value)) {
 
         let timestamp = this.tsFromCaseBasis(key, value);
-        // timestamp = moment.utc(timestamp).format("YYYY-MM-DDTHH:mm:ss.SSSS");
 
         dispatches.editStoredTimestamp(field, timestamp);
       }
@@ -99,7 +100,7 @@ class TimeInput extends Component {
 
     renderTimeInput(time) {
       // MMM DD YYYY 
-      let timeStr = moment(time).format("h mm A");
+      let timeStr = mowment(time).format("h mm A");
       let fields = timeStr.split(" ");
       let lengths = [2, 2, 2];
       let inputs = [];

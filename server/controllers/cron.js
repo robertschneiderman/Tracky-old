@@ -4,11 +4,12 @@ const Task = require('../models').Task;
 const Goal = require('../models').Goal;
 const Timestamp = require('../models').Timestamp;
 const ch = require('../cron_helpers');
+const dh = require('../date_helpers');
 
 const moment = require('moment');
 
 const cronJob = user => {
-    let interval = moment();
+    let interval = dh.mowment();
     
     User.find({
         where: {id: user.id},
@@ -16,7 +17,7 @@ const cronJob = user => {
             {model: Task, as: 'tasks', include: [
                 {model: Goal, as: 'goals'},
                 {model: Timestamp, as: 'timestamps', 
-                    where: { start: {$gt: moment().startOf('month').format('YYYY-MM-DDTHH:mm:ss.SSS') } 
+                    where: { start: {$gt: dh.mowment().startOf('month').format('YYYY-MM-DDTHH:mm:ss.SSS') } 
                 }},
             ]}
         ],

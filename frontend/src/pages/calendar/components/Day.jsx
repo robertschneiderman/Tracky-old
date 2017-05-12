@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import TimeBlock from './TimeBlock';
 import moment from 'moment';
+import { mowment } from '../../../common/helpers/timeHelpers';
 import { objToArr } from '../../../common/helpers/selectors';
 
 class Day extends Component {
@@ -37,7 +38,7 @@ class Day extends Component {
     timestampFromClick(y) {
         let { date } = this.props;
         let minutes = y / 2;
-        let clickTime = moment(date).startOf('day').add(minutes, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
+        let clickTime = mowment(date).startOf('day').add(minutes, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSSZ");
         
         return {start: clickTime, end: null};
     }

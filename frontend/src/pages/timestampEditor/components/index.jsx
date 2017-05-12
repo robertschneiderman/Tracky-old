@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {hashHistory} from 'react-router';
 import moment from 'moment';
+import { mowment } from '../../../common/helpers/timeHelpers';
 import { upperFirst } from 'lodash';
 import * as actions from '../redux/actions';
 import { objToArr } from '../../../common/helpers/selectors'
@@ -20,7 +21,7 @@ export class TimestampEditor extends Component {
 
   getElapsedTime(timestamp) {
     // debugger;
-    return moment(timestamp.end).unix() - moment(timestamp.start).unix();
+    return mowment(timestamp.end).unix() - mowment(timestamp.start).unix();
   }
 
   isValidRange() {

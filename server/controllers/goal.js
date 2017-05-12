@@ -73,7 +73,7 @@ exports.update = function(req, res, next) {
 };
 
 const getAmount = (timestamp, operation) => {
-  let timeElapsed = moment(timestamp.end).unix() - moment(timestamp.start).unix();
+  let timeElapsed = dh.mowment(timestamp.end).unix() - dh.mowment(timestamp.start).unix();
   if (!timestamp.end) timeElapsed = 1; 
   return operation === 'increment' ? timeElapsed : 0 - timeElapsed;
 };

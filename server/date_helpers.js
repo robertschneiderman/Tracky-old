@@ -1,5 +1,7 @@
 var moment = require('moment');
 var tz = require('moment-timezone');
+const MomentRange = require('moment-range');
+
 
 const months = {
     0: 'January',
@@ -23,8 +25,11 @@ const numberEndings = {
 };
 
 exports.today = () => {
-    
-    return (process.env.NODE_ENV ) === 'production' ? moment().tz("America/Los_Angeles") : moment().add(0, 'days');
+    return (process.env.NODE_ENV ) === 'production' ? exports.mowment().tz("America/Los_Angeles") : exports.mowment().add(0, 'days');
+};
+
+exports.mowment = date => {
+    return date ? moment(date).tz("America/Los_Angeles") : moment().tz("America/Los_Angeles");
 };
 
 exports.formattedDate= date => {
@@ -80,17 +85,32 @@ exports.minutesToTime = (totalMinutes) => {
 };
 
 exports.isSameWeek = (date1, date2) => {
-    return moment(date1).get('week') === moment(date2).get('week');
+    return exports.mowment(date1).get('week') === exports.mowment(date2).get('week');
 };
 
 exports.isSameDay = (date1, date2) => {
+    let momentRange = MomentRange.extendMoment(moment);
     // WORK ON THIS AREA!!!
     // date2 === now
-    let nextDay = moment(date1).add(1, 'days');
-    let nowFormatted = moment(date2).format('MM-DD-YYYY');
-    let dateFormatted = moment(date1).format('MM-DD-YYYY');
-    let nextDayFormatted = nextDay.format('MM-DD-YYYY');
+    // let nextDay = exports.mowment(date1).add(1, 'days');
+    // let nowFormatted = exports.mowment(date2).format('MM-DD-YYYY');
+    // let dateFormatted = exports.mowment(date1).format('MM-DD-YYYY');
+    // let nextDayFormatted = nextDay.format('MM-DD-YYYY');
 
-    return (date2.hours() >= 4 && dateFormatted === nowFormatted) ||
-    (date2.hours() < 4 && nextDayFormatted === nowFormatted);
+    let v1 = moment(date2);
+    let v2 = moment(date2);
+
+    let theDay = v1.hours() >= 4 ? v1 : v1.subtract(1, 'days');
+    let theDay2 = v2.hours() >= 4 ? v2 : v2.subtract(1, 'days');
+
+    let start = theDay.startOf('day');
+    let end = theDay2.add(1, 'days');
+    end = end.hours(3).minutes(59).seconds(59);
+
+    let range = momentRange.range(start, end);
+
+    return momentRange(date1).within(range);
+
+    // return (date2.hours() >= 4 && dateFormatted === nowFormatted) ||
+    // (date2.hours() < 4 && nextDayFormatted === nowFormatted);
 };

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import { today } from '../../../common/helpers/timeHelpers';
+import { today, mowment } from '../../../common/helpers/timeHelpers';
 
 class WeekToggler extends Component {
     constructor(props) {
@@ -22,8 +22,8 @@ class WeekToggler extends Component {
         let firstDate = dates[0];
         let lastDate = dates[dates.length-1];
 
-        firstDate = moment(firstDate).format('MMM Do');
-        lastDate = moment(lastDate).format('MMM Do');
+        firstDate = mowment(firstDate).format('MMM Do');
+        lastDate = mowment(lastDate).format('MMM Do');
 
         return(
             <div className="w-week-toggler">

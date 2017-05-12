@@ -24,7 +24,7 @@ const addMultipliers = goals => {
   goals.forEach(goal => {
     let fDoW = firstDayOfWeek();
     let fDoM = dh.today().date(1).startOf('day');
-    // return Math.floor(moment.duration(moment().unix() - timestamp, 'seconds').asHours());
+    
     if (goal.interval === 'weekly') {
       let hoursPassedInWeek = hoursPassedSince(fDoW);
       goal.multiplier = (168 - hoursPassedInWeek) / 168;

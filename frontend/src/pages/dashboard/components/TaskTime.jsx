@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import { dateToTime, padNumber, msToTime, msToLongerTime, today } from '../../../common/helpers/timeHelpers';
+import { dateToTime, padNumber, msToTime, msToLongerTime, today, mowment } from '../../../common/helpers/timeHelpers';
 
 class TaskTime extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class TaskTime extends Component {
     getTotalTime(timestamps) {
         let ts = timestamps[0];
         let totalMilliSeconds = timestamps.reduce((accum, tss) => {
-        let milliSeconds = moment.duration(moment(tss.end).unix() - moment(tss.start).unix(), 'seconds').seconds() * 1000;
+        let milliSeconds = moment.duration(mowment(tss.end).unix() - mowment(tss.start).unix(), 'seconds').seconds() * 1000;
             return accum + milliSeconds;
         }, 0);
         

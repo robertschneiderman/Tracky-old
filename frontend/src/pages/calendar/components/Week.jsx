@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import Day from './Day';
 import TimeGraph from './TimeGraph';
-import { minutesElapsedInDay, adjustedDay, today } from '../../../common/helpers/timeHelpers';
+import { minutesElapsedInDay, adjustedDay, today, mowment } from '../../../common/helpers/timeHelpers';
 
 class Week extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class Week extends Component {
         let week = [[], [], [], [], [], [], []];
 
         timestamps.forEach(timestamp => {
-            let idx = adjustedDay(moment(timestamp.start).get('day'));
+            let idx = adjustedDay(mowment(timestamp.start).get('day'));
             // timestamp.task = taskDict[timestamp.taskId].name;
             week[idx].push(timestamp);
         });

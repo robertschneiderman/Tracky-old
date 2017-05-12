@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import IncrementBtns from './IncrementBtns';
+import { mowment } from '../../../common/helpers/timeHelpers';
+
 
 class DateIncrementer extends Component {
     constructor(props) {
@@ -10,13 +12,13 @@ class DateIncrementer extends Component {
     incrementTime(number) {
         let { time, field, dispatches } = this.props;
         let method = number > 0 ? 'add' : 'subtract';
-        let date = moment(time)[method](1, 'days').format("YYYY-MM-DDTHH:mm:ss.SSSS");
+        let date = mowment(time)[method](1, 'days').format("YYYY-MM-DDTHH:mm:ss.SSSS");
         dispatches.editStoredTimestamp(field, date);        
     }
 
     formattedTime() {
         let { time } = this.props;
-        return moment(time).format("MMM DD, YYYY");
+        return mowment(time).format("MMM DD, YYYY");
     }
 
     render() {

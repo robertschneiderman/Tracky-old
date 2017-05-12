@@ -44,7 +44,6 @@ export class Calendar extends Component {
   }
 
   // isSplitDayTimestamp(ts) {
-  //   return moment(ts.start).get('date') !== moment(ts.end).get('date');
   // }
 
   splitTimestamps(historys) {

@@ -35,7 +35,7 @@ const selectGoalsToIncrement = (goals, timestamp) => {
 };
 
 const getAmount = timestamp => {
-  let timeElapsed = moment(timestamp.end).unix() - moment(timestamp.start).unix();
+  let timeElapsed = dh.mowment(timestamp.end).unix() - dh.mowment(timestamp.start).unix();
   return timestamp.end ? timeElapsed : 1;
 };
 

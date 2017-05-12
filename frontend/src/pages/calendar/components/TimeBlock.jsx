@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import {hashHistory} from 'react-router';
-import {dateToTime} from '../../../common/helpers/timeHelpers';
+import {dateToTime, mowment} from '../../../common/helpers/timeHelpers';
 import { COLOR_MAP } from '../../../common/helpers/maps';
 
 const multiplier = 2;
@@ -13,8 +13,8 @@ class TimeBlock extends Component {
     }
 
     getTotalMinutes(timeStr) {
-        let mins = moment(timeStr).hours() * 60;
-        mins += moment(timeStr).get('minutes');
+        let mins = mowment(timeStr).hours() * 60;
+        mins += mowment(timeStr).get('minutes');
         return mins;
     }
 
@@ -99,7 +99,7 @@ class TimeBlock extends Component {
     render() {
         let {task, timestamp, special} = this.props;
         let {start, end} = timestamp;
-        // let result = (moment(start).get('date') !== moment(end).get('date')) ? this.renderTimeBlocks() : this.renderTimeBlock();
+        
         return this.renderTimeBlock();
     }
 }
