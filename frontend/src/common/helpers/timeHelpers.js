@@ -3,7 +3,7 @@ import moment from 'moment';
 export const today = () => {
     const ROOT_URL = (process.env.NODE_ENV !== "production") ? 'http://localhost:3090' : 'https://traky.herokuapp.com';
     
-    return (ROOT_URL) === 'production' ? moment() : moment().add(10, 'days');
+    return (ROOT_URL) === 'production' ? moment() : moment().add(3, 'days');
 };
 
 export const dateToTime = (date) => {
