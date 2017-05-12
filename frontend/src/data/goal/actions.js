@@ -52,11 +52,11 @@ export const updateGoal = (id, goal) => ({
     goal
 });
 
-export const incrementGoals = (taskId, amount, time = moment().get('day')) => ({
+export const incrementGoals = (taskId, amount, operation) => ({
     type: INCREMENT_GOALS,
     taskId,
     amount,
-    time
+    operation
 });
 
 export const destroyGoal = goal => ({

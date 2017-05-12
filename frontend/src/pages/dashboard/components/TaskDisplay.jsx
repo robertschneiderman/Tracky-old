@@ -22,14 +22,19 @@ class TaskDisplay extends Component {
         // } else {
         //     this.setState({caughtUp: true});
         // }
+    }  
+
+    getTarget(goal) {
+        return (goal.multiplier !== 1) ? <span><span className="text-strike">{goal.target}</span><span>{Math.floor(goal.target * goal.multiplier)}</span></span> : <del>{goal.target}</del>;
     }
 
     getCompletionString(goal) {
         let { task, timer } = this.props;
-        let target = Math.ceil(goal.multiplier * goal.target)
-        debugger;
+        let target = this.getTarget(goal);
+        
         if (task.type === 'frequency') {
-            return `${goal.count} / ${target}`;
+            // debugger;
+            return <p>{goal.count} / {this.getTarget(goal)}</p>;
         } else {
             let timeToAdd = timer && timer.running ? (timer.time / 1000) : 0;
             return `${secondsToTimeString(goal.count + timeToAdd)} / ${secondsToTimeString(goal.target)}`;
@@ -59,13 +64,14 @@ class TaskDisplay extends Component {
                     <div className="w-task-display-goal">
                         <h3 className="title-task-display-goal">{startCase(goal.interval)}</h3>
                         <p className="text-task-display-goal">
-                            {this.getCompletionString(goal)}
+                            { this.getCompletionString(goal) }
                         </p>
                     </div>
                     <ProgressBar goal={goal} timer={timer} user={user} />
                 </div>
             );
         });
+                            // {goal.count} / {this.getTarget(goal)} {Math.floor(goal.target * goal.multiplier)}
     }
     
     render() {

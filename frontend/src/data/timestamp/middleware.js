@@ -39,7 +39,7 @@ export default ({getState, dispatch}) => next => action => {
     let timestamp = res.data;
     dispatch(receiveTimestamp(timestamp));
     dispatch(updateTimestampArr(timestamp.taskId, timestamp.id));
-    dispatch(incrementGoals(timestamp.taskId, timestamp));
+    dispatch(incrementGoals(timestamp.taskId, timestamp, 'increment'));
     // let goalIds = goals.map(goal => goal.id);
 
     // debugger;
@@ -49,14 +49,9 @@ export default ({getState, dispatch}) => next => action => {
   const timestampUpdateSuccess = res => dispatch(receiveTimestamp(res.data));  
   const timestampRemoved = res => {
     let timestamp = res.data;
-    let start = timestamp.start;
-    let end = timestamp.end;
-    timestamp.start = end;
-    timestamp.end = start;
 
-    debugger;
     dispatch(removeTimestamp(timestamp.id));
-    dispatch(incrementGoals(timestamp.taskId, timestamp));
+    dispatch(incrementGoals(timestamp.taskId, timestamp, 'decrement'));
   };
   const timestampErrored = res => dispatch(timestampError(res.data));
   switch(action.type){

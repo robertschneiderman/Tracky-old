@@ -70,11 +70,10 @@ exports.update = function(req, res, next) {
   });
 };
 
-const getAmount = timestamp => {
+const getAmount = (timestamp, operation) => {
   let timeElapsed = moment(timestamp.end).unix() - moment(timestamp.start).unix();
-  if (!timestamp.start) return -1; 
-  if (!timestamp.end) return 1; 
-  return timeElapsed;
+  if (!timestamp.end) timeElapsed = 1; 
+  return operation === 'increment' ? timeElapsed : 0 - timeElapsed;
 };
 
 const getIntervalsToIncrement = (timestamp) => {
@@ -89,10 +88,11 @@ const getIntervalsToIncrement = (timestamp) => {
 
 exports.increment = function(req, res, next) {
   let timestamp = req.body.timestamp;
+  let operation = req.body.operation;
   // let key = Object.keys(req.body)[0];
   // let value = req.body[key];
 
-  let amount = getAmount(timestamp);
+  let amount = getAmount(timestamp, operation);
   let intervals = getIntervalsToIncrement(timestamp);
 
   Goal.update({ count: db.sequelize.literal(`count + ${amount}`)}, { where: { taskId: timestamp.taskId, interval: {$in: intervals} }, returning: true })

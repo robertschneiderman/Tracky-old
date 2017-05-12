@@ -46,7 +46,7 @@ export default ({getState, dispatch}) => next => action => {
       updateGoal(action.id, action.goal, goalSuccess);
       return next(action);
     case INCREMENT_GOALS:
-      incrementGoals(action.taskId, action.amount, incrementSuccess);
+      incrementGoals(action.taskId, action.amount, action.operation, incrementSuccess);
       return next(action);      
     case DESTROY_GOAL:
       destroyGoal(action.goal, goalRemoved);
