@@ -97,8 +97,8 @@ exports.isSameDay = (date1, date2) => {
     // let dateFormatted = exports.mowment(date1).format('MM-DD-YYYY');
     // let nextDayFormatted = nextDay.format('MM-DD-YYYY');
 
-    let v1 = moment(date2);
-    let v2 = moment(date2);
+    let v1 = exports.mowment(date2);
+    let v2 = exports.mowment(date2);
 
     let theDay = v1.hours() >= 4 ? v1 : v1.subtract(1, 'days');
     let theDay2 = v2.hours() >= 4 ? v2 : v2.subtract(1, 'days');
