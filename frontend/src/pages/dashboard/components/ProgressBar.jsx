@@ -23,7 +23,7 @@ class ProgressBar extends Component {
         let { goal, timer } = this.props;
         let timeToAdd = timer && timer.running ? (timer.time / 1000) : 0;
         
-        return Math.min( (goal.count + timeToAdd) / Math.floor(goal.target * goal.multiplier), 1);
+        return Math.min( (goal.count + timeToAdd) / Math.ceil(goal.target * goal.multiplier), 1);
     }
 
     getBarStyles() {

@@ -25,7 +25,7 @@ class TaskDisplay extends Component {
     }  
 
     getTarget(goal) {
-        return (goal.multiplier !== 1) ? <span><span className="text-strike">{goal.target}</span><span>{Math.floor(goal.target * goal.multiplier)}</span></span> : <span>{goal.target}</span>;
+        return (goal.multiplier !== 1) ? <span><span className="text-strike">{goal.target}</span><span>{Math.ceil(goal.target * goal.multiplier)}</span></span> : <span>{goal.target}</span>;
     }
 
     getCompletionString(goal) {
@@ -71,7 +71,7 @@ class TaskDisplay extends Component {
                 </div>
             );
         });
-                            // {goal.count} / {this.getTarget(goal)} {Math.floor(goal.target * goal.multiplier)}
+                            // {goal.count} / {this.getTarget(goal)} {Math.ceil(goal.target * goal.multiplier)}
     }
     
     render() {
@@ -100,7 +100,7 @@ class TaskDisplay extends Component {
                     <div className="w-task-display-streaks-records">
                         <div className="w-record">
                             <img src="./static/images/medal.svg" alt="" className="icn-record"/>
-                            <span className="text-streak">0</span>
+                            <span className="text-streak">{firstGoal.record}</span>
                         </div>
                         <div className="w-record">
                             <img src="./static/images/fire.svg" alt="" className="icn-streak"/>
