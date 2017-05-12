@@ -31,17 +31,6 @@ export class Calendar extends Component {
     }, 100);
   }
 
-  getStartOfWeek() {
-    let { activeWeek, user } = this.props;
-    let mode;
-    // return moment().startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
-
-    return (mode === 'production') ?
-            today(user.devDate).startOf('week').add(1, 'days').subtract(activeWeek, 'weeks'):
-            artificialWeek(0).startOf('week').add(1, 'days').subtract(activeWeek, 'weeks');
-  }
-
-
   getWeek() {
     // let { week } = this.props;
     // let dates = [];

@@ -55,7 +55,7 @@ class Week extends Component {
 
     renderCurrentTimeLine() {
         let { propeties, user } = this.props;
-        let currentDay = today(user.devDate).get('day');
+        let currentDay = today().get('day');
         let lineLeft = `${adjustedDay(currentDay) * 14.28}%`;    
         let style = {top: `${minutesElapsedInDay()*2}px`, left: lineLeft };
         return <div className="shape-current-time-line" style={style}></div>;

@@ -43,7 +43,7 @@ class TaskTime extends Component {
             dispatches.updateTimer({id: task.id, time: this.state.timer + 10});
         }, 10);
 
-        let start = today(user.devDate);
+        let start = today();
 
         dispatches.createTimestamp({start, taskId: task.id});        
     }
@@ -52,7 +52,7 @@ class TaskTime extends Component {
         let { dispatches, task, user } = this.props;
         let lastTimestamp = this.getLastTimestamp();
 
-        let end = today(user.devDate);   
+        let end = today();   
 
         dispatches.stopTimer({id: task.id});
         dispatches.finishTimestamp({id: lastTimestamp.id, end});

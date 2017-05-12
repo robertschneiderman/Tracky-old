@@ -9,7 +9,7 @@ class ProgressBar extends Component {
     getElapsedProgress() {
         let { user, goal } = this.props;
         let interval = goal.interval;
-        // let devDate = user.devDate;
+        
         if (interval === 'daily') {
             return minutesPassedInDay() / 1440;
         } else if (interval === 'weekly') {
