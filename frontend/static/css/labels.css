@@ -7,6 +7,10 @@
     margin-right: 2rem;
     color: #666;
 }
+.label-task-label {color: #444;font-size: 1rem;font-weight: 700;text-transform: uppercase;margin: 2.4rem 0 1rem;}
+
+p.label-task-label {}
+.label-task-label:first-child { margin-top: 0; }
 .label-timestamp-editor {font-size: 1rem;/* font-weight: 700; */text-transform: uppercase;}
 .label-time-graph {position: absolute;z-index: 9999;left: -0.7rem;transform: translate3d(-100%, -50%, 0);}
 .label-icon-option {margin-right: 1em;font-size: 1.17rem;font-weight: 700;}

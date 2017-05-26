@@ -2,7 +2,7 @@
 
 }
 .title-goal-area {font-weight: 400;margin-bottom: 2.1rem;}
-.title-task-name {color: #444;font-weight: 300;}
+.title-task-name {color: #444;font-weight: 300;margin-bottom: 0.4rem;}
 .title-task-display-goal {font-weight: 400;}
 .title-day {margin-bottom: 0.1rem;font-weight: 400;display: inline-block;}
 .title-date {font-weight: 400;display: inline-block;}
