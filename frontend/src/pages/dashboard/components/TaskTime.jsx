@@ -102,6 +102,9 @@ class TaskTime extends Component {
                     </div>
                 </div>
                 {(running) ? <div className="shape-loader loader"></div> : ''}
+                <div className="shape-checkmark-circle">
+                    <img src="" alt="" className="img-checkmark-circle"/>
+                </div>
             </div>
         );
     }

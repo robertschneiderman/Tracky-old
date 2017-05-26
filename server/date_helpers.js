@@ -104,7 +104,7 @@ exports.isSameDay = (date1, date2) => {
     let theDay2 = v2.hours() >= 4 ? v2 : v2.subtract(1, 'days');
 
     let start = theDay.startOf('day');
-    end = end.hours(4).minutes(0).seconds(0);
+    start = start.hours(4).minutes(0).seconds(0);
     let end = theDay2.add(1, 'days');
     end = end.hours(3).minutes(59).seconds(59);
 

@@ -52,6 +52,11 @@ class TaskFrequency extends Component {
                         </p>
                     </div>
                 </div>
+                <div className="w-checkmark-circle">
+                    <div className="w-inner-checkmark-circle">
+                        { (goal.count >= goal.target) ? <img src="./static/images/checkmark_circle.svg" alt="" className="img-checkmark-circle"/> : <div className="shape-checkmark-circle"></div> }
+                    </div>
+                </div>
             </div>
         );
     }

@@ -50,9 +50,7 @@
 .c-task-frequency {
 
 }
-.c-task-column-1 {
-
-}
+.c-task-column-1 {}
 .c-task-column-2 {display: flex;align-items: center;}
 .c-task-text {
 
@@ -199,7 +197,9 @@
     .c-task-text {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         width: 100%;
+        margin-right: 0.6rem;
     }
     .c-tasks {
         

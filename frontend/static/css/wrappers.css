@@ -10,6 +10,8 @@
 .w-task-column-2 {
 
 }
+.w-inner-checkmark-circle {height: 1.4rem;width: 1.4rem;}
+.w-checkmark-circle {display: flex;align-items: center;}
 .w-task-display-goal {display: flex;justify-content: space-between;margin-bottom: 0.5rem;}
 .w-task-display-streaks-records {display: flex;}
 .w-record {display: flex;align-items: center;margin-right: 1.5rem;}
