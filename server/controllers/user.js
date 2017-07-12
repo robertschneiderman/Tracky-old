@@ -1,5 +1,6 @@
 const User = require('../models').User;
 const Task = require('../models').Task;
+const Notification = require('../models').Notification;
 const Goal = require('../models').Goal;
 const Timestamp = require('../models').Timestamp;
 const dh = require('../date_helpers');
@@ -11,6 +12,7 @@ exports.find = function(req, res, next) {
   
   User.find({ where: {id: parseInt(req.params.id)}, 
     include: [
+      {model: Notification, as: 'notifications'},
       {model: Task, as: 'tasks', include: [
         {model: Goal, as: 'goals', required: false},
         {model: Timestamp, as: 'timestamps', required: false,

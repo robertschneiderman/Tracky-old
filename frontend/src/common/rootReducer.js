@@ -10,6 +10,7 @@ import goalReducer from '../data/goal/reducer';
 import timestampReducer from '../data/timestamp/reducer';
 import calendarReducer from '../pages/calendar/redux/reducer';
 import timestampEditorReducer from '../pages/timestampEditor/redux/reducer';
+import notificationsReducer from '../data/notifications/reducer';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   timestamp: timestampReducer,
   calendar: calendarReducer,
   timestampEditor: timestampEditorReducer,
+  notifications: notificationsReducer,
 });
 
 export default rootReducer;

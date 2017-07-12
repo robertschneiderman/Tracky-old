@@ -10,6 +10,7 @@ import goalMiddleware from '../data/goal/middleware';
 import timestampMiddleware from '../data/timestamp/middleware';
 import calendarMiddleware from '../pages/calendar/redux/middleware';
 import timestampEditorMiddleware from '../pages/timestampEditor/redux/middleware';
+import notificationsMiddleware from '../data/notifications/middleware';
 
 const logger = createLogger();
 
@@ -24,6 +25,7 @@ const createStoreWithMiddleware = applyMiddleware(
   ,timestampMiddleware
   ,calendarMiddleware
   ,timestampEditorMiddleware
+  ,notificationsMiddleware
 )(createStore);
 
 const store = createStoreWithMiddleware(reducers);
