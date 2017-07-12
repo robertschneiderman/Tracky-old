@@ -16,12 +16,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       body: {
-        type: Sequelize.DATE
+        allowNull: false,
+        type: Sequelize.STRING
       },
       completed: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
       seen: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
       createdAt: {

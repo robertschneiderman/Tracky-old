@@ -3,6 +3,7 @@ const History = require('./models').History;
 const Task = require('./models').Task;
 const Goal = require('./models').Goal;
 const Timestamp = require('./models').Timestamp;
+const Notification = require('./models').Notification;
 const dh = require('./date_helpers');
 const config = require('./environment');
 const _ = require('lodash');
@@ -11,6 +12,31 @@ const eth = require('./emailTemplateHelper');
 
 const stripId = obj => {
     delete obj.id;
+};
+
+const assessStreakAndRecord = (goal, completed) => {
+    completed ? goal.streak += 1 : goal.streak = 0;
+    if (goal.streak > goal.record) goal.record = goal.streak;
+};
+
+const resetGoalStats = goal => {
+    goal.count = 0;
+    if (goal.multiplier !== 1) goal.multiplier = 1;
+};
+
+const draftNotificationBody = (taskName, interval, completed) => {
+    let verb = completed ? 'Completed' : 'Did not complete';
+    return `${verb} ${interval} ${taskName} goal`;
+};
+
+const createNotifcation = (userId, icon, body, completed) => {
+    Notification.create({
+        userId,
+        icon,
+        body,
+        completed,
+        seen: false
+    });
 };
 
 const assess = (emailText, interval, goals, tasks) => {
@@ -22,11 +48,14 @@ const assess = (emailText, interval, goals, tasks) => {
         let count = task.type === 'time' ? dh.minutesToTime(goal.count) : parseInt(goal.count);
         let target = task.type === 'time' ? dh.minutesToTime(goal.target) : parseInt(goal.target);
 
+        assessStreakAndRecord(goal, completed);
+        resetGoalStats(goal);
+
+        let body = draftNotificationBody(task.name, goal.interval, completed);
+        createNotifcation(task.userId, task.icon, body, completed);
+
         emailText.content += eth.task(task, count, target, completed);
-        completed ? goal.streak += 1 : goal.streak = 0;
-        if (goal.streak > goal.record) goal.record = goal.streak;
-        goal.count = 0;
-        if (goal.multiplier !== 1) goal.multiplier = 1;
+
         goal.save();
     });
     emailText.content += eth.intervalClosing();
