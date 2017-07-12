@@ -20,7 +20,7 @@ module.exports = function(app) {
   app.post('/signin', requireSignIn, Auth.signin);
   app.post('/signup', Auth.signup);
 
-  app.get('/users/:id', User.find);
+  app.get('/users/:id', requireAuth, User.find);
 
   app.post('/tasks', requireAuth, Task.create);
   app.get('/tasks', Task.getTasks);

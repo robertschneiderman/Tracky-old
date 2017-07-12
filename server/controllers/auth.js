@@ -36,5 +36,10 @@ module.exports = {
 
     signin(req, res, next) {
         res.send({ token: tokenForUser(req.user), user: {id: req.user.id, email: req.user.email} });
-    }
+    },
+
+    // reAuth(req, res, next) {
+    //     if (req.token )
+    //     res.status(201);
+    // }
 };

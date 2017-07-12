@@ -14,6 +14,11 @@ module.exports = function(sequelize, DataTypes) {
         User.hasMany(models.Task, {
           foreignKey: 'userId',
           as: 'tasks'
+        });     
+
+        User.hasMany(models.Notification, {
+          foreignKey: 'userId',
+          as: 'notifications'
         });                  
       },
       findByToken: function(token) {

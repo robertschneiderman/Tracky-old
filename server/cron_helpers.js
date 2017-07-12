@@ -78,11 +78,8 @@ exports.cronTask = user => {
     let emailText = {content: ''};
 
     let tasks = user.tasks;
-    // tasks = tasks.map(task => task.toJSON());
 
     let goalsGrouped = groupGoals(tasks);
-    // let {day, week, month, year, date} = getNewHistoryInfo(lastHistory.date);
-
     emailText.content += eth.headerOpening();
 
     if (isFirstDayOfMonth()) assess(emailText, 'monthly', goalsGrouped['monthly'], tasks);
@@ -95,23 +92,4 @@ exports.cronTask = user => {
 
     sendEmail(user, emailText);
 
-    // for (let interval in goalsGrouped) {
-    //     let goals = goalsGrouped[interval];
-    // }
-
-    // History.create(
-    //     {date, userId: user.id, day, week, month, year, tasks},
-    //     {include: [
-    //         {model: Task, as: 'tasks', include: [
-    //             {model: Goal, as: 'goals'}, {model: Timestamp, as: 'timestamps'}
-    //         ]}
-    //     ]}
-    // ).then(history => {
-    //     history;
-    // }).catch(e => {
-    //     e;
-    // });    
 };
-
-        // message = `<span style="color: red;">Incomplete: ${task.name} (${goal.count} of ${goal.goal})</span><br/>`;                
-        // message = `<span style="color: green;">Complete: ${task.name} (${goal.count} of ${goal.goal}) <b>Streak: ${goal.streak}</span><b><br/>`;                

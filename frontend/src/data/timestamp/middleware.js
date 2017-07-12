@@ -32,24 +32,14 @@ import { incrementGoals } from '../goal/actions';
 export default ({getState, dispatch}) => next => action => {
   const timestampsSuccess = res => dispatch(receiveTimestamps(res.data));
   const timestampSuccess = res => {
-    // const normalized = normalize(res.data, taskSchema);
-    // let { tasks, goals, timestamps } = normalized.entities;
-    // let task = Object.values(tasks)[0];
-    // goals = objToArr(goals);
     let timestamp = res.data;
     dispatch(receiveTimestamp(timestamp));
     dispatch(updateTimestampArr(timestamp.taskId, timestamp.id));
     dispatch(incrementGoals(timestamp.taskId, timestamp, 'increment'));
-    // let goalIds = goals.map(goal => goal.id);
-
-    // debugger;
-    // dispatch(updateGoalArr(goals[0].taskId, goalIds)); 
-
   };
   const timestampUpdateSuccess = res => dispatch(receiveTimestamp(res.data));  
   const timestampRemoved = res => {
     let timestamp = res.data;
-
     dispatch(removeTimestamp(timestamp.id));
     dispatch(incrementGoals(timestamp.taskId, timestamp, 'decrement'));
   };
