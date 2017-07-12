@@ -15,10 +15,7 @@ const cronJob = user => {
         where: {id: user.id},
         include: [
             {model: Task, as: 'tasks', include: [
-                {model: Goal, as: 'goals'},
-                {model: Timestamp, as: 'timestamps', 
-                    where: { start: {$gt: dh.mowment().startOf('month').format('YYYY-MM-DDTHH:mm:ss.SSS') } 
-                }},
+                {model: Goal, as: 'goals'}
             ]}
         ],
     }).then(user => {

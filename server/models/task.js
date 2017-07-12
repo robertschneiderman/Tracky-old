@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     userId: { type: DataTypes.INTEGER, allowNull: false },
     name: { type: DataTypes.STRING, allowNull: false },
     type: { type: DataTypes.STRING, allowNull: false },
+    interval: { type: DataTypes.STRING, allowNull: false },
     icon: { type: DataTypes.STRING, allowNull: false },
     color: { type: DataTypes.STRING, allowNull: false },
     taskOrder: { type: DataTypes.INTEGER, allowNull: false }

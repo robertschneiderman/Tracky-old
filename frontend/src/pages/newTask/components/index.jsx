@@ -36,7 +36,7 @@ export class NewTask extends Component {
 
     let taskOrder = this.getTaskOrder();
 
-    this.props.createTaskAndGoals({name, color, icon, type, taskOrder, userId: user.id}, goals);
+    this.props.createTaskAndGoals({name, color, icon, type, interval, taskOrder, userId: user.id}, goals);
     hashHistory.push('dashboard');
   }
 
